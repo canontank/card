@@ -1,0 +1,36 @@
+div {
+	text-align : center;
+}
+
+img {
+	border : 1px solid #ccc;
+}
+
+button {
+	width : 200px;
+	height : 30px;
+}
+
+label {
+	display : inline-block;
+	width : 340px;
+	height : 30px;
+	font-size : 1.4em;
+	font-weight : 600;
+}
+
+.menu {
+	margin-bottom : 10px;
+}
+
+@media ( max-width : 540px ) {
+    img {
+        width : 100%;
+    }
+    button {
+    	width : 28%;
+    }
+    label {
+    	width : 40%;
+    }
+}
