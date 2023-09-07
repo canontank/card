@@ -7,6 +7,8 @@ var keyList = new Array();
 var titleList = new Array('날짜', '카드', '판매처', '충전처', '종류');
 var cashKeyList = new Array('원가', '단가', '수량');
 
+var cardArray = new Array('텔로', '딥에코', '욜로', 'SKT', '딥온', '주거래', '4tune', '쿠키', '쿠키런', '람다람', '총몇명', '야코', '스무살', '선불교통', '12세후불', '더나은', '스마트', '010pay', 'K-First');
+
 $(function() {
     setKeyList();
     init();
@@ -142,7 +144,6 @@ function setAccountBook() {
 
 function setAccountBook11() {
 	var titleArray = new Array('구분', '상품권', '거래가', '마진');
-    var cardArray = new Array('텔로', '딥에코', '욜로', '딥온', '주거래', '4tune', '쿠키', '쿠키런', '람다람', '총몇명', '야코', '스무살', '선불교통', '12세후불', '더나은', '직장인', '스마트', '010pay', 'K-First');
     var valueArray = new Array();
     for (var card of cardArray) {
         var gift = 0;
@@ -192,7 +193,7 @@ function setAccountBook13() {
     var titleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드');
     var chargeArray = new Array('모빌리언스', '팔라고', '페이코', '모바일팝', '포인트로페이', '하나머니', '웰컴페이');
     var valueArray = new Array(
-	    	new Array(chargeArray[0], 3260000, 3260000, '불가'),
+	    	new Array(chargeArray[0], 2160000, '불가', '불가'),
 		new Array(chargeArray[1], 2000000, 2000000, '불가'),
 		new Array(chargeArray[2], 2000000, 2000000, 2000000),
 		new Array(chargeArray[3],  500000, 3000000, '불가'),
