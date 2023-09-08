@@ -193,7 +193,7 @@ function setAccountBook13() {
     var titleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드');
     var chargeArray = new Array('모빌리언스', '팔라고', '페이코', '모바일팝', '포인트로페이', '하나머니', '웰컴페이');
     var valueArray = new Array(
-	    	new Array(chargeArray[0], 2160000, '불가', '불가'),
+	    	new Array(chargeArray[0], 3260000, 3260000, '불가'),
 		new Array(chargeArray[1], 2000000, 2000000, '불가'),
 		new Array(chargeArray[2], 2000000, 2000000, 2000000),
 		new Array(chargeArray[3],  500000, 3000000, '불가'),
