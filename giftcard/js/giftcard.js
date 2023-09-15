@@ -139,6 +139,7 @@ function setAccountBook() {
 	setAccountBook11();
 	setAccountBook12();
 	setAccountBook13();
+    setAccountBook14();
 	setAccountBook2();
 }
 
@@ -193,15 +194,39 @@ function setAccountBook13() {
     var titleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드');
     var chargeArray = new Array('모빌리언스', '팔라고', '페이코', '모바일팝', '포인트로페이', '하나머니', '웰컴페이');
     var valueArray = new Array(
-	    	new Array(chargeArray[0], 3260000, 3260000, '불가'),
+	    new Array(chargeArray[0], 3260000, 3260000, '불가'),
 		new Array(chargeArray[1], 2000000, 2000000, '불가'),
 		new Array(chargeArray[2], 2000000, 2000000, 2000000),
 		new Array(chargeArray[3],  500000, 3000000, '불가'),
-	    	new Array(chargeArray[4], '불가', 5000000, 2000000),
+	    new Array(chargeArray[4], '불가', 5000000, 2000000),
 		new Array(chargeArray[5], '불가', 2000000, '불가'),
-	    	new Array(chargeArray[6], '불가', '불가', 1060000)
+	    new Array(chargeArray[6], '불가', '불가', 1060000)
     );
     setAccountDiv1("#book13", '[ 충전한도 ]', titleArray, valueArray);
+}
+
+function setAccountBook14() {
+    var titleArray = new Array('구분', '내용');
+    var valueArray = new Array(
+        new Array('텔로', '제약 없음'),
+	    new Array('딥에코', '티몬, 위메프, 쿠팡, 지마켓, 옥션, 11번가'),
+        new Array('욜로', '티몬, 위메프, 쿠팡'),
+        new Array('SKT', '제약 없음 (실적용)'),
+        new Array('딥온', '간편결제 (신한플레이, 스마일페이, SK페이)'),
+        new Array('주거래', '티몬, 위메프, 쿠팡, 지마켓, 옥션, 11번가'),
+        new Array('4tune', '티몬, 위메프, 쿠팡, 지마켓, 옥션, 11번가'),
+        new Array('쿠키', '지마켓, 11번가'),
+        new Array('쿠키런', '지마켓, 11번가'),
+        new Array('람다람', '지마켓, 11번가'),
+        new Array('총몇명', '지마켓, 11번가'),
+        new Array('야코', '지마켓, 11번가'),
+        new Array('스무살', '지마켓, 11번가'),
+        new Array('선불교통', '지마켓, 11번가'),
+        new Array('12세후불', '지마켓, 11번가'),
+        new Array('더나은', '제약 없음 (실적용)'),
+        new Array('스마트', '건당 50만 이상 결제'),
+    );
+    setAccountNotiDiv("#book14", '[ 주의사항 ]', titleArray, valueArray);
 }
 
 function setAccountBook2() {
@@ -217,6 +242,11 @@ function setAccountBook2() {
 function setAccountDiv1(divId, header, titleArray, valueArray) {
     setAccountDiv(divId, header);
     setTable(divId, titleArray, valueArray);
+}
+
+function setAccountNotiDiv(divId, header, titleArray, valueArray) {
+    setAccountDiv(divId, header);
+    setNotiTable(divId, titleArray, valueArray);
 }
 
 function setAccountDiv2(divId, title, valueArray) {
@@ -248,6 +278,13 @@ function setTable(divId, titleArray, valueArray) {
 	$(divId).append(table);
 }
 
+function setNotiTable(divId, titleArray, valueArray) {
+    var table = getTable();
+    setNotiTitle(table, titleArray);
+    setNotiContents(table, valueArray);
+	$(divId).append(table);
+}
+
 function setBookTable(divId, valueArray) {
     var table = getTable();
     setBookTitle(table);
@@ -263,12 +300,33 @@ function setTitle(table, titleArray) {
     table.append(tr);
 }
 
+function setNotiTitle(table, titleArray) {
+    var tr = ($('<tr/>'));
+    tr.append($('<th/>', { align : 'center', width : '25%' }).append($('<font/>', { text : titleArray[0] } )));
+    tr.append($('<th/>', { align : 'center', width : '75%' }).append($('<font/>', { text : titleArray[1] } )));
+    table.append(tr);
+}
+
 function setContents(table, valueArray) {
     for (var value of valueArray) {
         var tr = ($('<tr/>'));
         for (var i = 0; i < value.length; i++) {
             var td = (i == 0) ? '<th/>' : '<td/>';
             var align = (i == 0) ? 'center' : 'right';
+            var text = (i == 0) ? value[i] : getCommaValue(value[i]);
+            var color = (i == 0) ? '' : getColor(value[i]);
+            tr.append($(td, { align : align }).append($('<font/>', { text : text, color : color } )));
+        }
+        table.append(tr);
+    }
+}
+
+function setNotiContents(table, valueArray) {
+    for (var value of valueArray) {
+        var tr = ($('<tr/>'));
+        for (var i = 0; i < value.length; i++) {
+            var td = (i == 0) ? '<th/>' : '<td/>';
+            var align = 'center';
             var text = (i == 0) ? value[i] : getCommaValue(value[i]);
             var color = (i == 0) ? '' : getColor(value[i]);
             tr.append($(td, { align : align }).append($('<font/>', { text : text, color : color } )));
