@@ -7,6 +7,11 @@ var keyList = new Array();
 var titleList = new Array('날짜', '카드', '구매처', '간편결제');
 var cashKeyList = new Array('액면가', '거래가', '수량');
 
+var titleArray1 = new Array('구분', '실적', '기본할인', '추가할인');
+var cardArray1 = new Array('쿠키', '쿠키런', '람다람', '총몇명', '야코', '스무살', '선불교통', '12세후불');
+var cardArray2 = new Array('한베가족', '롤챔코');
+var cardArray = cardArray1.concat(cardArray2);
+
 $(function() {
     setKeyList();
     init();
@@ -142,8 +147,6 @@ function setAccountBook() {
 }
 
 function setAccountBook11() {
-	var titleArray = new Array('구분', '실적', '기본할인', '추가할인');
-    var cardArray = new Array('쿠키', '쿠키런', '람다람', '총몇명', '야코', '스무살', '선불교통', '12세후불');
     var valueArray = new Array();
     for (var card of cardArray) {
         var performence = 0;
@@ -160,12 +163,10 @@ function setAccountBook11() {
         }
         valueArray.push(new Array(card, performence, discount, addDiscount));
     }
-    setAccountDiv1("#book11", '[ 현재 ]', titleArray, valueArray);
+    setAccountDiv1("#book11", '[ 현재 ]', titleArray1, valueArray);
 }
 
 function setAccountBook12() {
-	var titleArray = new Array('구분', '실적', '기본할인', '추가할인');
-    var cardArray = new Array('쿠키', '쿠키런', '람다람', '총몇명', '야코', '스무살', '선불교통', '12세후불');
     var valueArray = new Array();
     for (var card of cardArray) {
         var performence = 0;
@@ -182,7 +183,7 @@ function setAccountBook12() {
         }
         valueArray.push(new Array(card, performence, discount, addDiscount));
     }
-    setAccountDiv1("#book12", '[ 예상 ]', titleArray, valueArray);
+    setAccountDiv1("#book12", '[ 예상 ]', titleArray1, valueArray);
 }
 
 function setAccountBook13() {
@@ -204,18 +205,24 @@ function setAccountBook13() {
 }
 
 function getDiscount(data) {
-	if ((data[2] == "지마켓" || data[2] == "11번가") && ((data[5] * data[6]) >= 20000))
-		return 2000;
-	if (data[2] == "스타벅스" && (data[5] * data[6]) >= 10000)
-		return 2000;
-	if (data[2] == "편의점" && (data[5] * data[6]) >= 10000)
-		return 1000;
+    if (cardArray1.indexOf(data[1]) != -1) {
+        if ((data[2] == "지마켓" || data[2] == "11번가") && ((data[5] * data[6]) >= 20000))
+		    return 2000;
+        if (data[2] == "스타벅스" && (data[5] * data[6]) >= 10000)
+            return 2000;
+        if (data[2] == "편의점" && (data[5] * data[6]) >= 10000)
+            return 1000;
+    } else {
+        if ((data[2] == "지마켓" || data[2] == "옥션") && ((data[5] * data[6]) >= 20000))
+		    return 3000;
+    }
 	return 0;
 }
 
 function getAddDiscount(data) {
-	if (data[3] == "간편결제" && (data[5] * data[6]) >= 10000)
-		return 1000;
+    if (cardArray1.indexOf(data[1]) != -1 && data[3] == "간편결제" && (data[5] * data[6]) >= 10000) {
+        return 1000;
+    }
 	return 0;
 }
 
