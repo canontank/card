@@ -7,7 +7,7 @@ var keyList = new Array();
 var titleList = new Array('날짜', '카드', '판매처', '충전처', '종류');
 var cashKeyList = new Array('원가', '단가', '수량');
 
-var cardArray = new Array('텔로', '딥에코', '욜로', 'SKT', '딥온', '주거래', '4tune', '쿠키', '쿠키런', '람다람', '총몇명', '야코', '스무살', '선불교통', '12세후불', '더나은', '스마트', '010pay', 'K-First');
+var cardArray = new Array('텔로', '딥에코', '욜로', 'SKT', '딥온', '주거래', '4tune', '쿠키', '쿠키런', '람다람', '총몇명', '야코', '스무살', '선불교통', '12세후불', '한베가족', '롤챔코', '더나은', '스마트', '010pay', 'K-First');
 
 $(function() {
     setKeyList();
@@ -223,6 +223,8 @@ function setAccountBook14() {
         new Array('스무살', '지마켓, 11번가'),
         new Array('선불교통', '지마켓, 11번가'),
         new Array('12세후불', '지마켓, 11번가'),
+		new Array('한베가족', '지마켓, 옥션'),
+		new Array('롤챔코', '지마켓, 옥션'),
         new Array('더나은', '제약 없음 (실적용)'),
         new Array('스마트', '건당 50만 이상 결제'),
     );
