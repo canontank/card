@@ -220,10 +220,12 @@ function getDiscount(data) {
 }
 
 function getAddDiscount(data) {
-    if ((cardArray1.indexOf(data[1]) != -1) && data[3] == "간편결제" && (data[5] * data[6]) >= 10000) {
-        return 1000;
+    if (cardArray1.indexOf(data[1]) != -1) {
+    	if (data[3] == "간편결제" && (data[5] * data[6]) >= 10000) {
+            return 1000;
+	}
     }
-	return 0;
+    return 0;
 }
 
 function isExpDate(value) {
