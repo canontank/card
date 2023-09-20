@@ -7,7 +7,7 @@ var keyList = new Array();
 var titleList = new Array('날짜', '카드', '판매처', '충전처', '종류');
 var cashKeyList = new Array('원가', '단가', '수량');
 
-var cardArray = new Array('텔로', '딥에코', '욜로', 'SKT', '딥온', '주거래', '4tune', '쿠키', '쿠키런', '람다람', '총몇명', '야코', '스무살', '선불교통', '12세후불', '한베가족', '롤챔코', '더나은', '스마트', '010pay', 'K-First');
+var cardArray = new Array('텔로', '데일리', '딥에코', '욜로', 'SKT', '스마트애니', '딥온', '주거래', '4tune', '쿠키', '쿠키런', '람다람', '총몇명', '야코', '스무살', '선불교통', '12세후불', '한베가족', '롤챔코', '더나은', '스마트캐시백', '010pay', 'K-First');
 
 $(function() {
     setKeyList();
@@ -208,10 +208,12 @@ function setAccountBook13() {
 function setAccountBook14() {
     var titleArray = new Array('구분', '내용');
     var valueArray = new Array(
-        new Array('텔로', '제약 없음'),
+        new Array('텔로', '제약 없음 (실적용)'),
+        new Array('데일리', '일일 20~25만 결제'),
 	    new Array('딥에코', '티몬, 위메프, 쿠팡, 지마켓, 옥션, 11번가'),
         new Array('욜로', '티몬, 위메프, 쿠팡'),
         new Array('SKT', '제약 없음 (실적용)'),
+        new Array('스마트애니', '스마트로, 이니시스, KICC'),
         new Array('딥온', '간편결제 (신한플레이, 스마일페이, SK페이)'),
         new Array('주거래', '티몬, 위메프, 쿠팡, 지마켓, 옥션, 11번가'),
         new Array('4tune', '티몬, 위메프, 쿠팡, 지마켓, 옥션, 11번가'),
