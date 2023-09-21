@@ -213,8 +213,12 @@ function getDiscount(data) {
         if (data[2] == "편의점" && (data[5] * data[6]) >= 10000)
             return 1000;
     } else {
-        if ((data[2] == "지마켓" || data[2] == "옥션") && ((data[5] * data[6]) >= 20000))
-		    return 3000;
+        if ((data[2] == "지마켓" || data[2] == "옥션") && ((data[5] * data[6]) >= 20000)) {
+            var discount = Math.floor((data[5] * data[6]) * 0.1);
+            if (discount > 3000)
+                return 3000;
+            return discount;
+        }
     }
 	return 0;
 }
