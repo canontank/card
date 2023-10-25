@@ -199,7 +199,7 @@ function setAccountBook13() {
 		new Array(chargeArray[2], 2000000, 2000000, 2000000),
 		new Array(chargeArray[3], 1500000, 4500000, '불가'),
 	    new Array(chargeArray[4], '불가', 5000000, 2000000),
-		new Array(chargeArray[5], '불가', 2000000, '불가'),
+		new Array(chargeArray[5], '불가', 2170000, '불가'),
 	    new Array(chargeArray[6], '불가', '불가', 1060000)
     );
     setAccountDiv1("#book13", '[ 충전한도 ]', titleArray, valueArray);
