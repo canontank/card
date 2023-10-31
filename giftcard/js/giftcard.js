@@ -166,7 +166,7 @@ function setAccountBook11() {
 
 function setAccountBook12() {
 	var titleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드');
-    var chargeArray = new Array('모빌리언스', '팔라고', '페이코', '모바일팝', '포인트로페이', '하나머니', '웰컴페이');
+    var chargeArray = new Array('모빌리언스', '팔라고', '페이코', '모바일팝', '포인트로페이', '하나머니', '웰컴페이', '스타비즈');
     var valueArray = new Array();
     for (var charge of chargeArray) {
         var happy = 0;
@@ -192,7 +192,7 @@ function setAccountBook12() {
 
 function setAccountBook13() {
     var titleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드');
-    var chargeArray = new Array('모빌리언스', '팔라고', '페이코', '모바일팝', '포인트로페이', '하나머니', '웰컴페이');
+    var chargeArray = new Array('모빌리언스', '팔라고', '페이코', '모바일팝', '포인트로페이', '하나머니', '웰컴페이', '스타비즈');
     var valueArray = new Array(
 	    new Array(chargeArray[0], 2170000, 3260000, '불가'),
 		new Array(chargeArray[1], 2000000, 2000000, '불가'),
@@ -200,7 +200,8 @@ function setAccountBook13() {
 		new Array(chargeArray[3], 1500000, 4500000, '불가'),
 	    new Array(chargeArray[4], '불가', 5000000, 2000000),
 		new Array(chargeArray[5], '불가', 2170000, '불가'),
-	    new Array(chargeArray[6], '불가', '불가', 1060000)
+	    new Array(chargeArray[6], '불가', '불가', 1060000),
+        new Array(chargeArray[7], '불가', '불가', 5000000)
     );
     setAccountDiv1("#book13", '[ 충전한도 ]', titleArray, valueArray);
 }
