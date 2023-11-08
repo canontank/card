@@ -7,7 +7,48 @@ var keyList = new Array();
 var titleList = new Array('날짜', '카드', '판매처', '충전처', '종류');
 var cashKeyList = new Array('원가', '단가', '수량');
 
-var cardArray = new Array('텔로', '데일리', '딥에코', '욜로', 'SKT', 'KT NU', 'LG NU', '스마트애니', '위클리', '딥온', '주거래', '4tune', '쿠키', '쿠키런', '람다람', '총몇명', '야코', '스무살', '선불교통', '12세후불', '한베가족', '롤챔코', '더나은', '스마트캐시백', '010pay', 'K-First');
+var cardValueArray = new Array(
+    new Array('텔로', '제약 없음 (실적용)'),
+    new Array('데일리', '일일 20~25만 결제'),
+    new Array('딥에코', '티몬, 위메프, 쿠팡, 지마켓, 옥션, 11번가'),
+    new Array('욜로', '티몬, 위메프, 쿠팡'),
+    new Array('SKT', '제약 없음 (실적용)'),
+    new Array('KT NU', '제약 없음 (실적용)'),
+    new Array('LG NU', '제약 없음 (실적용)'),
+    new Array('스마트애니', '스마트로, 이니시스, KICC'),
+    new Array('위클리', '주말(토/일) 2% 할인 (평일 실적 필요)'),
+    new Array('딥온', '간편결제 (신한플레이, 스마일페이, SK페이)'),
+    new Array('주거래', '티몬, 위메프, 쿠팡, 지마켓, 옥션, 11번가'),
+    new Array('4tune', '티몬, 위메프, 쿠팡, 지마켓, 옥션, 11번가'),
+    new Array('쿠키', '지마켓, 11번가'),
+    new Array('쿠키런', '지마켓, 11번가'),
+    new Array('람다람', '지마켓, 11번가'),
+    new Array('총몇명', '지마켓, 11번가'),
+    new Array('야코', '지마켓, 11번가'),
+    new Array('스무살', '지마켓, 11번가'),
+    new Array('선불교통', '지마켓, 11번가'),
+    new Array('12세후불', '지마켓, 11번가'),
+    new Array('한베가족', '지마켓, 옥션 (일 1회, 월 2회)'),
+    new Array('롤챔코', '지마켓, 옥션 (일 1회, 월 2회)'),
+    new Array('더나은', '제약 없음 (실적용)'),
+    new Array('스마트캐시백', '건당 50만 이상 결제'),
+    new Array('010pay', '혜택 없음'),
+    new Array('K-First', '혜택 없음'),
+    new Array('페이코', '제약 없음 (1% 적립)'),
+);
+
+var chargeTitleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드');
+var chargeValueArray = new Array(
+    new Array('모빌리언스', 2170000, 4360000, 1080000),
+	new Array('팔라고', 2000000, 2000000, '불가'),
+	new Array('페이코', 2000000, 2000000, 2000000),
+	new Array('모바일팝', 1500000, 4500000, '불가'),
+    new Array('포인트로페이', '불가', 5000000, 2000000),
+    new Array('하나머니', '불가', 2170000, '불가'),
+    new Array('마일벌스', '불가', 66000000, '불가'),
+    new Array('웰컴페이', '불가', '불가', 1060000),
+    new Array('스타비즈', '불가', '불가', 5000000)
+);
 
 $(function() {
     setKeyList();
@@ -146,7 +187,8 @@ function setAccountBook() {
 function setAccountBook11() {
 	var titleArray = new Array('구분', '상품권', '거래가', '마진');
     var valueArray = new Array();
-    for (var card of cardArray) {
+    for (var cardValue of cardValueArray) {
+        var card = cardValue[0];
         var gift = 0;
         var c = 0;
         var d = 0;
@@ -165,10 +207,9 @@ function setAccountBook11() {
 }
 
 function setAccountBook12() {
-	var titleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드');
-    var chargeArray = new Array('모빌리언스', '팔라고', '페이코', '모바일팝', '포인트로페이', '하나머니', '웰컴페이', '스타비즈');
     var valueArray = new Array();
-    for (var charge of chargeArray) {
+    for (var chargeValue of chargeValueArray) {
+        var charge = chargeValue[0];
         var happy = 0;
         var booknlife = 0;
         var culture = 0;
@@ -177,64 +218,26 @@ function setAccountBook12() {
                 continue;
             if (charge != data[3])
                 continue;
-            if (data[4] == titleArray[1]) {
+            if (data[4] == chargeTitleArray[1]) {
                 happy += (data[5] * data[7]);
-            } else if (data[4] == titleArray[2]) {
+            } else if (data[4] == chargeTitleArray[2]) {
                 booknlife += (data[5] * data[7]);
-            } else if (data[4] == titleArray[3]) {
+            } else if (data[4] == chargeTitleArray[3]) {
                 culture += (data[5] * data[7]);
 	    }
         }
         valueArray.push(new Array(charge, happy, booknlife, culture));
     }
-    setAccountDiv1("#book12", '[ 충전처 ]', titleArray, valueArray);
+    setAccountDiv1("#book12", '[ 충전처 ]', chargeTitleArray, valueArray);
 }
 
 function setAccountBook13() {
-    var titleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드');
-    var chargeArray = new Array('모빌리언스', '팔라고', '페이코', '모바일팝', '포인트로페이', '하나머니', '웰컴페이', '스타비즈');
-    var valueArray = new Array(
-	    new Array(chargeArray[0], 2170000, 4360000, 1080000),
-		new Array(chargeArray[1], 2000000, 2000000, '불가'),
-		new Array(chargeArray[2], 2000000, 2000000, 2000000),
-		new Array(chargeArray[3], 1500000, 4500000, '불가'),
-	    new Array(chargeArray[4], '불가', 5000000, 2000000),
-		new Array(chargeArray[5], '불가', 2170000, '불가'),
-	    new Array(chargeArray[6], '불가', '불가', 1060000),
-        new Array(chargeArray[7], '불가', '불가', 5000000)
-    );
-    setAccountDiv1("#book13", '[ 충전한도 ]', titleArray, valueArray);
+    setAccountDiv1("#book13", '[ 충전한도 ]', chargeTitleArray, chargeValueArray);
 }
 
 function setAccountBook14() {
     var titleArray = new Array('구분', '내용');
-    var valueArray = new Array(
-        new Array('텔로', '제약 없음 (실적용)'),
-        new Array('데일리', '일일 20~25만 결제'),
-	    new Array('딥에코', '티몬, 위메프, 쿠팡, 지마켓, 옥션, 11번가'),
-        new Array('욜로', '티몬, 위메프, 쿠팡'),
-        new Array('SKT', '제약 없음 (실적용)'),
-        new Array('KT NU', '제약 없음 (실적용)'),
-        new Array('LG NU', '제약 없음 (실적용)'),
-        new Array('스마트애니', '스마트로, 이니시스, KICC'),
-        new Array('위클리', '주말(토/일) 2% 할인 (평일 실적 필요)'),
-        new Array('딥온', '간편결제 (신한플레이, 스마일페이, SK페이)'),
-        new Array('주거래', '티몬, 위메프, 쿠팡, 지마켓, 옥션, 11번가'),
-        new Array('4tune', '티몬, 위메프, 쿠팡, 지마켓, 옥션, 11번가'),
-        new Array('쿠키', '지마켓, 11번가'),
-        new Array('쿠키런', '지마켓, 11번가'),
-        new Array('람다람', '지마켓, 11번가'),
-        new Array('총몇명', '지마켓, 11번가'),
-        new Array('야코', '지마켓, 11번가'),
-        new Array('스무살', '지마켓, 11번가'),
-        new Array('선불교통', '지마켓, 11번가'),
-        new Array('12세후불', '지마켓, 11번가'),
-		new Array('한베가족', '지마켓, 옥션 (일 1회, 월 2회)'),
-		new Array('롤챔코', '지마켓, 옥션 (일 1회, 월 2회)'),
-        new Array('더나은', '제약 없음 (실적용)'),
-        new Array('스마트', '건당 50만 이상 결제'),
-    );
-    setAccountNotiDiv("#book14", '[ 주의사항 ]', titleArray, valueArray);
+    setAccountNotiDiv("#book14", '[ 주의사항 ]', titleArray, cardValueArray);
 }
 
 function setAccountBook2() {
