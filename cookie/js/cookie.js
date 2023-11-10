@@ -71,7 +71,7 @@ function setDataList(rows) {
 }
 
 function initYearSelect() {
-    for (var i = 2023; i <= year; i++) {
+    for (var i = 2022; i <= year; i++) {
         $("#yearSelect").append("<option value=" + i + ">" + i + "</option>");
     }
     $("#yearSelect").val(year);
