@@ -2,6 +2,7 @@ var dataList = new Array();
 var today = new Date();
 var year = today.getFullYear();
 var month = getMonthStr(today.getMonth() + 1);
+var thisMonthDataList = new Array();
 
 var keyList = new Array();
 var titleList = new Array('날짜', '카드', '판매처', '충전처', '종류');
@@ -38,17 +39,24 @@ var cardValueArray = new Array(
 );
 
 var chargeTitleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드');
-var chargeValueArray = new Array(
+var chargeLimitArray = new Array(
     new Array('모빌리언스', 2170000, 4360000, 1080000),
-	new Array('팔라고', 2000000, 2000000, '불가'),
+	new Array('팔라고', 2000000, 2000000, 0),
 	new Array('페이코', 2000000, 2000000, 2000000),
-	new Array('모바일팝', 1500000, 4500000, '불가'),
-    new Array('포인트로페이', '불가', 5000000, 2000000),
-    new Array('하나머니', '불가', 2170000, '불가'),
-    new Array('마일벌스', '불가', 66000000, '불가'),
-    new Array('웰컴페이', '불가', '불가', 1060000),
-    new Array('스타비즈', '불가', '불가', 5000000)
+	new Array('모바일팝', 1500000, 4500000, 0),
+    new Array('포인트로페이', 0, 5000000, 2000000),
+    new Array('하나머니', 0, 2170000, 0),
+    new Array('마일벌스', 0, 66000000, 0),
+    new Array('웰컴페이', 0, 0, 1060000),
+    new Array('스타비즈', 0, 0, 5000000)
 );
+
+var giftTitleArray = new Array('구분', '상품권', '거래가', '마진');
+var notiTitleArray = new Array('구분', '내용');
+
+var giftCardArray = new Array();
+var chargeValueArray = new Array();
+var chargeRemainArray = new Array();
 
 $(function() {
     setKeyList();
@@ -177,77 +185,67 @@ function setYearMonth() {
 }
 
 function setAccountBook() {
-	setAccountBook11();
-	setAccountBook12();
-	setAccountBook13();
-    setAccountBook14();
-	setAccountBook2();
+    set();
+    show();
 }
 
-function setAccountBook11() {
-	var titleArray = new Array('구분', '상품권', '거래가', '마진');
-    var valueArray = new Array();
-    for (var cardValue of cardValueArray) {
-        var card = cardValue[0];
-        var gift = 0;
-        var c = 0;
-        var d = 0;
-        for (var data of dataList) {
-            if (!isThisMonth(data))
-                continue;
-            if (card != data[1])
-                continue;
-            gift += (data[5] * data[7]);
-            c += (data[6] * data[7]);
-            d += (data[5] * 0.92) * data[7];
-        }
-        valueArray.push(new Array(card, gift, c, d - c));
-    }
-    setAccountDiv1("#book11", '[ 카드 ]', titleArray, valueArray);
+function set() {
+    setThisMonthDataList();
+	setGiftCardArray();
+	setChargeArray();
 }
 
-function setAccountBook12() {
-    var valueArray = new Array();
-    for (var chargeValue of chargeValueArray) {
-        var charge = chargeValue[0];
-        var happy = 0;
-        var booknlife = 0;
-        var culture = 0;
-        for (var data of dataList) {
-            if (!isThisMonth(data))
-                continue;
-            if (charge != data[3])
-                continue;
-            if (data[4] == chargeTitleArray[1]) {
-                happy += (data[5] * data[7]);
-            } else if (data[4] == chargeTitleArray[2]) {
-                booknlife += (data[5] * data[7]);
-            } else if (data[4] == chargeTitleArray[3]) {
-                culture += (data[5] * data[7]);
-	    }
-        }
-        valueArray.push(new Array(charge, happy, booknlife, culture));
-    }
-    setAccountDiv1("#book12", '[ 충전처 ]', chargeTitleArray, valueArray);
-}
-
-function setAccountBook13() {
-    setAccountDiv1("#book13", '[ 충전한도 ]', chargeTitleArray, chargeValueArray);
-}
-
-function setAccountBook14() {
-    var titleArray = new Array('구분', '내용');
-    setAccountNotiDiv("#book14", '[ 주의사항 ]', titleArray, cardValueArray);
-}
-
-function setAccountBook2() {
-    var valueArray = new Array();
+function setThisMonthDataList() {
+    thisMonthDataList = new Array();
     for (var data of dataList) {
         if (!isThisMonth(data))
             continue;
-		valueArray.push(data);
+        thisMonthDataList.push(data);
     }
-    setAccountDiv2("#gbn0", '[ 상품권 ]', valueArray);
+}
+
+function setGiftCardArray() {
+    giftCardArray = new Array();
+    for (var cardValue of cardValueArray) {
+        var giftArray = new Array(0, 0, 0, 0);
+        for (var data of thisMonthDataList) {
+            if (cardValue[0] != data[1])
+                continue;
+            giftArray[0] += (data[5] * data[7]);
+            giftArray[1] += (data[6] * data[7]);
+            giftArray[2] += (data[5] * 0.92) * data[7];
+            giftArray[3] += giftArray[2] - giftArray[1];
+        }
+        giftCardArray.push(new Array(cardValue[0], giftArray[0], giftArray[1], giftArray[3]));
+    }
+}
+
+function setChargeArray() {
+    chargeValueArray = new Array();
+    chargeRemainArray = new Array();
+    for (var chargeLimit of chargeLimitArray) {
+        var chargeArray = new Array(0, 0, 0);
+        for (var data of thisMonthDataList) {
+            if (chargeLimit[0] != data[3])
+                continue;
+            for (var i = 0; i < chargeArray.length; i++) {
+                if (data[4] == chargeTitleArray[i + 1]) {
+                    chargeArray[i] += (data[5] * data[7]);
+                }
+            }
+        }
+        chargeValueArray.push(new Array(chargeLimit[0], chargeArray[0], chargeArray[1], chargeArray[2]));
+        chargeRemainArray.push(new Array(chargeLimit[0], chargeLimit[1] - chargeArray[0], chargeLimit[2] - chargeArray[1], chargeLimit[3] - chargeArray[2]));
+    }    
+}
+
+function show() {
+    setAccountDiv1("#book11", '[ 카드 ]', giftTitleArray, giftCardArray);
+    setAccountDiv1("#book12", '[ 충전처 ]', chargeTitleArray, chargeValueArray);
+    setAccountDiv1("#book13", '[ 남은한도 ]', chargeTitleArray, chargeRemainArray);
+    setAccountDiv1("#book14", '[ 충전한도 ]', chargeTitleArray, chargeLimitArray);
+    setAccountNotiDiv("#book15", '[ 주의사항 ]', notiTitleArray, cardValueArray);
+    setAccountDiv2("#book2", '[ 상품권 ]', thisMonthDataList);
 }
 
 function setAccountDiv1(divId, header, titleArray, valueArray) {
