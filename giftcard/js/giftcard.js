@@ -35,6 +35,7 @@ var cardValueArray = new Array(
     new Array('스마트캐시백', '건당 50만 이상 결제'),
     new Array('010pay', '혜택 없음'),
     new Array('K-First', '혜택 없음'),
+    new Array('농협국행', '혜택 없음'),
     new Array('페이코', '제약 없음 (1% 적립)'),
 );
 
