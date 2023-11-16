@@ -215,8 +215,8 @@ function setGiftCardArray() {
             giftArray[0] += (data[5] * data[7]);
             giftArray[1] += (data[6] * data[7]);
             giftArray[2] += (data[5] * 0.92) * data[7];
-            giftArray[3] += giftArray[2] - giftArray[1];
         }
+        giftArray[3] = (giftArray[2] - giftArray[1]);
         giftCardArray.push(new Array(cardValue[0], giftArray[0], giftArray[1], giftArray[3]));
     }
 }
