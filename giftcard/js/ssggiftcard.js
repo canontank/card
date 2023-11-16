@@ -40,7 +40,7 @@ var cardValueArray = new Array(
     new Array('페이코', '제약 없음 (1% 적립)'),
 );
 
-var chargeTitleArray = new Array('구분', 'SSG', '1', '2');
+var chargeTitleArray = new Array('구분', 'SSG', '', '');
 var chargeLimitArray = new Array(
     new Array('SSG', 2000000, 0, 0)
 );
