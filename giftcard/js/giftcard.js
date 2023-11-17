@@ -8,6 +8,7 @@ var keyList = new Array();
 var titleList = new Array('날짜', '카드', '판매처', '충전처', '종류');
 var cashKeyList = new Array('원가', '단가', '수량');
 
+var notiTitleArray = new Array('구분', '내용');
 var cardValueArray = new Array(
     new Array('텔로', '제약 없음 (실적용)'),
     new Array('데일리', '일일 20~25만 결제'),
@@ -40,26 +41,26 @@ var cardValueArray = new Array(
     new Array('페이코', '제약 없음 (1% 적립)'),
 );
 
-var chargeTitleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드');
+var chargeTitleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드', '문화상품권');
 var chargeLimitArray = new Array(
-    new Array('모빌리언스', 2170000, 4360000, 1080000),
-	new Array('팔라고', 2000000, 2000000, 0),
-	new Array('페이코', 2000000, 2000000, 2500000),
-	new Array('모바일팝', 1500000, 4500000, 0),
-    new Array('페이북', 0, 0, 1080000),
-    new Array('포인트로페이', 0, 5000000, 2000000),
-    new Array('하나머니', 0, 2170000, 0),
-    new Array('마일벌스', 0, 66000000, 0),
-    new Array('웰컴페이', 0, 0, 1060000),
-    new Array('스타비즈', 0, 0, 5000000)
+    new Array('모빌리언스', 2170000, 4360000, 1080000, 0),
+	new Array('팔라고', 2000000, 2000000, 0, 0),
+	new Array('페이코', 2000000, 2000000, 2500000, 0),
+	new Array('모바일팝', 1500000, 4500000, 0, 0),
+    new Array('페이북', 0, 0, 1080000, 0),
+    new Array('포인트로페이', 0, 5000000, 0, 2000000),
+    new Array('하나머니', 0, 2170000, 0, 0),
+    new Array('마일벌스', 0, 66000000, 0, 0),
+    new Array('웰컴페이', 0, 0, 0, 1060000),
+    new Array('스타비즈', 0, 0, 0, 5000000),
+    new Array('기프트밸류', 0, 0, 0, 2000000)
 );
 
 var giftTitleArray = new Array('구분', '상품권', '거래가', '마진');
-var notiTitleArray = new Array('구분', '내용');
-
 var giftCardArray = new Array();
-var chargeValueArray = new Array();
-var chargeRemainArray = new Array();
+
+var giftTotalTitleArray = new Array('구분', '충전한도', '충전금액', '남은금액');
+var giftTotalValueArray = new Array();
 
 $(function() {
     setKeyList();
@@ -195,7 +196,8 @@ function setAccountBook() {
 function set() {
     setThisMonthDataList();
 	setGiftCardArray();
-	setChargeArray();
+	//setChargeArray();
+    setGiftTotalValueArray();
 }
 
 function setThisMonthDataList() {
@@ -222,7 +224,7 @@ function setGiftCardArray() {
         giftCardArray.push(new Array(cardValue[0], giftArray[0], giftArray[1], giftArray[3]));
     }
 }
-
+/*
 function setChargeArray() {
     chargeValueArray = new Array();
     chargeRemainArray = new Array();
@@ -241,13 +243,34 @@ function setChargeArray() {
         chargeRemainArray.push(new Array(chargeLimit[0], chargeLimit[1] - chargeArray[0], chargeLimit[2] - chargeArray[1], chargeLimit[3] - chargeArray[2]));
     }    
 }
+*/
+function setGiftTotalValueArray() {
+    giftTotalValueArray = new Array();
+    for (var i = 1; i < chargeTitleArray.length; i++) {
+        var array = new Array();
+        for (var chargeLimit of chargeLimitArray) {
+            var value = 0;
+            if (chargeLimit[i] == 0)
+                continue;
+            for (var data of thisMonthDataList) {
+                if (data[3] != chargeLimit[0])
+                    continue;
+                if (data[4] != chargeTitleArray[i])
+                    continue;
+                value += (data[5] * data[7]);
+            }
+            array.push(new Array(chargeLimit[0], chargeLimit[i], value, chargeLimit[i] - value));
+        }
+        giftTotalValueArray.push(array);
+    }
+}
 
 function show() {
     setAccountDiv1("#book11", '[ 카드 ]', giftTitleArray, giftCardArray);
-    setAccountDiv1("#book12", '[ 충전처 ]', chargeTitleArray, chargeValueArray);
-    setAccountDiv1("#book13", '[ 남은한도 ]', chargeTitleArray, chargeRemainArray);
-    setAccountDiv1("#book14", '[ 충전한도 ]', chargeTitleArray, chargeLimitArray);
-    setAccountNotiDiv("#book15", '[ 주의사항 ]', notiTitleArray, cardValueArray);
+    for (var i = 0; i < giftTotalValueArray.length; i++) {
+        setAccountDiv1("#book" + (i + 12), '[ ' + chargeTitleArray[i + 1] + ' ]', giftTotalTitleArray, giftTotalValueArray[i]);
+    }
+    setAccountNotiDiv("#book16", '[ 주의사항 ]', notiTitleArray, cardValueArray);
     setAccountDiv2("#book2", '[ 상품권 ]', thisMonthDataList);
 }
 
