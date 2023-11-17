@@ -44,9 +44,9 @@ var cardValueArray = new Array(
 var chargeTitleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드', '문화상품권');
 var chargeLimitArray = new Array(
     new Array('모빌리언스', 2170000, 4360000, 1080000, 0),
-	new Array('팔라고', 2000000, 2000000, 0, 0),
-	new Array('페이코', 2000000, 2000000, 2500000, 0),
-	new Array('모바일팝', 1500000, 4500000, 0, 0),
+    new Array('팔라고', 2000000, 2000000, 0, 0),
+    new Array('페이코', 2000000, 2000000, 2500000, 0),
+    new Array('모바일팝', 1500000, 4500000, 0, 0),
     new Array('페이북', 0, 0, 1080000, 0),
     new Array('포인트로페이', 0, 5000000, 0, 2000000),
     new Array('하나머니', 0, 2170000, 0, 0),
@@ -195,8 +195,7 @@ function setAccountBook() {
 
 function set() {
     setThisMonthDataList();
-	setGiftCardArray();
-	//setChargeArray();
+    setGiftCardArray();
     setGiftTotalValueArray();
 }
 
@@ -224,26 +223,7 @@ function setGiftCardArray() {
         giftCardArray.push(new Array(cardValue[0], giftArray[0], giftArray[1], giftArray[3]));
     }
 }
-/*
-function setChargeArray() {
-    chargeValueArray = new Array();
-    chargeRemainArray = new Array();
-    for (var chargeLimit of chargeLimitArray) {
-        var chargeArray = new Array(0, 0, 0);
-        for (var data of thisMonthDataList) {
-            if (chargeLimit[0] != data[3])
-                continue;
-            for (var i = 0; i < chargeArray.length; i++) {
-                if (data[4] == chargeTitleArray[i + 1]) {
-                    chargeArray[i] += (data[5] * data[7]);
-                }
-            }
-        }
-        chargeValueArray.push(new Array(chargeLimit[0], chargeArray[0], chargeArray[1], chargeArray[2]));
-        chargeRemainArray.push(new Array(chargeLimit[0], chargeLimit[1] - chargeArray[0], chargeLimit[2] - chargeArray[1], chargeLimit[3] - chargeArray[2]));
-    }    
-}
-*/
+
 function setGiftTotalValueArray() {
     giftTotalValueArray = new Array();
     for (var i = 1; i < chargeTitleArray.length; i++) {
