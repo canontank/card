@@ -41,19 +41,20 @@ var cardValueArray = new Array(
     new Array('페이코', '제약 없음 (1% 적립)'),
 );
 
-var chargeTitleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드', '문화상품권');
+var chargeTitleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드', '문화상품권', 'SSG');
 var chargeLimitArray = new Array(
-    new Array('모빌리언스', 2170000, 4360000, 1080000, 0),
-    new Array('팔라고', 2000000, 2000000, 0, 0),
-    new Array('페이코', 2000000, 2000000, 2500000, 0),
-    new Array('모바일팝', 1500000, 4500000, 0, 0),
-    new Array('페이북', 0, 0, 1080000, 0),
-    new Array('포인트로페이', 0, 5000000, 0, 2000000),
-    new Array('하나머니', 0, 2170000, 0, 0),
-    new Array('마일벌스', 0, 66000000, 0, 0),
-    new Array('웰컴페이', 0, 0, 0, 1060000),
-    new Array('스타비즈', 0, 0, 0, 5000000),
-    new Array('기프트밸류', 0, 0, 0, 2000000)
+    new Array('모빌리언스', 2170000, 4360000, 1080000, 0, 0),
+    new Array('팔라고', 2000000, 2000000, 0, 0, 0),
+    new Array('페이코', 2000000, 2000000, 2500000, 0, 0),
+    new Array('모바일팝', 1500000, 4500000, 0, 0, 0),
+    new Array('페이북', 0, 0, 1080000, 0, 0),
+    new Array('포인트로페이', 0, 5000000, 0, 2000000, 0),
+    new Array('하나머니', 0, 2170000, 0, 0, 0),
+    new Array('마일벌스', 0, 66000000, 0, 0, 0),
+    new Array('웰컴페이', 0, 0, 0, 1060000, 0),
+    new Array('스타비즈', 0, 0, 0, 5000000, 0),
+    new Array('기프트밸류', 0, 0, 0, 2000000, 0),
+    new Array('SSG', 0, 0, 0, 0, 2000000)
 );
 
 var giftTitleArray = new Array('구분', '상품권', '거래가', '마진');
@@ -215,9 +216,10 @@ function setGiftCardArray() {
         for (var data of thisMonthDataList) {
             if (cardValue[0] != data[1])
                 continue;
+            var rate = (data[4] == "SSG") ? 0.95 : 0.92;
             giftArray[0] += (data[5] * data[7]);
             giftArray[1] += (data[6] * data[7]);
-            giftArray[2] += (data[5] * 0.92) * data[7];
+            giftArray[2] += (data[5] * rate) * data[7];
         }
         giftArray[3] = (giftArray[2] - giftArray[1]);
         giftCardArray.push(new Array(cardValue[0], giftArray[0], giftArray[1], giftArray[3]));
@@ -250,7 +252,7 @@ function show() {
     for (var i = 0; i < giftTotalValueArray.length; i++) {
         setAccountDiv1("#book" + (i + 12), '[ ' + chargeTitleArray[i + 1] + ' ]', giftTotalTitleArray, giftTotalValueArray[i]);
     }
-    setAccountNotiDiv("#book16", '[ 주의사항 ]', notiTitleArray, cardValueArray);
+    setAccountNotiDiv("#book17", '[ 주의사항 ]', notiTitleArray, cardValueArray);
     setAccountDiv2("#book2", '[ 상품권 ]', thisMonthDataList);
 }
 
