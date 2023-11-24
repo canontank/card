@@ -8,8 +8,8 @@ var titleList = new Array('날짜', '카드', '구매처', '간편결제');
 var cashKeyList = new Array('액면가', '거래가', '수량');
 
 var titleArray1 = new Array('구분', '실적', '기본할인', '추가할인');
-var cardArray1 = new Array('쿠키', '쿠키런', '람다람', '총몇명', '야코', '스무살', '선불교통', '12세후불');
-var cardArray2 = new Array('한베가족', '롤챔코');
+
+// common/js/cardData.js 참고
 var cardArray = cardArray1.concat(cardArray2);
 
 $(function() {
