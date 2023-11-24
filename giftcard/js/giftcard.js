@@ -9,6 +9,8 @@ var titleList = new Array('날짜', '카드', '판매처', '충전처', '종류'
 var cashKeyList = new Array('원가', '단가', '수량');
 
 var notiTitleArray = new Array('구분', '내용');
+// common/js/cardData.js 참고
+/*
 var cardValueArray = new Array(
     new Array('텔로', '제약 없음 (실적용)'),
     new Array('데일리', '일일 20~25만 결제'),
@@ -40,6 +42,7 @@ var cardValueArray = new Array(
     new Array('농협국행', '혜택 없음'),
     new Array('페이코', '제약 없음 (1% 적립)'),
 );
+*/
 
 var chargeTitleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드', '문화상품권', 'SSG');
 var chargeLimitArray = new Array(
