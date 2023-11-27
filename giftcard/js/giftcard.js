@@ -63,7 +63,7 @@ function init() {
 function loadDataList() {
     $.ajax({
         type : "GET",
-        url : "https://script.google.com/macros/s/AKfycbyasILwI4kZaMx29L_WmsYT0c8sBcYdDNrourJvTsWbTwJ6MqvijA1SitK4zX4ZWcXn/exec",
+        url : "https://script.google.com/macros/s/AKfycby0MRiCzRAqQcJiZs_n8e6wmLkSi4ON4sSIsDCeSEKJeuz5p0Gk_B4UXbC5eWkTnWwO/exec",
         data : {
             "cmd" : "get"
         },
