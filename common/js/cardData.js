@@ -28,6 +28,7 @@ var cardValueArray = new Array(
     new Array('K-First', '혜택 없음'),
     new Array('농협국행', '혜택 없음'),
     new Array('페이코', '제약 없음 (1% 적립)'),
+    new Array('네이버', '혜택 없음'),
 );
 
 var cardArray1 = new Array('쿠키', '쿠키런', '람다람', '총몇명', '야코', '스무살', '선불교통', '12세후불');
