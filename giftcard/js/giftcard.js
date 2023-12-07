@@ -13,7 +13,7 @@ var notiTitleArray = new Array('구분', '내용');
 
 var chargeTitleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드', '문화상품권', 'SSG');
 var chargeLimitArray = new Array(
-    new Array('모빌리언스', 2170000, 4360000, 1080000, 0, 0),
+    new Array('모빌리언스', 2170000, 4360000, 1080000, 2000000, 0),
     new Array('팔라고', 2000000, 2000000, 0, 0, 0),
     new Array('페이코', 2000000, 2000000, 2500000, 0, 0),
     new Array('모바일팝', 1500000, 4500000, 0, 0, 0),
