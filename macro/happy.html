@@ -1,0 +1,120 @@
+<!DOCTYPE HTML> 
+<html>
+	<head>
+		<title>해피머니</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<script type="text/javascript" src="../common/js/jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="../common/js/bootstrap.js"></script>
+		<script type="text/javascript" src="js/happy.js"></script>
+		<link type="text/css" rel="stylesheet" href="../common/css/bootstrap.css">
+		<link type="text/css" rel="stylesheet" href="css/happy.css">
+	</head>
+
+	<body>
+		<div class="account account1">
+			<table class="table table-bordered table-striped">
+				<tr><th>입력</th></tr>
+				<tr>
+					<td>
+						<textarea id="input" style="border:1px solid red;">
+[Web발신]
+[티몬] 김민수님의 구매정보 입니다.
+ 
+▶상품명 : [해피머니] 온라인상품권 5만원권 
+▶옵션명 : [해피머니] 온라인상품권 5만원권
+▶티켓번호 : 4734-2092-0243-6849_20230701, 0256-3801-9795-6494_20230701, 6119-5943-4131-6802_20230701, 8093-6118-7483-9899_20230701, 8320-1667-8573-2882_20230701, 4805-9329-3979-1954_20230701, 9578-7485-6369-0815_20230701, 9487-8574-1042-5864_20230701, 0941-0736-2882-8249_20230701, 9481-4250-7028-6512_20230701, 0259-2092-6750-1133_20230701, 8328-3801-0546-7011_20230701, 9576-5943-8361-4857_20230701, 6665-6118-2686-2387_20230701, 6114-1667-9134-7654_20230701, 0942-9329-1883-1140_20230701, 4730-7485-4229-1633_20230701, 4803-8574-5990-1440_20230701, 8097-0736-3428-2564_20230701, 0943-4250-3878-3125_20230701
+
+ 
+유효기간 : 발행일로부터 5년(해피캐시 충전 시 충전일로부터 12개월)
+ 카드사 정책으로 인하여 “상품권 및 현금성 상품”에 대하여 카드 혜택이 제외 될 수 있습니다.
+ *본 상품 구매는 티몬 슈퍼세이브 구매적립에서 제외됩니다.
+ *본 상품은 티몬페이 적립금 지급 행사에서 제외됩니다.
+ 
+ 상품권 발행일자 : 20230701 [온라인 사용 방법]
+ 핀번호 16자리와 발행일 8자리 확인 > 해피머니 홈페이지에서 핀번호와 발행일로 해피캐시를 충전 > 해피머니 사용처에서 해피캐시로 결제
+ Ex) OOOO-OOOO-OOOO-OOOO_20220701
+  
+ [잔액 확인 방법]
+ URL : https://m.happymoney.co.kr/svc/view/use/giftcardBuy/giftcardBuyUseStatusCheck
+ * 경로 : 해피머니홈페이지 > 상단 상품권 > 사용여부 조회 > 해피머니상품권 > 16자리 pin 번호 & 발행일 입력 후 조회 > 하단에 내역 조회 가능
+ (조회를 위해 해피머니 홈페이지 로그인 필요)
+  
+ [교환 및 기타 사항]
+ 상품권의 유효기간은 발송일로부터 최장 5년이며 일부 제휴사에 따라 변경될 수 있습니다.
+ 상품권 구입시에는 세금계산서 및 현금 영수증이 발급되지 않고, 상품권으로 물품 구매 시에 세금계산서 및 현금 영수증이 발행 됩니다.
+ 
+※ 상품 별로 사용방법 및 취소/환불규정이 다르므로 자세한 사항은 티몬 사이트를 통해 확인해주세요.
+바로가기 http://go.tmon.co.kr/?v=0&type=deal&srl=24720789002
+						</textarea>
+					</td>
+				</tr>
+			</table>
+			<div class="clear10"></div>
+			<div style="padding-top:5px; padding-bottom:5px;">
+				<button id="extract">추출</button>
+			</div>
+			<div class="clear10"></div>
+			<table class="table table-bordered table-striped">
+				<tr><th colspan="2">결과</th></tr>
+				<tr>
+					<th style="width:50%;">수량</th>
+					<td id="count" style="width:50%; text-align:center; color:blue;">0</td>
+				</tr>
+				<tr><td colspan="2"><textarea id="output" style="height:500px;" readonly></textarea></td></tr>
+			</table>
+		</div>
+		<div id="outputDiv"></div>
+
+		<div style="display:none;">
+			<textarea id="outputHidden">
+var codeList = "#GIFT_CODE";
+var newCodeList = new Array();
+
+function addTen() {
+	$("#addTen").click();
+}
+
+function setNewCodeList() {
+	var newCode = "";
+	for (var number of codeList) {
+		if (isNaN(number))
+			continue;
+		newCode += number;
+		if (newCodeList.length % 5 == 4) {
+			if (newCode.length != 8)
+				continue;
+		} else {
+			if (newCode.length != 4)
+				continue;
+		}
+		newCodeList.push(newCode);
+		newCode = "";
+	}
+}
+
+function inputNewCodeList() {
+	$("#cashTable").find("input:not(:hidden)").each(function(index, item) {
+		if (index % 5 == 1 || index % 5 == 3) {
+			$(this).val("");
+		} else {
+			$(this).val(newCodeList[index]);
+		}
+	});
+}
+
+function csCon() {
+	$("#csCon").click();
+}
+
+function execute() {
+	addTen();
+	setNewCodeList();
+	inputNewCodeList();
+	csCon();
+}
+
+execute();
+			</textarea>
+		</div>
+	</body>
+</html>
