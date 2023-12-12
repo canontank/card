@@ -16,11 +16,17 @@ textarea {
     height : 200px;
     resize : none;
     font-weight : 300;
+    border : 1px solid black;
 }
 
 select {
     width : 100%;
     text-align-last : center;
+}
+
+.buttonDiv {
+    padding-top : 5px;
+    padding-bottom : 5px;
 }
 
 .container {
@@ -54,7 +60,7 @@ select {
 .account1 {
 	    width : 380px;
 	    font-weight : 600;
-	    overflow-y : scroll;
+        border : 1px dotted black;
 }
 
 @media ( max-width : 540px ) {

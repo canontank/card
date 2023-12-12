@@ -8,6 +8,7 @@ $(function() {
 });
 
 function init() {
+    setWidth();
     setHeight();
     setArr();
     initExtract();
@@ -36,12 +37,12 @@ function getClearDiv() {
 function getURLTable(cnt) {
     var table = getTable();
     table.append(($('<tr/>')).append($('<th/>', { text : 'URL' + (cnt + 1) })));
-    table.append($('<tr/>').append(($('<td/>')).append(($('<textarea/>', { id : 'output' + (cnt + 1), style : 'border:1px solid black;' })))));
+    table.append($('<tr/>').append(($('<td/>')).append(($('<textarea/>', { id : 'output' + (cnt + 1) })))));
     return table;
 }
 
 function getButtonDiv() {
-    var buttonDiv = ($('<div/>', { style : 'padding-top:5px; padding-bottom:5px;' } ));
+    var buttonDiv = ($('<div/>', { class : 'buttonDiv' } ));
     var button = ($('<button/>', { name : 'copy', text : '복사' } ));
     buttonDiv.append(button);
     return buttonDiv;
@@ -52,8 +53,12 @@ function getBookDiv(cnt) {
     return bookDiv;
 }
 
+function setWidth() {
+    $(".root").innerWidth((giftCodeArray.length / 10 + 1) * 380 );
+}
+
 function setHeight() {
-    $(".account").innerHeight(window.innerHeight);
+    $(".account").innerHeight(window.innerHeight - 20);
 }
 
 function setArr() {
@@ -74,6 +79,7 @@ function initExtract() {
         showOutput();
         show();
         initCopy();
+        setWidth();
         setHeight();
     });
 }
