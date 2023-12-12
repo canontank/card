@@ -15,19 +15,11 @@ function init() {
 }
 
 function makeHtml(cnt) {
-    var accountDiv = ($('<div/>', { class : 'account account1' } ));
-    accountDiv.append(getBook_Div(cnt));
-    accountDiv.append(getClearDiv());
-    accountDiv.append(getBookDiv(cnt));
-    $("#outputDiv").append(accountDiv);
-}
-
-function getBook_Div(cnt) {
-    var book_Div = ($('<div/>', { id : 'book1' + (cnt + 1) + '_1' } ));
-    book_Div.append(getURLTable(cnt));
-    book_Div.append(getClearDiv());
-    book_Div.append(getButtonDiv());
-    return book_Div;
+    var giftDiv = ($('<div/>', { class : 'gift' } ));
+    giftDiv.append(getURLTable(cnt));
+    giftDiv.append(getButtonDiv(cnt));
+    giftDiv.append(getBookDiv(cnt));
+    $("#outputDiv").append(giftDiv);
 }
 
 function getClearDiv() {
@@ -42,10 +34,8 @@ function getURLTable(cnt) {
 }
 
 function getButtonDiv() {
-    var buttonDiv = ($('<div/>', { class : 'buttonDiv' } ));
     var button = ($('<button/>', { name : 'copy', text : '복사' } ));
-    buttonDiv.append(button);
-    return buttonDiv;
+    return button;
 }
 
 function getBookDiv(cnt) {
@@ -54,11 +44,11 @@ function getBookDiv(cnt) {
 }
 
 function setWidth() {
-    $(".root").innerWidth((giftCodeArray.length / 10 + 1) * 380 );
+    $("#outputDiv").innerWidth((giftCodeArray.length / 10 + 1) * 380 );
 }
 
 function setHeight() {
-    $(".account").innerHeight(window.innerHeight - 20);
+    $(".gift").innerHeight(window.innerHeight - 20);
 }
 
 function setArr() {
@@ -92,7 +82,7 @@ function initCopy() {
     $("[name=copy]").on("click", function() {
         $("[name=copy]").css("background-color", "#f0f0f0").css("border", "1px solid black");
         $(this).css("background-color", "#47E1A8");
-        var value = $(this).parents("div").parents("div").children("table").find("textarea:eq(0)").val();
+        var value = $(this).parents("div").children("table").find("textarea:eq(0)").val();
         console.log(value);
         navigator.clipboard.writeText(value);
     });

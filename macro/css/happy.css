@@ -2,13 +2,11 @@ body {
     font-size : 14px;
 }
 
-h4 {
-    font-weight : 600;
-}
-
 button {
     width : 100%;
     height : 30px;
+    margin-top : 15px;
+    margin-bottom : 15px;
 }
 
 textarea {
@@ -19,83 +17,32 @@ textarea {
     border : 1px solid black;
 }
 
-select {
+.gift {
+    float : left;
+    padding : 20px;
+    width : 380px;
+    font-weight : 600;
+    border : 1px dotted black;
+}
+
+.header {
     width : 100%;
-    text-align-last : center;
+    height : 30px;
+    text-align : center;
+    background-color : #1f497d;
+    color :white;
+    line-height: 28px;
+    border : 1px solid white;
 }
 
-.buttonDiv {
-    padding-top : 5px;
-    padding-bottom : 5px;
+.contents {
+    padding : 5px;
+    border : 1px solid #ccc;
 }
 
-.container {
-    margin-left : 0px;
-    margin-right : 0px;
-}
-
-.clear10 {
-    margin-top : 10px;
-}
-
-.clear20 {
-    margin-top : 15px;
-}
-
-.accountBookYear {
-    padding : 20px;
-    font-weight : 600;
-}
-
-.accountBookGbn {
-    padding : 20px;
-    font-weight : 600;
-}
-
-.account {
+.left50 {
     float : left;
-    padding : 20px;   
-}
-
-.account1 {
-	    width : 380px;
-	    font-weight : 600;
-        border : 1px dotted black;
-}
-
-@media ( max-width : 540px ) {
-    .account1 {
-        width : 100%;
-        font-weight : 600;
-    }
-}
-
-.account2 {
-    width : 790px;
-    overflow-y : scroll;
-}
-
-.account3 {
-    width : 590px;
-    overflow-y : scroll;
-}
-
-.accountHeader {
-    font-weight : 600;
-    font-size : large;
-}
-
-.chart {
-    float : left;
-    width : 613px;
-    padding-bottom : 20px;
-}
-
-.chartGbn {
-    float : left;
-    width : 1880px;
-    height : 300px;
-    padding-bottom : 20px;
+    width : 50%;
 }
 
 .table {
@@ -118,22 +65,4 @@ select {
 .table > tbody > tr > td, 
 .table > tfoot > tr > td {
     padding : 4px;
-}
-
-#yearTd, #monthTd {
-    width : 120px;
-    height : 29px;
-    text-align : center;
-}
-
-.saturday {
-	color : blue;
-}
-
-.sunday {
-	color : red;
-}
-
-.normal {
-	color : black;
 }
