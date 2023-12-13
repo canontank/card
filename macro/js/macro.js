@@ -215,7 +215,7 @@ function initCopy() {
 }
 
 function setWidth() {
-    $("#outputDiv").innerWidth((giftCodeArray.length / MAX_ROW_COUNT + 1) * 380);
+    $("#outputDiv").innerWidth((giftCodeArrayList.length + 1) * 380);
 }
 
 function setHeight() {
