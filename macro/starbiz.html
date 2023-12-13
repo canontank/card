@@ -1,0 +1,150 @@
+<!DOCTYPE HTML> 
+<html>
+	<head>
+		<title>스타비즈</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<script type="text/javascript" src="../common/js/jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="../common/js/bootstrap.js"></script>
+		<script type="text/javascript" src="js/starbiz.js"></script>
+		<script type="text/javascript" src="js/macro.js"></script>
+		<link type="text/css" rel="stylesheet" href="../common/css/bootstrap.css">
+		<link type="text/css" rel="stylesheet" href="css/happy.css">
+	</head>
+
+	<body>
+		<div id="root" class="root">
+			<div id="inputDiv" class="gift">
+				<div class="header">입력</div>
+				<div class="contents">
+					<textarea id="input" style="border:1px solid red;">
+[Web발신]
+
+[온라인문화상품권 안내]
+(타인이 상품권을 요구하는 경우, 각종 사기 범죄로 이용될 수 있습니다. https://gift.cultureland.co.kr/notice.html 페이지를 참조하세요.)
+
+- 금액 : 50,000원
+- 온라인문화상품권 번호 : 3332-9703-1996-128598
+- 유효기간 : 2023.12.07 ~ 2028.12.06
+- 이용안내 : https://culturegift.co.kr/html/giftcard/online.html
+
+- 환불안내 : 
+1) 구매처에서 환불 가능합니다.
+2) 구매금액 기준 유효기간 내 100분의60 (1만원이하 100분의80) 이상 사용 시 잔액 환불 가능합니다.
+- 본 상품은 (주)문화상품권의 신용으로 발행되었습니다.
+[Web발신]
+
+[온라인문화상품권 안내]
+(타인이 상품권을 요구하는 경우, 각종 사기 범죄로 이용될 수 있습니다. https://gift.cultureland.co.kr/notice.html 페이지를 참조하세요.)
+
+- 금액 : 50,000원
+- 온라인문화상품권 번호 : 3372-9875-2217-141258
+- 유효기간 : 2023.12.07 ~ 2028.12.06
+- 이용안내 : https://culturegift.co.kr/html/giftcard/online.html
+
+- 환불안내 : 
+1) 구매처에서 환불 가능합니다.
+2) 구매금액 기준 유효기간 내 100분의60 (1만원이하 100분의80) 이상 사용 시 잔액 환불 가능합니다.
+- 본 상품은 (주)문화상품권의 신용으로 발행되었습니다.
+[Web발신]
+
+[온라인문화상품권 안내]
+(타인이 상품권을 요구하는 경우, 각종 사기 범죄로 이용될 수 있습니다. https://gift.cultureland.co.kr/notice.html 페이지를 참조하세요.)
+
+- 금액 : 50,000원
+- 온라인문화상품권 번호 : 3372-9153-3076-139672
+- 유효기간 : 2023.12.07 ~ 2028.12.06
+- 이용안내 : https://culturegift.co.kr/html/giftcard/online.html
+
+- 환불안내 : 
+1) 구매처에서 환불 가능합니다.
+2) 구매금액 기준 유효기간 내 100분의60 (1만원이하 100분의80) 이상 사용 시 잔액 환불 가능합니다.
+- 본 상품은 (주)문화상품권의 신용으로 발행되었습니다.
+[Web발신]
+
+[온라인문화상품권 안내]
+(타인이 상품권을 요구하는 경우, 각종 사기 범죄로 이용될 수 있습니다. https://gift.cultureland.co.kr/notice.html 페이지를 참조하세요.)
+
+- 금액 : 50,000원
+- 온라인문화상품권 번호 : 3313-7283-7253-224078
+- 유효기간 : 2023.12.07 ~ 2028.12.06
+- 이용안내 : https://culturegift.co.kr/html/giftcard/online.html
+
+- 환불안내 : 
+1) 구매처에서 환불 가능합니다.
+2) 구매금액 기준 유효기간 내 100분의60 (1만원이하 100분의80) 이상 사용 시 잔액 환불 가능합니다.
+- 본 상품은 (주)문화상품권의 신용으로 발행되었습니다.
+[Web발신]
+
+[온라인문화상품권 안내]
+(타인이 상품권을 요구하는 경우, 각종 사기 범죄로 이용될 수 있습니다. https://gift.cultureland.co.kr/notice.html 페이지를 참조하세요.)
+
+- 금액 : 50,000원
+- 온라인문화상품권 번호 : 3313-7021-5499-223676
+- 유효기간 : 2023.12.07 ~ 2028.12.06
+- 이용안내 : https://culturegift.co.kr/html/giftcard/online.html
+
+- 환불안내 : 
+1) 구매처에서 환불 가능합니다.
+2) 구매금액 기준 유효기간 내 100분의60 (1만원이하 100분의80) 이상 사용 시 잔액 환불 가능합니다.
+- 본 상품은 (주)문화상품권의 신용으로 발행되었습니다.					
+					</textarea>
+				</div>
+				<button id="extract">추출</button>
+				<table class="table table-bordered table-striped">
+					<tr><th colspan="2">결과</th></tr>
+					<tr>
+						<th style="width:50%;">수량</th>
+						<td id="count">0</td>
+					</tr>
+				</table>
+				<div class="contents">
+					<textarea id="result" style="height:500px;"></textarea>
+				</div>
+			</div>
+			<div id="outputDiv"></div>
+
+			<div style="display:none;">
+				<textarea id="outputHidden">
+var codeList = "#GIFT_CODE";
+var newCodeList = new Array();
+
+function setNewCodeList() {
+	var newCode = "";
+	for (var number of codeList) {
+		if (isNaN(number))
+			continue;
+		newCode += number;
+		if (newCodeList.length % 4 == 3) {
+			if (newCode.length != 6)
+				continue;
+		} else {
+			if (newCode.length != 4)
+				continue;
+		}
+		newCodeList.push(newCode);
+		newCode = "";
+	}
+}
+
+function inputNewCodeList() {
+	$("#chargefrm").find("input:not(:hidden)").each(function(index, item) {
+		if (index % 4 == 3) {
+			//$(this).val("");
+			$(this).val(newCodeList[index]);
+		} else {
+			$(this).val(newCodeList[index]);
+		}
+	});
+}
+
+function execute() {
+	setNewCodeList();
+	inputNewCodeList();
+}
+
+execute();
+				</textarea>
+			</div>
+		</div>
+	</body>
+</html>

@@ -66,3 +66,9 @@ textarea {
 .table > tfoot > tr > td {
     padding : 4px;
 }
+
+#count {
+    width : 50%;
+    text-align : center;
+    color : blue;
+}

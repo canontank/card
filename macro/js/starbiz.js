@@ -1,5 +1,5 @@
 function getCode() {
-    return new Array(4, 4, 4, 4, 8);
+    return new Array(4, 4, 4, 6);
 }
 
 function getMaxRowCount() {
