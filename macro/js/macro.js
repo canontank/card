@@ -79,6 +79,10 @@ function setGiftCode(value) {
     giftCode += value;
     if (giftCode.length != CODE_LENGTH)
         return;
+    if (isExceptionGiftCode(giftCode)) {
+        giftCode = "";
+        return;
+    }
     var cnt = CODE_LENGTH;
     for (var i = CODE.length - 1; i > 0; i--) {
         cnt -= CODE[i];
@@ -86,6 +90,12 @@ function setGiftCode(value) {
     }
     giftCodeArray.push(giftCode);
     giftCode = "";
+}
+
+function isExceptionGiftCode(giftCode) {
+    if (giftCode == "1234123412341234")
+        return true;
+    return false;
 }
 
 function setGiftCodeArrayList() {
