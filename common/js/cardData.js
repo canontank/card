@@ -24,6 +24,7 @@ var cardValueArray = new Array(
     new Array('롤챔코', '지마켓, 옥션 (일 1회, 월 2회)'),
     new Array('더나은', '제약 없음 (실적용)'),
     new Array('스마트캐시백', '건당 50만 이상 결제'),
+    new Array('GOAT', '제약 없음'),
     new Array('010pay', '혜택 없음'),
     new Array('K-First', '혜택 없음'),
     new Array('농협국행', '혜택 없음'),
