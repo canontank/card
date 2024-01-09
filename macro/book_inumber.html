@@ -1,0 +1,42 @@
+<!DOCTYPE HTML> 
+<html>
+	<head>
+		<title>북앤라이프 - 아이넘버</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<script type="text/javascript" src="../common/js/jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="../common/js/bootstrap.js"></script>
+		<script type="text/javascript" src="js/book_inumber.js"></script>
+		<script type="text/javascript" src="js/macro.js"></script>
+		<link type="text/css" rel="stylesheet" href="../common/css/bootstrap.css">
+		<link type="text/css" rel="stylesheet" href="css/happy.css">
+	</head>
+
+	<body>
+		<div id="root" class="root">
+			<div id="inputDiv" class="gift">
+				<div class="header">입력</div>
+				<div class="contents">
+					<textarea id="input" style="border:1px solid red;">
+					</textarea>
+				</div>
+				<button id="extract">추출</button>
+				<table class="table table-bordered table-striped">
+					<tr><th colspan="2">결과</th></tr>
+					<tr>
+						<th style="width:50%;">수량</th>
+						<td id="count">0</td>
+					</tr>
+				</table>
+				<div class="contents">
+					<textarea id="result" style="height:500px;"></textarea>
+				</div>
+			</div>
+			<div id="outputDiv"></div>
+
+			<div style="display:none;">
+				<textarea id="outputHidden">
+				</textarea>
+			</div>
+		</div>
+	</body>
+</html>
