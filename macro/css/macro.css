@@ -77,6 +77,12 @@ textarea {
     color : blue;
 }
 
+#duplicate {
+    width : 50%;
+    text-align : center;
+    color : red;
+}
+
 #result {
     height : 476px;
 }

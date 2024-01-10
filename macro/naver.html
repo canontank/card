@@ -1,14 +1,17 @@
 <!DOCTYPE HTML> 
 <html>
 	<head>
-		<title>온라인 문화상품권 - 네이버페이</title>
+		<title>온라인문상 - 네이버페이</title>
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-		<script type="text/javascript" src="../common/js/jquery-1.11.1.js"></script>
-		<script type="text/javascript" src="../common/js/bootstrap.js"></script>
-		<script type="text/javascript" src="js/naver.js"></script>
-		<script type="text/javascript" src="js/macro.js"></script>
 		<link type="text/css" rel="stylesheet" href="../common/css/bootstrap.css">
 		<link type="text/css" rel="stylesheet" href="css/macro.css">
+		<script type="text/javascript" src="../common/js/jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="../common/js/bootstrap.js"></script>
+		<script type="text/javascript" src="js/macro.js"></script>
+		<script type="text/javascript">
+			var CODE = new Array(4, 4, 4, 6);
+			var MAX_ROW_COUNT = 10;
+		</script>
 	</head>
 
 	<body>
@@ -25,15 +28,19 @@
 						<th style="width:50%;">수량</th>
 						<td id="count">0</td>
 					</tr>
+					<tr>
+						<th style="width:50%;">중복</th>
+						<td id="duplicate">0</td>
+					</tr>
 				</table>
 				<div class="contents">
 					<textarea id="result"></textarea>
 				</div>
 			</div>
 			<div id="outputDiv"></div>
-
-			<div style="display:none;">
-				<textarea id="outputHidden">
+		</div>
+		<div style="display:none;">
+			<textarea id="outputHidden">
 var codeList = "#GIFT_CODE";
 var newCodeList = new Array();
 
@@ -74,8 +81,7 @@ function execute() {
 }
 
 execute();
-				</textarea>
-			</div>
+			</textarea>
 		</div>
 	</body>
 </html>

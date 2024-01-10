@@ -1,6 +1,4 @@
-var CODE;
 var CODE_LENGTH = 0;
-var MAX_ROW_COUNT;
 
 var arr = new Array();
 var array = new Array();
@@ -12,18 +10,16 @@ var giftCodeArray = new Array();
 var giftCodeArrayList = new Array();
 
 $(function() {
-    init();
+    setCodeLength();
     setArr();
     setReplaceStr();
     initExtract();
 });
 
-function init() {
-    CODE = getCode();
+function setCodeLength() {
     for (var c of CODE) {
         CODE_LENGTH += c;
     }
-    MAX_ROW_COUNT = getMaxRowCount();
 }
 
 function setArr() {
