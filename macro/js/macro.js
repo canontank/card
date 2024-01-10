@@ -5,11 +5,15 @@ var array = new Array();
 var replaceStrArray = new Array();
 
 var inputValue = "";
+
 var giftCode = "";
 var giftCodeArray = new Array();
 var giftCodeArrayList = new Array();
 
+var duplicateGiftCodeArray = new Array();
+
 $(function() {
+    setHeight();
     setCodeLength();
     setArr();
     setReplaceStr();
@@ -98,6 +102,11 @@ function setGiftCode(value) {
         giftCode = "";
         return;
     }
+    if (isDuplicateGiftCode(giftCode)) {
+        duplicateGiftCodeArray.push(giftCode);
+        giftCode = "";
+        return;
+    }
     var cnt = CODE_LENGTH;
     for (var i = CODE.length - 1; i > 0; i--) {
         cnt -= CODE[i];
@@ -110,6 +119,15 @@ function setGiftCode(value) {
 function isExceptionGiftCode(giftCode) {
     if (giftCode == "1234123412341234")
         return true;
+    return false;
+}
+
+function isDuplicateGiftCode(giftCode) {
+    for (var i = 0; i < giftCodeArray.length; i++) {
+        if (giftCode == giftCodeArray[i].replaceAll("-", "")) {
+            return true;
+        }
+    }
     return false;
 }
 
@@ -140,6 +158,7 @@ function showInputDiv() {
 
 function showCount() {
     $("#count").text(giftCodeArray.length);
+    $("#duplicate").text(duplicateGiftCodeArray.length);
 }
 
 function showResult() {
