@@ -4,6 +4,9 @@ var MAX_ROW_COUNT;
 
 var arr = new Array();
 var array = new Array();
+var replaceStrArray = new Array();
+
+var inputValue = "";
 var giftCode = "";
 var giftCodeArray = new Array();
 var giftCodeArrayList = new Array();
@@ -11,6 +14,7 @@ var giftCodeArrayList = new Array();
 $(function() {
     init();
     setArr();
+    setReplaceStr();
     initExtract();
 });
 
@@ -31,6 +35,13 @@ function setArr() {
     arr.push('_');
 }
 
+function setReplaceStr() {
+    replaceStrArray.push("* 발행일자: "); // 위메프 해피머니
+    replaceStrArray.push(" ");
+    replaceStrArray.push("\n");
+    replaceStrArray.push("\t");
+}
+
 function initExtract() {
     $("#extract").on("click", function() {
         set();
@@ -42,13 +53,21 @@ function initExtract() {
 }
 
 function set() {
+    setInputValue();
     setGiftCodeArray();
     setGiftCodeArrayList();
 }
 
+function setInputValue() {
+    inputValue = $("#input").val();
+    for (var i = 0; i < replaceStrArray.length; i++) {
+        inputValue = inputValue.replaceAll(replaceStrArray[i], "");
+    }
+}
+
 function setGiftCodeArray() {
     giftCodeArray = new Array();
-    for (var value of $("#input").val()) {
+    for (var value of inputValue) {
         if (isGiftCode(value)) {
             if (isGiftCodeNumber(value)) {
                 setGiftCode(value);
@@ -157,7 +176,7 @@ function getGiftDiv(gCodeArray, cnt) {
 }
 
 function getHeaderDiv(cnt) {
-    return $('<div/>', { class : 'header', text : 'URL_' + (cnt + 1) });
+    return $('<div/>', { class : 'header', text : '스크립트_' + (cnt + 1) });
 }
 
 function getContentsDiv(gCodeArray) {
