@@ -10,7 +10,7 @@ var cashKeyList = new Array('액면가', '거래가', '수량');
 var titleArray1 = new Array('구분', '실적', '기본할인', '추가할인');
 
 // common/js/cardData.js 참고
-var cardArray = cardArray1.concat(cardArray2);
+var cardArray = cardArray1.concat(cardArray2).concat(cardArray3);
 
 $(function() {
     setKeyList();
@@ -212,12 +212,16 @@ function getDiscount(data) {
             return 2000;
         if (data[2] == "편의점" && (data[5] * data[6]) >= 10000)
             return 1000;
-    } else {
+    } else if (cardArray2.indexOf(data[1]) != -1) {
         if ((data[2] == "지마켓" || data[2] == "옥션") && ((data[5] * data[6]) >= 20000)) {
             var discount = Math.floor((data[5] * data[6]) * 0.1);
             if (discount > 3000)
                 return 3000;
             return discount;
+        }
+    } else {
+        if (data[2] == "지마켓" || data[2] == "옥션") {
+            return Math.floor((data[5] * data[6]) * 0.05);
         }
     }
 	return 0;
