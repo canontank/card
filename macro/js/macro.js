@@ -36,10 +36,12 @@ function setArr() {
 }
 
 function setReplaceStr() {
-    replaceStrArray.push("* 발행일자: "); // 위메프 해피머니
     replaceStrArray.push(" ");
     replaceStrArray.push("\n");
     replaceStrArray.push("\t");
+    replaceStrArray.push("*발행일자:"); // 위메프 해피머니
+    replaceStrArray.push("*인증번호:"); // 옥션 북앤라이프
+    replaceStrArray.push("인증번호:"); // KB 북앤라이프
 }
 
 function initExtract() {
