@@ -1,6 +1,7 @@
 var cardValueArray = new Array(
     new Array('텔로', '제약 없음 (실적용)'),
     new Array('데일리', '일일 20~25만 결제'),
+    new Array('샤롯데', '지마켓/옥션 40만'),
     new Array('딥에코', '티몬, 위메프, 쿠팡, 지마켓, 옥션, 11번가'),
     new Array('욜로', '티몬, 위메프, 쿠팡'),
     new Array('SKT', '제약 없음 (실적용)'),
