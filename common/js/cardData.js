@@ -18,7 +18,7 @@ var cardValueArray = new Array(
     new Array('애니패스', 'SSG 11만'),
     new Array('CMA', 'SSG 11만'),
     new Array('위클리', '주말(토/일) 2% 할인 (평일 실적 필요)'),
-    new Array('롯데국행', '지마켓, 옥션, 인터파크 (월 2회, 건당 10만)'),
+    new Array('국민행복', '지마켓, 옥션, 인터파크 (월 2회, 건당 10만)'),
     new Array('딥온', '간편결제 (신한플레이, 스마일페이, SK페이)'),
     new Array('주거래', '티몬, 위메프, 쿠팡, 지마켓, 옥션, 11번가'),
     new Array('4tune', '티몬, 위메프, 쿠팡 (스마일페이/SK페이 불가)'),
