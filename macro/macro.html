@@ -1,0 +1,183 @@
+<!DOCTYPE HTML> 
+<html>
+	<head>
+		<title>상품권 매크로</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+		<link type="text/css" rel="stylesheet" href="../common/css/bootstrap.css">
+		<link type="text/css" rel="stylesheet" href="css/macro.css">
+		<script type="text/javascript" src="../common/js/jquery-1.11.1.js"></script>
+		<script type="text/javascript" src="../common/js/bootstrap.js"></script>
+		<script type="text/javascript" src="js/macro.js"></script>
+	</head>
+
+	<body>
+		<div id="root" class="root">
+			<div id="inputDiv" class="gift">
+				<div class="header">종류</div>
+				<div class="gbn">
+					<table class="table table-bordered table-striped">
+						<tr>
+							<td>
+								<select id="type"></select>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<div class="header">입력</div>
+				<div class="contents">
+					<textarea id="input"></textarea>
+				</div>
+				<button id="extract">추출</button>
+				<table class="table table-bordered table-striped">
+					<tr><th colspan="2">결과</th></tr>
+					<tr>
+						<th style="width:50%;">수량</th>
+						<td id="count">0</td>
+					</tr>
+					<tr>
+						<th style="width:50%;">중복</th>
+						<td id="duplicate">0</td>
+					</tr>
+				</table>
+				<div class="contents">
+					<textarea id="result"></textarea>
+				</div>
+			</div>
+			<div id="outputDiv"></div>
+		</div>
+		<div style="display:none;">
+			<textarea id="outputHiddenCommon">#GIFT_CODE</textarea>
+			<textarea id="outputHiddenHappy">
+var codeList = "#GIFT_CODE";
+var newCodeList = new Array();
+
+function addTen() {
+	$("#addTen").click();
+}
+
+function setNewCodeList() {
+	var newCode = "";
+	for (var number of codeList) {
+		if (isNaN(number))
+			continue;
+		newCode += number;
+		if (newCodeList.length % 5 == 4) {
+			if (newCode.length != 8)
+				continue;
+		} else {
+			if (newCode.length != 4)
+				continue;
+		}
+		newCodeList.push(newCode);
+		newCode = "";
+	}
+}
+
+function inputNewCodeList() {
+	$("#cashTable").find("input:not(:hidden)").each(function(index, item) {
+		if (index % 5 == 1 || index % 5 == 3) {
+			$(this).val("");
+		} else {
+			$(this).val(newCodeList[index]);
+		}
+	});
+}
+
+function csCon() {
+	$("#csCon").click();
+}
+
+function execute() {
+	addTen();
+	setNewCodeList();
+	inputNewCodeList();
+	csCon();
+}
+
+execute();
+			</textarea>
+			<textarea id="outputHiddenOnlineStarbiz">
+var codeList = "#GIFT_CODE";
+var newCodeList = new Array();
+
+function setNewCodeList() {
+	var newCode = "";
+	for (var number of codeList) {
+		if (isNaN(number))
+			continue;
+		newCode += number;
+		if (newCodeList.length % 4 == 3) {
+			if (newCode.length != 6)
+				continue;
+		} else {
+			if (newCode.length != 4)
+				continue;
+		}
+		newCodeList.push(newCode);
+		newCode = "";
+	}
+}
+
+function inputNewCodeList() {
+	$("#chargefrm").find("input:not(:hidden)").each(function(index, item) {
+		if (index % 4 == 3) {
+			//$(this).val("");
+			$(this).val(newCodeList[index]);
+		} else {
+			$(this).val(newCodeList[index]);
+		}
+	});
+}
+
+function execute() {
+	setNewCodeList();
+	inputNewCodeList();
+}
+
+execute();
+			</textarea>
+			<textarea id="outputHiddenOnlineNaver">
+var codeList = "#GIFT_CODE";
+var newCodeList = new Array();
+
+function setNewCodeList() {
+	var newCode = "";
+	for (var number of codeList) {
+		if (isNaN(number))
+			continue;
+		newCode += number;
+		if (newCodeList.length % 4 == 3) {
+			if (newCode.length != 6)
+				continue;
+		} else {
+			if (newCode.length != 4)
+				continue;
+		}
+		newCodeList.push(newCode);
+		newCode = "";
+	}
+}
+
+function inputNewCodeList() {
+	$("#conversionForm").find("input:not(:hidden)").each(function(index, item) {
+		if (index % 4 == 3) {
+			//$(this).val("");
+			$(this).val(newCodeList[index]);
+		} else {
+			$(this).val(newCodeList[index]);
+		}
+	});
+}
+
+function execute() {
+	addGift();
+	setNewCodeList();
+	inputNewCodeList();
+	$("#naverPayAgree").prop('checked', true);
+}
+
+execute();
+			</textarea>
+		</div>
+	</body>
+</html>
