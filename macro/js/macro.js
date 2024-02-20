@@ -1,4 +1,16 @@
+var CODE;
 var CODE_LENGTH = 0;
+var MAX_ROW_COUNT;
+var OUTPUT_HIDDEN_ID;
+
+var macroArray = new Array(
+    new Array("happy", "해피머니", new Array(4, 4, 4, 4, 8), 10, "#outputHiddenHappy"),
+    new Array("book", "북앤라이프", new Array(4, 4, 4, 4, 4), 10, "#outputHiddenCommon"),
+    new Array("book_inumber", "북앤라이프 (아이넘버)", new Array(4, 4, 4), 10, "#outputHiddenCommon"),
+    new Array("culture", "컬쳐랜드", new Array(4, 4, 4, 4), 10, "#outputHiddenCommon"),
+    new Array("online_starbiz", "온라인 문화상품권 (스타비즈)", new Array(4, 4, 4, 6), 10, "#outputHiddenOnlineStarbiz"),
+    new Array("online_naver", "온라인 문화상품권 (네이버)", new Array(4, 4, 4, 6), 5, "#outputHiddenOnlineNaver")
+);
 
 var arr = new Array();
 var array = new Array();
@@ -14,15 +26,15 @@ var duplicateGiftCodeArray = new Array();
 
 $(function() {
     setHeight();
-    setCodeLength();
+    setSelectType();
     setArr();
     setReplaceStr();
     initExtract();
 });
 
-function setCodeLength() {
-    for (var c of CODE) {
-        CODE_LENGTH += c;
+function setSelectType() {
+    for (var macroInfo of macroArray) {
+        $("#type").append("<option value=" + macroInfo[0] + ">" + macroInfo[1] + "</option>");
     }
 }
 
@@ -55,9 +67,29 @@ function initExtract() {
 }
 
 function set() {
+    setInit();
+    setCodeLength();
     setInputValue();
     setGiftCodeArray();
     setGiftCodeArrayList();
+}
+
+function setInit() {
+    var type = $("#type").val();
+    for (var macroInfo of macroArray) {
+        if (macroInfo[0] == type) {
+            CODE = macroInfo[2];
+            MAX_ROW_COUNT = macroInfo[3];
+            OUTPUT_HIDDEN_ID = macroInfo[4];
+        }
+    }
+}
+
+function setCodeLength() {
+    CODE_LENGTH = 0;
+    for (var c of CODE) {
+        CODE_LENGTH += c;
+    }
 }
 
 function setInputValue() {
@@ -198,7 +230,7 @@ function getHeaderDiv(cnt) {
 
 function getContentsDiv(gCodeArray) {
     return $('<div/>', { class : 'contents' }).append(
-        $('<textarea/>', { text : $("#outputHidden").val().split("#GIFT_CODE").join(gCodeArray) })
+        $('<textarea/>', { text : $(OUTPUT_HIDDEN_ID).val().split("#GIFT_CODE").join(gCodeArray) })
     );
 }
 
