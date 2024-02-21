@@ -2,93 +2,12 @@
 <html>
 	<head>
 		<title>해피머니</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-		<link type="text/css" rel="stylesheet" href="../common/css/bootstrap.css">
-		<link type="text/css" rel="stylesheet" href="css/macro.css">
-		<script type="text/javascript" src="../common/js/jquery-1.11.1.js"></script>
-		<script type="text/javascript" src="../common/js/bootstrap.js"></script>
-		<script type="text/javascript" src="js/macro.js"></script>
-		<script type="text/javascript">
-			var CODE = new Array(4, 4, 4, 4, 8);
-			var MAX_ROW_COUNT = 10;
-		</script>
 	</head>
 
 	<body>
-		<div id="root" class="root">
-			<div id="inputDiv" class="gift">
-				<div class="header">입력</div>
-				<div class="contents">
-					<textarea id="input"></textarea>
-				</div>
-				<button id="extract">추출</button>
-				<table class="table table-bordered table-striped">
-					<tr><th colspan="2">결과</th></tr>
-					<tr>
-						<th style="width:50%;">수량</th>
-						<td id="count">0</td>
-					</tr>
-					<tr>
-						<th style="width:50%;">중복</th>
-						<td id="duplicate">0</td>
-					</tr>
-				</table>
-				<div class="contents">
-					<textarea id="result"></textarea>
-				</div>
-			</div>
-			<div id="outputDiv"></div>
-		</div>
-		<div style="display:none;">
-			<textarea id="outputHidden">
-var codeList = "#GIFT_CODE";
-var newCodeList = new Array();
-
-function addTen() {
-	$("#addTen").click();
-}
-
-function setNewCodeList() {
-	var newCode = "";
-	for (var number of codeList) {
-		if (isNaN(number))
-			continue;
-		newCode += number;
-		if (newCodeList.length % 5 == 4) {
-			if (newCode.length != 8)
-				continue;
-		} else {
-			if (newCode.length != 4)
-				continue;
-		}
-		newCodeList.push(newCode);
-		newCode = "";
-	}
-}
-
-function inputNewCodeList() {
-	$("#cashTable").find("input:not(:hidden)").each(function(index, item) {
-		if (index % 5 == 1 || index % 5 == 3) {
-			$(this).val("");
-		} else {
-			$(this).val(newCodeList[index]);
-		}
-	});
-}
-
-function csCon() {
-	$("#csCon").click();
-}
-
-function execute() {
-	addTen();
-	setNewCodeList();
-	inputNewCodeList();
-	csCon();
-}
-
-execute();
-			</textarea>
+		<div style="width:100%; height:100%; text-align:center; padding-top:200px;">
+			<p>페이지 통합됨</p>
+			<p><a href="http://canontank.github.io/card/macro/macro.html">http://canontank.github.io/card/macro/macro.html</a></p>
 		</div>
 	</body>
 </html>
