@@ -13,20 +13,15 @@
 	<body>
 		<div id="root" class="root">
 			<div id="inputDiv" class="gift">
-				<div class="header">종류</div>
-				<div class="gbn">
-					<table class="table table-bordered table-striped">
-						<tr>
-							<td>
-								<select id="type"></select>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<div class="header">입력</div>
-				<div class="contents">
-					<textarea id="input"></textarea>
-				</div>
+				<table class="table table-bordered table-striped">
+					<tr><th>입력</th></tr>
+					<tr>
+						<td><select id="type"></select></td>
+					</tr>
+					<tr>
+						<td><textarea id="input"></textarea></td>
+					</tr>
+				</table>
 				<button id="extract">추출</button>
 				<table class="table table-bordered table-striped">
 					<tr><th colspan="2">결과</th></tr>
@@ -38,10 +33,10 @@
 						<th style="width:50%;">중복</th>
 						<td id="duplicate">0</td>
 					</tr>
+					<tr>
+						<td colspan="2"><textarea id="result"></textarea></td>
+					</tr>
 				</table>
-				<div class="contents">
-					<textarea id="result"></textarea>
-				</div>
 			</div>
 			<div id="outputDiv"></div>
 		</div>

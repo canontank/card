@@ -41,10 +41,6 @@ textarea {
     border : 1px solid white;
 }
 
-.gbn {
-    height : 50px;
-}
-
 .contents {
     padding : 5px;
     border : 1px solid #ccc;
@@ -80,6 +76,7 @@ textarea {
 
 #input {
     border : 1px solid red;
+    height : 170px;
 }
 
 #count {
@@ -95,5 +92,5 @@ textarea {
 }
 
 #result {
-    height : 370px;
+    height : 445px;
 }
