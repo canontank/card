@@ -75,6 +75,9 @@ function set() {
 }
 
 function setInit() {
+    giftCode = "";
+    giftCodeArray = new Array();
+    giftCodeArrayList = new Array();
     var type = $("#type").val();
     for (var macroInfo of macroArray) {
         if (macroInfo[0] == type) {
