@@ -289,7 +289,6 @@ function initCopy() {
         $("[name=copy]").css("background-color", "#f0f0f0").css("border", "1px solid black");
         $(this).css("background-color", "#47E1A8");
         var value = $(this).parent("div").find("textarea:eq(0)").val();
-        console.log(value);
         navigator.clipboard.writeText(value);
     });
 }
