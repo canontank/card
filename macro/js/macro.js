@@ -25,7 +25,6 @@ var giftCodeArrayList = new Array();
 var duplicateGiftCodeArray = new Array();
 
 $(function() {
-    setHeight();
     setSelectType();
     setArr();
     setReplaceStr();
@@ -62,7 +61,6 @@ function initExtract() {
         show();
         initCopy();
         setWidth();
-        setHeight();
     });
 }
 
@@ -298,10 +296,6 @@ function initCopy() {
 
 function setWidth() {
     $("#outputDiv").innerWidth((giftCodeArrayList.length + 1) * 380);
-}
-
-function setHeight() {
-    $(".gift").innerHeight(window.innerHeight - 20);
 }
 
 String.prototype.insertAt = function(index, str) {

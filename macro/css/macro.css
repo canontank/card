@@ -27,6 +27,7 @@ textarea {
     float : left;
     padding : 20px;
     width : 380px;
+    height : 900px;
     font-weight : 600;
     border : 1px dotted black;
 }
