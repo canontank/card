@@ -75,15 +75,6 @@ textarea {
     text-align : center;
 }
 
-#inputDiv {
-    position : fixed;
-    background-color: #fff;
-}
-
-#outputDiv {
-    padding-left : 380px;
-}
-
 #input {
     border : 1px solid red;
     height : 170px;
