@@ -86,6 +86,7 @@ function setInit() {
             OUTPUT_HIDDEN_ID = macroInfo[4];
         }
     }
+    duplicateGiftCodeArray = new Array();
 }
 
 function setCodeLength() {
