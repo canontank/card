@@ -5,6 +5,7 @@ var OUTPUT_HIDDEN_ID;
 
 var macroArray = new Array(
     new Array("happy", "해피머니", new Array(4, 4, 4, 4, 8), 10, "#outputHiddenHappy"),
+    new Array("happy_inumber", "해피머니 (아이넘버)", new Array(4, 4, 4), 10, "#outputHiddenCommon"),
     new Array("book", "북앤라이프", new Array(4, 4, 4, 4, 4), 10, "#outputHiddenCommon"),
     new Array("book_inumber", "북앤라이프 (아이넘버)", new Array(4, 4, 4), 10, "#outputHiddenCommon"),
     new Array("culture", "컬쳐랜드", new Array(4, 4, 4, 4), 10, "#outputHiddenCommon"),
