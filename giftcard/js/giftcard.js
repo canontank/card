@@ -31,6 +31,7 @@ var cardValueArray = new Array(
     new Array('위클리', '주말(토/일) 2% 할인 (평일 실적 필요)'),
     new Array('국민행복', '지마켓, 옥션, 인터파크 (월 2회, 건당 10만)'),
     new Array('딥온', '간편결제 (신한플레이, 스마일페이, SK페이)'),
+    new Array('판타스틱', '티몬 10만 결제 (일 1회, 월 4회)'),
     new Array('주거래', '티몬, 위메프, 쿠팡, 지마켓, 옥션, 11번가'),
     new Array('4tune', '티몬, 위메프, 쿠팡 (스마일페이/SK페이 불가)'),
     new Array('쿠키', '지마켓, 11번가'),
@@ -51,7 +52,7 @@ var cardValueArray = new Array(
     new Array('페이코', '제약 없음 (1% 적립)'),
     new Array('네이버', '혜택 없음'),
     new Array('텔로', '제약 없음 (실적용)'),
-    new Array('데일리', '일일 20~25만 결제'),
+    new Array('데일리', '1일 20~25만 결제'),
     new Array('농협국행', '혜택 없음'),
     new Array('K-First', '혜택 없음'),
     new Array('010pay', '혜택 없음')
