@@ -82,6 +82,7 @@ var giftCardArray = new Array();
 
 var giftTotalTitleArray = new Array('구분', '충전한도', '충전금액', '남은금액');
 var giftTotalValueArray = new Array();
+var giftValueArray = new Array();
 
 $(function() {
     setKeyList();
@@ -217,6 +218,7 @@ function setAccountBook() {
 function set() {
     setThisMonthDataList();
     setGiftCardArray();
+    setGiftValueArray();
     setGiftTotalValueArray();
 }
 
@@ -246,8 +248,8 @@ function setGiftCardArray() {
     }
 }
 
-function setGiftTotalValueArray() {
-    giftTotalValueArray = new Array();
+function setGiftValueArray() {
+    giftValueArray = new Array();
     for (var i = 1; i < chargeTitleArray.length; i++) {
         var array = new Array();
         for (var chargeLimit of chargeLimitArray) {
@@ -263,16 +265,32 @@ function setGiftTotalValueArray() {
             }
             array.push(new Array(chargeLimit[0], chargeLimit[i], value, chargeLimit[i] - value));
         }
-        giftTotalValueArray.push(array);
+        giftValueArray.push(array);
+    }
+}
+
+function setGiftTotalValueArray() {
+    giftTotalValueArray = new Array();
+    for (var i = 0; i < giftValueArray.length; i++) {
+        var giftArray = giftValueArray[i];
+        var totalArray = new Array("", 0, 0, 0);
+        totalArray[0] = chargeTitleArray[i + 1];
+        for (var array of giftArray) {
+            totalArray[1] += array[1];
+            totalArray[2] += array[2];
+            totalArray[3] += array[3];
+        }
+        giftTotalValueArray.push(totalArray);
     }
 }
 
 function show() {
     setAccountDiv1("#book11", '[ 카드 ]', giftTitleArray, giftCardArray);
-    for (var i = 0; i < giftTotalValueArray.length; i++) {
-        setAccountDiv1("#book" + (i + 12), '[ ' + chargeTitleArray[i + 1] + ' ]', giftTotalTitleArray, giftTotalValueArray[i]);
+    setAccountDiv1("#book12", '[ 합계 ]', giftTotalTitleArray, giftTotalValueArray);
+    for (var i = 0; i < giftValueArray.length; i++) {
+        setAccountDiv1("#book" + (i + 13), '[ ' + chargeTitleArray[i + 1] + ' ]', giftTotalTitleArray, giftValueArray[i]);
     }
-    setAccountNotiDiv("#book17", '[ 주의사항 ]', notiTitleArray, cardValueArray);
+    setAccountNotiDiv("#book18", '[ 주의사항 ]', notiTitleArray, cardValueArray);
     setAccountDiv2("#book2", '[ 상품권 ]', thisMonthDataList);
 }
 
