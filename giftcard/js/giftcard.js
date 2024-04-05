@@ -238,7 +238,7 @@ function setGiftCardArray() {
         for (var data of thisMonthDataList) {
             if (cardValue[0] != data[1])
                 continue;
-            var rate = (data[4] == "SSG") ? 0.95 : 0.92;
+            var rate = getRate(data[4]);
             giftArray[0] += (data[5] * data[7]);
             giftArray[1] += (data[6] * data[7]);
             giftArray[2] += (data[5] * rate) * data[7];
@@ -246,6 +246,15 @@ function setGiftCardArray() {
         giftArray[3] = (giftArray[2] - giftArray[1]);
         giftCardArray.push(new Array(cardValue[0], giftArray[0], giftArray[1], giftArray[3]));
     }
+}
+
+function getRate(giftType) {
+    if (giftType == "티몬캐시") {
+        return 0.96;
+    } else if (giftType == "SSG") {
+        return 0.95;
+    }
+    return 0.92;
 }
 
 function setGiftValueArray() {
