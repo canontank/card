@@ -6,10 +6,18 @@ var imgList = new Array(
 var index = imgList.length - 1;
 
 $(function() {
+	setTitle();
 	clickPrevBtn();
 	clickNextBtn();
+	changeTitle();
     setImage();
 });
+
+function setTitle() {
+	for (var img of imgList) {
+		$("#title").append("<option value=" + img + ">" + img + "</option>");
+	}
+}
 
 function clickPrevBtn() {
     $("#prevBtn").click(function() {
@@ -29,8 +37,15 @@ function clickNextBtn() {
     });
 }
 
+function changeTitle() {
+	$("#title").change(function() {
+		index = imgList.indexOf($(this).val());
+		setImage();
+	});
+}
+
 function setImage() {
-	$('#title').html(imgList[index]);
+	$('#title').val(imgList[index]);
 	$('#event').html('');
     $('#event').append($('<div/>', {})
         .append($('<img/>', { src : 'img/' + imgList[index] + '.jpg' }))
