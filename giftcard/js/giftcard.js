@@ -50,12 +50,7 @@ var cardValueArray = new Array(
     new Array('더나은', '제약 없음 (실적용)'),
     new Array('스마트캐시백', '건당 50만 이상 결제'),
     new Array('페이코', '제약 없음 (1% 적립)'),
-    new Array('네이버', '혜택 없음'),
-    new Array('텔로', '제약 없음 (실적용)'),
-    new Array('데일리', '1일 20~25만 결제'),
-    new Array('농협국행', '혜택 없음'),
-    new Array('K-First', '혜택 없음'),
-    new Array('010pay', '혜택 없음')
+    new Array('네이버', '혜택 없음')
 );
 
 var chargeTitleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드', '문화상품권', 'SSG');
@@ -76,6 +71,8 @@ var chargeLimitArray = new Array(
     new Array('기프트밸류', 0, 0, 0, 2000000, 0),
     new Array('SSG', 0, 0, 0, 0, 2000000)
 );
+
+var cardNameList = new Set();
 
 var giftTitleArray = new Array('구분', '상품권', '거래가', '마진');
 var giftCardArray = new Array();
@@ -217,6 +214,7 @@ function setAccountBook() {
 
 function set() {
     setThisMonthDataList();
+    setCardNameList();
     setGiftCardArray();
     setGiftValueArray();
     setGiftTotalValueArray();
@@ -231,12 +229,24 @@ function setThisMonthDataList() {
     }
 }
 
+function setCardNameList() {
+    cardNameList = new Set();
+    for (var cardValue of cardValueArray) {
+        cardNameList.add(cardValue[0]);
+    }
+    for (var data of thisMonthDataList) {
+        if (data[1] == "-")
+            continue;
+        cardNameList.add(data[1]);
+    }
+}
+
 function setGiftCardArray() {
     giftCardArray = new Array();
-    for (var cardValue of cardValueArray) {
+    for (var cardName of cardNameList) {
         var giftArray = new Array(0, 0, 0, 0);
         for (var data of thisMonthDataList) {
-            if (cardValue[0] != data[1])
+            if (cardName != data[1])
                 continue;
             var rate = getRate(data[4]);
             giftArray[0] += (data[5] * data[7]);
@@ -244,7 +254,7 @@ function setGiftCardArray() {
             giftArray[2] += (data[5] * rate) * data[7];
         }
         giftArray[3] = (giftArray[2] - giftArray[1]);
-        giftCardArray.push(new Array(cardValue[0], giftArray[0], giftArray[1], giftArray[3]));
+        giftCardArray.push(new Array(cardName, giftArray[0], giftArray[1], giftArray[3]));
     }
 }
 
