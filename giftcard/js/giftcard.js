@@ -45,6 +45,7 @@ var cardValueArray = new Array(
     new Array('한베가족', '지마켓, 옥션 (일 1회, 월 2회)'),
     new Array('롤챔코', '지마켓, 옥션 (일 1회, 월 2회)'),
     new Array('지엔미체크', 'SSG 11만'),
+    new Array('애니패스체크', 'SSG 11만'),
     new Array('W지엔미', 'SSG 11만'),
     new Array('W애니패스', 'SSG 11만'),
     new Array('더나은', '제약 없음 (실적용)'),
