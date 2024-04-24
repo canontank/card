@@ -1,0 +1,48 @@
+select {
+    width : 100%;
+    text-align-last : right;
+}
+
+.clear10 {
+    margin-top : 10px;
+}
+
+.gmarket {
+    padding : 20px;
+	width : 600px;
+    font-weight : 600;
+}
+
+@media ( max-width : 540px ) {
+    .gmarket {
+        width : 100%;
+        padding : 10px;
+    }
+}
+
+.gmarketHeader {
+    font-weight : 600;
+    font-size : medium;
+}
+
+.table {
+    margin-bottom : 0px;
+}
+
+.table th {
+    text-align : center;
+}
+
+.table > thead > tr > th,
+.table > tbody > tr > th, 
+.table > tfoot > tr > th {
+    padding : 4px;
+    background-color : #1f497d;
+    color : #fff;
+}
+
+.table > thead > tr > td, 
+.table > tbody > tr > td, 
+.table > tfoot > tr > td {
+    padding : 4px;
+}
