@@ -25,16 +25,53 @@ var cardArray2 = new Array(
     new Array("국민행복", 90000)
 )
 
+var totalCardArray = new Array(cardArray1, cardArray2);
+
 var giftTitleArray = new Array('구분', '5만', '3만');
 var titleArray = new Array('구분', '5만', '3만', '합계', '마진');
 
-var valueArray = new Array();
 var cardValueArray = new Array();
 var totalValueArray = new Array();
 
 $(function() {
+    initGiftPrice();
     setGmarket();
 });
+
+function initGiftPrice() {
+    changeGiftPrice5();
+    changeGiftPrice3();
+    setGiftPrice5();
+    setGiftPrice3();
+}
+
+function changeGiftPrice5() {
+    $("#giftPrice5").change(function() {
+        gift5 = this.value;
+        setGmarket();
+    });
+}
+
+function changeGiftPrice3() {
+    $("#giftPrice3").change(function() {
+        gift3 = this.value;
+        setGmarket();
+    });
+}
+
+function setGiftPrice5() {
+    for (i = 46000; i <= 47000; i+=50) {
+        $("#giftPrice5").append("<option value=" + i + ">" + getCommaValue(i) + "</option>");
+    }
+    $("#giftPrice5").val(gift5);
+}
+
+function setGiftPrice3() {
+    for (i = 27600; i <= 28200; i+=30) {
+        $("#giftPrice3").append("<option value=" + i + ">" + getCommaValue(i) + "</option>");
+    }
+    $("#giftPrice3").val(gift3);
+}
 
 function setGmarket() {
     set();
@@ -43,9 +80,8 @@ function setGmarket() {
 
 function set() {
     setGiftMaxCount();
-    setCardValueArray(cardArray1);
-    setCardValueArray(cardArray2);
-    setTotalValueArray(cardValueArray);
+    setCardValueArray();
+    setTotalValueArray();
 }
 
 function setGiftMaxCount() {
@@ -54,54 +90,45 @@ function setGiftMaxCount() {
     gift3_max_count = 0;
 }
 
-function setCardValueArray(cardArray) {
-    valueArray = new Array();
-    for (var card of cardArray) {
-        setValueArray(card[0], card[1]);
+function setCardValueArray() {
+    cardValueArray = new Array();
+    for (var cardArray of totalCardArray) {
+        var valueArray = new Array();
+        for (var card of cardArray) {
+            valueArray.push(getValueArray(card));
+        }
+        cardValueArray.push(valueArray);
     }
-    cardValueArray.push(valueArray);
 }
 
-function setValueArray(cardName, cash) {
-    var array = getArray(cardName, cash);
-    sortArray(array);
-    valueArray.push(array[0]);
-}
-
-function getArray(cardName, cash) {
+function getValueArray(card) {
     var array = new Array();
     for (var i = 0; i <= 10; i++) {
         for (var j = 0; j <= gift3_max_count; j++) {
             var sum = (gift5 * i) + (gift3 * j);
-            if (sum < cash)
+            if (sum < card[1])
                 continue;
             var margin = ((50000 * 0.92) - gift5) * i + ((30000 * 0.92) - gift3) * j;
-            array.push(new Array(cardName, i, j, sum, margin));
+            array.push(new Array(card[0], i, j, sum, margin));
         }
     }
-    return array;
+    return getMarginArray(array);
 }
 
-function sortArray(array) {
-    for (var i = 0; i < array.length - 1; i++) {
-        for (var j = i + 1; j < array.length; j++) {
-            if (array[i][4] < array[j][4]) {
-                swap(array, i, j);
-            } else if (array[i][4] == array[j][4] && array[i][2] < array[j][2]) {
-                swap(array, i, j);
-            }
-        }
+function getMarginArray(array) {
+    var marginArray = array[0];
+    for (var i = 1; i < array.length; i++) {
+        if (marginArray[4] > array[i][4])
+            continue;
+        if (marginArray[4] == array[i][4] && marginArray[1] > array[i][1])
+            continue;
+        marginArray = array[i];
     }
-    return array;
+    return marginArray;
 }
 
-function swap(array, i, j) {
-    var temp = array[i];
-    array[i] = array[j];
-    array[j] = temp;
-}
-
-function setTotalValueArray(cardValueArray) {
+function setTotalValueArray() {
+    totalValueArray = new Array();
     for (var i = 0; i < cardValueArray.length; i++) {
         var valueArray = cardValueArray[i];
         var arr = new Array((i + 1) + '일차', 0, 0, 0 ,0);
@@ -115,8 +142,6 @@ function setTotalValueArray(cardValueArray) {
 }
 
 function show() {
-    var tempArray = new Array(new Array('상품권', gift5, gift3));
-    //setGmarketDiv1("#book1", "[ 상품권 ]", giftTitleArray, tempArray);
     setGmarketDiv1("#book10", "[ 합계 ]", titleArray, totalValueArray);
     for (var i = 0; i < cardValueArray.length; i++) {
         var valueArray = cardValueArray[i];
