@@ -21,11 +21,16 @@ var cardArray2 = new Array(
     new Array("12세후불", 20000),
     new Array("한베가족", 30000),
     new Array("롤챔코", 30000),
-    new Array("국민행복", 90000),
+    new Array("K-패스", 30000),
     new Array("국민행복", 90000)
-)
+);
 
-var totalCardArray = new Array(cardArray1, cardArray2);
+var cardArray3 = new Array(
+    new Array("K-패스", 30000),
+    new Array("국민행복", 90000)
+);
+
+var totalCardArray = new Array(cardArray1, cardArray2, cardArray3);
 
 var giftTitleArray = new Array('구분', '5만', '3만');
 var titleArray = new Array('구분', '5만', '3만', '합계', '마진');
