@@ -1,5 +1,5 @@
-var gift5 = 46250;
-var gift3 = 27750;
+var gift5 = 46500;
+var gift3 = 27900;
 
 var gift5_max_count = 10;
 var gift3_max_count = 10;
