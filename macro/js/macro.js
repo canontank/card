@@ -29,6 +29,7 @@ $(function() {
     setSelectType();
     setArr();
     setReplaceStr();
+    initButton();
     initExtract();
 });
 
@@ -55,6 +56,20 @@ function setReplaceStr() {
     replaceStrArray.push("*인증번호:"); // 옥션 북앤라이프
     replaceStrArray.push("■인증번호:"); // 문화상품권 → 북앤라이프
     replaceStrArray.push("인증번호:"); // KB 북앤라이프
+}
+
+function initButton() {
+    $("#comma").on("click", function() {
+        replaceResultValue(",");
+    });
+    $("#dash").on("click", function() {
+        replaceResultValue("-");
+    });
+}
+
+function replaceResultValue(code) {
+    var resultVal = $("#result").val();
+    $("#result").val(resultVal.replaceAll(code, ""));
 }
 
 function initExtract() {
