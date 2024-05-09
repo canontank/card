@@ -1,16 +1,18 @@
 var gift5 = 46500;
 var gift3 = 27900;
 
-var gift5_max_count = 10;
-var gift3_max_count = 10;
+var specialCard = new Array("샤롯데", 400000);
 
 var cardArray1 = new Array(
-    new Array("샤롯데", 400000),
     new Array("한베가족", 30000),
-    new Array("롤챔코", 30000)
+    new Array("롤챔코", 30000),
+    new Array("K-패스", 30000)
 );
     
 var cardArray2 = new Array(
+    new Array("한베가족", 30000),
+    new Array("롤챔코", 30000),
+    new Array("K-패스", 30000),
     new Array("쿠키", 20000),
     new Array("쿠키런", 20000),
     new Array("람다람", 20000),
@@ -18,15 +20,11 @@ var cardArray2 = new Array(
     new Array("야코", 20000),
     new Array("스무살", 20000),
     new Array("선불교통", 20000),
-    new Array("12세후불", 20000),
-    new Array("한베가족", 30000),
-    new Array("롤챔코", 30000),
-    new Array("K-패스", 30000),
-    new Array("국민행복", 90000)
+    new Array("12세후불", 20000)
 );
 
 var cardArray3 = new Array(
-    new Array("K-패스", 30000),
+    new Array("국민행복", 90000),
     new Array("국민행복", 90000)
 );
 
@@ -35,6 +33,7 @@ var totalCardArray = new Array(cardArray1, cardArray2, cardArray3);
 var giftTitleArray = new Array('구분', '5만', '3만');
 var titleArray = new Array('구분', '5만', '3만', '합계', '마진');
 
+var specialValueArray = new Array();
 var cardValueArray = new Array();
 var totalValueArray = new Array();
 
@@ -84,15 +83,13 @@ function setGmarket() {
 }
 
 function set() {
-    setGiftMaxCount();
+    initSpecialValueArray();
     setCardValueArray();
     setTotalValueArray();
 }
 
-function setGiftMaxCount() {
-    if (gift3 != 0)
-        return;
-    gift3_max_count = 0;
+function initSpecialValueArray() {
+    specialValueArray = getValueArray(specialCard);
 }
 
 function setCardValueArray() {
@@ -102,14 +99,15 @@ function setCardValueArray() {
         for (var card of cardArray) {
             valueArray.push(getValueArray(card));
         }
+        addValueArray(valueArray);
         cardValueArray.push(valueArray);
     }
 }
 
 function getValueArray(card) {
     var array = new Array();
-    for (var i = 0; i <= 10; i++) {
-        for (var j = 0; j <= gift3_max_count; j++) {
+    for (var i = 0; i <= 30; i++) {
+        for (var j = 0; j <= 30; j++) {
             var sum = (gift5 * i) + (gift3 * j);
             if (sum < card[1])
                 continue;
@@ -125,13 +123,72 @@ function getMarginArray(array) {
     for (var i = 1; i < array.length; i++) {
         if (marginArray[4] > array[i][4])
             continue;
-        if (marginArray[3] < array[i][3])
+        if (marginArray[4] == array[i][4] && marginArray[3] < array[i][3])
             continue;
         if (marginArray[4] == array[i][4] && marginArray[1] > array[i][1])
             continue;
         marginArray = array[i];
     }
     return marginArray;
+}
+
+function addValueArray(valueArray) {
+    if (specialValueArray[1] == 0 && specialValueArray[2] == 0)
+        return;
+    var cardSumArray = getCardSumArray(valueArray);
+    var charlotteArray = getCharlotteArray(cardSumArray);
+    if (charlotteArray.length == 0)
+        return;
+    var maxSumArray = getMaxSumArray(charlotteArray);
+    valueArray.push(maxSumArray);
+    setSpecialValueArray(maxSumArray);
+}
+
+function getCardSumArray(valueArray) {
+    var cardSumArray = new Array("", 0, 0, 0);
+    for (var value of valueArray) {
+        for (var index = 1; index <=3; index++) {
+            cardSumArray[index] += value[index];
+        }
+    }
+    return cardSumArray;
+}
+
+function getCharlotteArray(cardSumArray) {
+    var charlotteArray = new Array();
+    for (var i = 0; i <= getMin(10 - cardSumArray[1], specialValueArray[1]); i++) {
+        for (var j = 0; j <= getMin(10 - cardSumArray[2], specialValueArray[2]); j++) {
+            var sum = (gift5 * i) + (gift3 * j);
+            if (sum + cardSumArray[3] > 500000)
+                continue;
+            var margin = ((50000 * 0.92) - gift5) * i + ((30000 * 0.92) - gift3) * j;
+            charlotteArray.push(new Array(specialValueArray[0], i, j, sum, margin));
+        }
+    }
+    return charlotteArray;
+}
+
+function getMin(a, b) {
+    if (a > b)
+        return b;
+    return a;
+}
+
+function getMaxSumArray(array) {
+    var maxSumArray = array[0];
+    for (var i = 1; i < array.length; i++) {
+        if (maxSumArray[3] > array[i][3])
+            continue;
+        if (maxSumArray[3] == array[i][3] && maxSumArray[1] > array[i][1])
+            continue;
+        maxSumArray = array[i];
+    }
+    return maxSumArray;
+}
+
+function setSpecialValueArray(maxSumArray) {
+    specialValueArray[1] -= maxSumArray[1];
+    specialValueArray[2] -= maxSumArray[2];
 }
 
 function setTotalValueArray() {
