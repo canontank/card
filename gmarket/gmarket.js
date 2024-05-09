@@ -125,6 +125,8 @@ function getMarginArray(array) {
     for (var i = 1; i < array.length; i++) {
         if (marginArray[4] > array[i][4])
             continue;
+        if (marginArray[3] < array[i][3])
+            continue;
         if (marginArray[4] == array[i][4] && marginArray[1] > array[i][1])
             continue;
         marginArray = array[i];
