@@ -249,7 +249,7 @@ function getHeaderDiv(cnt) {
 
 function getContentsDiv(gCodeArray) {
     return $('<div/>', { class : 'contents' }).append(
-        $('<textarea/>', { text : $(OUTPUT_HIDDEN_ID).val().split("#GIFT_CODE").join(gCodeArray) })
+        $('<textarea/>', { text : $(OUTPUT_HIDDEN_ID).val().split("#GIFT_CODE").join(gCodeArray), readonly : 'readonly' })
     );
 }
 
