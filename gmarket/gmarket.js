@@ -1,41 +1,35 @@
 var gift5 = 46500;
 var gift3 = 27900;
 
-var specialCard = new Array("샤롯데", 400000);
+var initCardArray = new Array(
+    new Array("한베가족", 30000, 0, 0, 0, 0),
+    new Array("롤챔코", 30000, 0, 0, 0, 0),
+    new Array("K-패스", 30000, 0, 0, 0, 0),
+    new Array("샤롯데", 400000, 0, 0, 0, 0),
 
-var cardArray1 = new Array(
-    new Array("한베가족", 30000),
-    new Array("롤챔코", 30000),
-    new Array("K-패스", 30000)
-);
-    
-var cardArray2 = new Array(
-    new Array("한베가족", 30000),
-    new Array("롤챔코", 30000),
-    new Array("K-패스", 30000),
-    new Array("쿠키", 20000),
-    new Array("쿠키런", 20000),
-    new Array("람다람", 20000),
-    new Array("총몇명", 20000),
-    new Array("야코", 20000),
-    new Array("스무살", 20000),
-    new Array("선불교통", 20000),
-    new Array("12세후불", 20000)
-);
+    new Array("한베가족", 30000, 0, 0, 0, 0),
+    new Array("롤챔코", 30000, 0, 0, 0, 0),
+    new Array("K-패스", 30000, 0, 0, 0, 0),
+    new Array("쿠키", 20000, 0, 0, 0, 0),
+    new Array("쿠키런", 20000, 0, 0, 0, 0),
+    new Array("람다람", 20000, 0, 0, 0, 0),
+    new Array("총몇명", 20000, 0, 0, 0, 0),
+    new Array("야코", 20000, 0, 0, 0, 0),
+    new Array("스무살", 20000, 0, 0, 0, 0),
+    new Array("선불교통", 20000, 0, 0, 0, 0),
+    new Array("12세후불", 20000, 0, 0, 0, 0),
 
-var cardArray3 = new Array(
-    new Array("국민행복", 90000),
-    new Array("국민행복", 90000)
+    new Array("국민행복", 90000, 0, 0, 0, 0),
+    new Array("국민행복", 90000, 0, 0, 0, 0)
 );
 
-var totalCardArray = new Array(cardArray1, cardArray2, cardArray3);
+var dayDuplicateCardList = new Array("한베가족", "롤챔코", "K-패스");
+var splitCardList = new Array("샤롯데");
 
-var giftTitleArray = new Array('구분', '5만', '3만');
 var titleArray = new Array('구분', '5만', '3만', '합계', '마진');
-
-var specialValueArray = new Array();
-var cardValueArray = new Array();
+var totalCardArray = new Array();
 var totalValueArray = new Array();
+var totalSumValueArray = new Array();
 
 $(function() {
     initGiftPrice();
@@ -83,89 +77,106 @@ function setGmarket() {
 }
 
 function set() {
-    initSpecialValueArray();
-    setCardValueArray();
+    setTotalCardArray();
     setTotalValueArray();
+    setTotalSumValueArray();
 }
 
-function initSpecialValueArray() {
-    specialValueArray = getValueArray(specialCard);
+function setTotalCardArray() {
+    totalCardArray = new Array();
+    for (var i = 0; i < initCardArray.length; i++) {
+        var cardValueArray = getCardValueArray(initCardArray[i]);
+        totalCardArray[i] = getMinMarginArray(cardValueArray);
+    }
 }
 
-function setCardValueArray() {
-    cardValueArray = new Array();
+function getCardValueArray(cardArray) {
+    var cardValueArray = new Array();
+    for (var i = 0; i <= 10; i++) {
+        for (var j = 0; j <= 20; j++) {
+            var sum = (gift5 * i) + (gift3 * j);
+            if (sum < cardArray[1])
+                continue;
+            var margin = ((50000 * 0.92) - gift5) * i + ((30000 * 0.92) - gift3) * j;
+            cardValueArray.push(new Array(cardArray[0], i, j, sum, margin));
+        }
+    }
+    return cardValueArray;
+}
+
+function getMinMarginArray(cardValueArray) {
+    var minMarginArray = cardValueArray[0];
+    for (var i = 1; i < cardValueArray.length; i++) {
+        if (minMarginArray[4] > cardValueArray[i][4])
+            continue;
+        if (minMarginArray[4] == cardValueArray[i][4] && minMarginArray[3] < cardValueArray[i][3])
+            continue;
+        if (minMarginArray[4] == cardValueArray[i][4] && minMarginArray[1] > cardValueArray[i][1])
+            continue;
+        minMarginArray = cardValueArray[i];
+    }
+    return minMarginArray;
+}
+
+function setTotalValueArray() {
+    totalValueArray = new Array();
+    while (!isEmptyTotalCardArray()) {
+        var dayArray = new Array();
+        for (var i = 0; i < totalCardArray.length; i++) {
+            var cardArray = getCardArray(dayArray, totalCardArray[i]);
+            if (cardArray[3] == 0)
+                continue;
+            if (!isAddDayArray(dayArray, cardArray))
+                continue;
+            dayArray.push(cardArray);
+            setTotalCard(i, cardArray);
+        }
+        totalValueArray.push(dayArray);
+    }
+}
+
+function isEmptyTotalCardArray() {
+    var sum = 0;
     for (var cardArray of totalCardArray) {
-        var valueArray = new Array();
-        for (var card of cardArray) {
-            valueArray.push(getValueArray(card));
-        }
-        addValueArray(valueArray);
-        cardValueArray.push(valueArray);
+        sum += cardArray[3];
     }
+    if (sum == 0)
+        return true;
+    return false;
 }
 
-function getValueArray(card) {
-    var array = new Array();
-    for (var i = 0; i <= 30; i++) {
-        for (var j = 0; j <= 30; j++) {
+function getCardArray(dayArray, cardArray) {
+    for (var card of splitCardList) {
+        if (cardArray[0] != card)
+            continue;
+        return getSplitCardArray(dayArray, cardArray);
+    }
+    return cardArray;
+}
+
+function getSplitCardArray(dayArray, cardArray) {
+    var splitCardArray = new Array();
+    var daySumArray = getDaySumArray(dayArray);
+    for (var i = 0; i <= getMin(10 - daySumArray[1], cardArray[1]); i++) {
+        for (var j = 0; j <= getMin(10 - daySumArray[2], cardArray[2]); j++) {
             var sum = (gift5 * i) + (gift3 * j);
-            if (sum < card[1])
+            if (daySumArray[3] + sum > 500000)
                 continue;
             var margin = ((50000 * 0.92) - gift5) * i + ((30000 * 0.92) - gift3) * j;
-            array.push(new Array(card[0], i, j, sum, margin));
+            splitCardArray.push(new Array(cardArray[0], i, j, sum, margin));
         }
     }
-    return getMarginArray(array);
+    return getMaxSumArray(splitCardArray);
 }
 
-function getMarginArray(array) {
-    var marginArray = array[0];
-    for (var i = 1; i < array.length; i++) {
-        if (marginArray[4] > array[i][4])
-            continue;
-        if (marginArray[4] == array[i][4] && marginArray[3] < array[i][3])
-            continue;
-        if (marginArray[4] == array[i][4] && marginArray[1] > array[i][1])
-            continue;
-        marginArray = array[i];
-    }
-    return marginArray;
-}
-
-function addValueArray(valueArray) {
-    if (specialValueArray[1] == 0 && specialValueArray[2] == 0)
-        return;
-    var cardSumArray = getCardSumArray(valueArray);
-    var charlotteArray = getCharlotteArray(cardSumArray);
-    if (charlotteArray.length == 0)
-        return;
-    var maxSumArray = getMaxSumArray(charlotteArray);
-    valueArray.push(maxSumArray);
-    setSpecialValueArray(maxSumArray);
-}
-
-function getCardSumArray(valueArray) {
-    var cardSumArray = new Array("", 0, 0, 0);
-    for (var value of valueArray) {
-        for (var index = 1; index <=3; index++) {
-            cardSumArray[index] += value[index];
+function getDaySumArray(dayArray) {
+    var daySumArray = new Array("", 0, 0, 0, 0);
+    for (var day of dayArray) {
+        for (var i = 1; i <= 4; i++) {
+            daySumArray[i] += day[i];
         }
     }
-    return cardSumArray;
-}
-
-function getCharlotteArray(cardSumArray) {
-    var charlotteArray = new Array();
-    for (var i = 0; i <= getMin(10 - cardSumArray[1], specialValueArray[1]); i++) {
-        for (var j = 0; j <= getMin(10 - cardSumArray[2], specialValueArray[2]); j++) {
-            var sum = (gift5 * i) + (gift3 * j);
-            if (sum + cardSumArray[3] > 500000)
-                continue;
-            var margin = ((50000 * 0.92) - gift5) * i + ((30000 * 0.92) - gift3) * j;
-            charlotteArray.push(new Array(specialValueArray[0], i, j, sum, margin));
-        }
-    }
-    return charlotteArray;
+    return daySumArray;
 }
 
 function getMin(a, b) {
@@ -186,29 +197,79 @@ function getMaxSumArray(array) {
     return maxSumArray;
 }
 
-function setSpecialValueArray(maxSumArray) {
-    specialValueArray[1] -= maxSumArray[1];
-    specialValueArray[2] -= maxSumArray[2];
+function isAddDayArray(dayArray, cardArray) {
+    if (isDayDuplicateCard(dayArray, cardArray))
+        return false;
+    if (isDayExceeds(dayArray, cardArray))
+        return false;
+    return true;
 }
 
-function setTotalValueArray() {
-    totalValueArray = new Array();
-    for (var i = 0; i < cardValueArray.length; i++) {
-        var valueArray = cardValueArray[i];
-        var arr = new Array((i + 1) + '일차', 0, 0, 0 ,0);
-        for (var array of valueArray) {
-            for (var j = 1; j < array.length; j++) {
-                arr[j] += array[j];
+function isDayDuplicateCard(dayArray, cardArray) {
+    for (var card of dayDuplicateCardList) {
+        if (cardArray[0] != card)
+            continue;
+        for (var day of dayArray) {
+            if (day[0] != card)
+                continue;
+            return true;
+        }
+    }
+    return false;
+}
+
+function isDayExceeds(dayArray, cardArray) {
+    if (isExceeds(dayArray, cardArray, 1, 10))
+        return true;
+    if (isExceeds(dayArray, cardArray, 2, 10))
+        return true;
+    if (isExceeds(dayArray, cardArray, 3, 500000))
+        return true;
+    return false;
+}
+
+function isExceeds(dayArray, cardArray, index, limit) {
+    var sum = 0;
+    for (var array of dayArray) {
+        sum += array[index];
+    }
+    if (sum + cardArray[index] > limit)
+        return true;
+    return false;
+}
+
+function setTotalCard(index, cardArray) {
+    var array = new Array(cardArray[0], 0, 0, 0, 0);
+    for (var i = 1; i <= 4; i++) {
+        array[i] = totalCardArray[index][i] - cardArray[i];
+    }
+    totalCardArray[index] = array;
+}
+
+function setTotalSumValueArray() {
+    totalSumValueArray = new Array();
+    for (var i = 0; i < totalValueArray.length; i++) {
+        var valueArray = totalValueArray[i];
+        var array = new Array((i + 1) + "일차", 0, 0, 0, 0);
+        for (var j = 0; j < valueArray.length; j++) {
+            var value = valueArray[j];
+            for (var k = 1; k <= 4; k++) {
+                array[k] += value[k];
             }
         }
-        totalValueArray.push(arr);
+        totalSumValueArray.push(array);
     }
 }
 
 function show() {
-    setGmarketDiv1("#book10", "[ 합계 ]", titleArray, totalValueArray);
-    for (var i = 0; i < cardValueArray.length; i++) {
-        var valueArray = cardValueArray[i];
+    setGmarketDiv1("#book10", "[ 합계 ]", titleArray, totalSumValueArray);
+    $("#book11").empty();
+    $("#book12").empty();
+    $("#book13").empty();
+    $("#book14").empty();
+    $("#book15").empty();
+    for (var i = 0; i < totalValueArray.length; i++) {
+        var valueArray = totalValueArray[i];
         setGmarketDiv1("#book1" + (i + 1), "[ " + (i + 1) + "일차 ]", titleArray, valueArray);
     }
 }
