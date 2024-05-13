@@ -262,26 +262,24 @@ function setTotalSumValueArray() {
 }
 
 function show() {
-    setGmarketDiv1("#book10", "[ 합계 ]", titleArray, totalSumValueArray);
-    $("#book11").empty();
-    $("#book12").empty();
-    $("#book13").empty();
-    $("#book14").empty();
-    $("#book15").empty();
+    $("#gmarket").empty();
+    setGmarketDiv("#book10", "[ 합계 ]", titleArray, totalSumValueArray);
     for (var i = 0; i < totalValueArray.length; i++) {
         var valueArray = totalValueArray[i];
-        setGmarketDiv1("#book1" + (i + 1), "[ " + (i + 1) + "일차 ]", titleArray, valueArray);
+        setGmarketDiv("#book1" + (i + 1), "[ " + (i + 1) + "일차 ]", titleArray, valueArray);
     }
 }
 
-function setGmarketDiv1(divId, header, titleArray, valueArray) {
-    setGmarketDiv(divId, header);
+function setGmarketDiv(divId, header, titleArray, valueArray) {
+    makeDiv(divId);
+    setHeader(divId, header);
     setTable(divId, titleArray, valueArray);
 }
 
-function setGmarketDiv(divId, title) {
-    $(divId).empty();
-    setHeader(divId, title);
+function makeDiv(divId) {
+    $("#gmarket").append(
+        $('<div/>', { id : divId.replace("#", ""), style : 'margin-bottom : 15px;' } )
+    );
 }
 
 function setHeader(divId, text) {
