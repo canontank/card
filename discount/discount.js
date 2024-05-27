@@ -5,7 +5,7 @@ var month = getMonthStr(today.getMonth() + 1);
 var thisMonthDataList = new Array();
 
 var keyList = new Array();
-var titleList1 = new Array('날짜', '카드명');
+var titleList1 = new Array('날짜', '카드사', '카드명');
 var cashKeyList = new Array('청구할인', '캐시백');
 var titleList2 = new Array('비고');
 
@@ -185,9 +185,9 @@ function setCardNameList() {
         cardNameList.add(cardName);
     }
     for (var data of thisMonthDataList) {
-        if (data[1] == "-")
+        if (data[2] == "-")
             continue;
-        cardNameList.add(data[1]);
+        cardNameList.add(data[2]);
     }
 }
 
@@ -196,9 +196,9 @@ function setDiscountArray() {
     for (var cardName of cardNameList) {
         var discount = 0;
         for (var data of thisMonthDataList) {
-            if (cardName != data[1])
+            if (cardName != data[2])
                 continue;
-            discount += (data[2] + data[3]);
+            discount += (data[3] + data[4]);
         }
         discountArray.push(new Array(cardName, discount));
     }
@@ -275,10 +275,11 @@ function setContents(table, valueArray) {
 function setBookTitle(table) {
     table.append($('<tr/>')
 		.append($('<th/>', { align : 'center', 'width' : '20%' }).append($('<font/>', { text : '날짜' } )))
-		.append($('<th/>', { align : 'center', 'width' : '20%' }).append($('<font/>', { text : '카드' } )))
+        .append($('<th/>', { align : 'center', 'width' : '15%' }).append($('<font/>', { text : '카드사' } )))
+		.append($('<th/>', { align : 'center', 'width' : '15%' }).append($('<font/>', { text : '카드명' } )))
         .append($('<th/>', { align : 'center', 'width' : '15%' }).append($('<font/>', { text : '청구할인' } )))
         .append($('<th/>', { align : 'center', 'width' : '15%' }).append($('<font/>', { text : '캐시백' } )))
-        .append($('<th/>', { align : 'center', 'width' : '30%' }).append($('<font/>', { text : '비고' } )))
+        .append($('<th/>', { align : 'center', 'width' : '20%' }).append($('<font/>', { text : '비고' } )))
 	);
 }
 
@@ -287,9 +288,10 @@ function setBookContents(table, valueArray) {
         table.append($('<tr/>')
             .append($('<td/>', { align : 'center' }).append($('<font/>', { text : new Date(value[0]).format("yyyy-MM-dd (E)"), class : getDayClass(new Date(value[0]).format("E")) } )))
             .append($('<td/>', { align : 'center' }).append($('<font/>', { text : value[1] } )))
-            .append($('<td/>', { align :  'right' }).append($('<font/>', { text : getCommaValue(value[2]) } )))
+            .append($('<td/>', { align : 'center' }).append($('<font/>', { text : value[2] } )))
             .append($('<td/>', { align :  'right' }).append($('<font/>', { text : getCommaValue(value[3]) } )))
-            .append($('<td/>', { align : 'center' }).append($('<font/>', { text : value[4] } )))
+            .append($('<td/>', { align :  'right' }).append($('<font/>', { text : getCommaValue(value[4]) } )))
+            .append($('<td/>', { align : 'center' }).append($('<font/>', { text : value[5] } )))
         );
     }
 }
