@@ -6,7 +6,7 @@ var thisMonthDataList = new Array();
 
 var keyList = new Array();
 var titleList1 = new Array('날짜', '카드사', '카드명');
-var cashKeyList = new Array('청구할인', '캐시백');
+var cashKeyList = new Array('신용', '계좌');
 var titleList2 = new Array('비고');
 
 var cardNameArray = new Array(
@@ -83,7 +83,7 @@ function setDataList(rows) {
         for (var i = 0; i < keyList.length; i++) {
             var value = row[keyList[i]];
             if (cashKeyList.includes(keyList[i])) {
-                value = value.replaceAll(",", "") * 1;
+                value = (value == undefined) ? 0 : value.replaceAll(",", "") * 1;
             }
             data.push(value);
         }
