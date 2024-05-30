@@ -5,7 +5,7 @@ var month = getMonthStr(today.getMonth() + 1);
 var thisMonthDataList = new Array();
 
 var keyList = new Array();
-var titleList = new Array('날짜', '카드사', '카드명', '판매처', '충전처', '종류');
+var titleList = new Array('날짜', '카드사', '카드명', '구매처', '충전처', '종류');
 var cashKeyList = new Array('원가', '단가', '수량');
 
 var notiTitleArray = new Array('구분', '내용');
@@ -416,7 +416,7 @@ function setBookTitle(table) {
 		.append($('<th/>', { align : 'center', 'width' : '15%' }).append($('<font/>', { text : '날짜' } )))
         .append($('<th/>', { align : 'center', 'width' : '10%' }).append($('<font/>', { text : '카드사' } )))
 		.append($('<th/>', { align : 'center', 'width' : '11%' }).append($('<font/>', { text : '카드명' } )))
-        .append($('<th/>', { align : 'center', 'width' : '11%' }).append($('<font/>', { text : '판매처' } )))
+        .append($('<th/>', { align : 'center', 'width' : '11%' }).append($('<font/>', { text : '구매처' } )))
         .append($('<th/>', { align : 'center', 'width' : '12%' }).append($('<font/>', { text : '충전처' } )))
         .append($('<th/>', { align : 'center', 'width' : '12%' }).append($('<font/>', { text : '종류' } )))
         .append($('<th/>', { align : 'center', 'width' : '11%' }).append($('<font/>', { text : '원가' } )))
