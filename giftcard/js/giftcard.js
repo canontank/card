@@ -74,6 +74,12 @@ var chargeLimitArray = new Array(
     new Array('SSG', 0, 0, 0, 0, 2000000)
 );
 
+var rateArray = new Array(
+    new Array("티몬캐시", 0.96),
+    new Array("SSG", 0.95),
+    new Array("에그머니", 0.88)
+)
+
 var cardNameList = new Set();
 
 var giftTitleArray = new Array('구분', '상품권', '거래가', '마진');
@@ -261,12 +267,9 @@ function setGiftCardArray() {
 }
 
 function getRate(giftType) {
-    if (giftType == "티몬캐시") {
-        return 0.96;
-    } else if (giftType == "SSG") {
-        return 0.95;
-    } else if (giftType == "에그머니") {
-        return 0.88;
+    for (var array of rateArray) {
+        if (giftType == array[0])
+            return array[1];
     }
     return 0.92;
 }
