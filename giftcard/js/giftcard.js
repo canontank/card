@@ -265,6 +265,8 @@ function getRate(giftType) {
         return 0.96;
     } else if (giftType == "SSG") {
         return 0.95;
+    } else if (giftType == "에그머니") {
+        return 0.88;
     }
     return 0.92;
 }
