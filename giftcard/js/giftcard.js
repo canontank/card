@@ -58,7 +58,7 @@ var cardValueArray = new Array(
 var chargeTitleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드', '문화상품권', 'SSG');
 var chargeLimitArray = new Array(
     new Array('모빌리언스', 6520000, 6520000, 6520000, 6520000, 0),
-    new Array('페이코', 4000000, 1000000, 4500000, 4000000, 0),
+    new Array('페이코', 4000000, 1000000, 4200000, 4000000, 0),
     new Array('팔라고', 2000000, 2000000, 0, 0, 0),
     new Array('모바일팝', 1500000, 4500000, 0, 0, 0),
     new Array('머니트리', 4000000, 0, 0, 0, 0),
