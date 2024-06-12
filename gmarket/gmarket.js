@@ -278,7 +278,7 @@ function setGmarketDiv(divId, header, titleArray, valueArray) {
 
 function makeDiv(divId) {
     $("#gmarket").append(
-        $('<div/>', { id : divId.replace("#", ""), style : 'margin-bottom : 15px;' } )
+        $('<div/>', { id : divId.replace("#", ""), style : 'margin-top : 15px;' } )
     );
 }
 
