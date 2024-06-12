@@ -58,14 +58,14 @@ function changeGiftPrice3() {
 }
 
 function setGiftPrice5() {
-    for (i = 46000; i <= 47000; i+=50) {
+    for (i = 46000; i <= 47500; i+=50) {
         $("#giftPrice5").append("<option value=" + i + ">" + getCommaValue(i) + "</option>");
     }
     $("#giftPrice5").val(gift5);
 }
 
 function setGiftPrice3() {
-    for (i = 27600; i <= 28200; i+=30) {
+    for (i = 27600; i <= 28500; i+=30) {
         $("#giftPrice3").append("<option value=" + i + ">" + getCommaValue(i) + "</option>");
     }
     $("#giftPrice3").val(gift3);
