@@ -76,6 +76,7 @@ var chargeLimitArray = new Array(
 );
 
 var rateArray = new Array(
+    new Array("페이코", 1.00),
     new Array("티몬캐시", 0.96),
     new Array("SSG", 0.95),
     new Array("에그머니", 0.88)
