@@ -5,7 +5,7 @@ var month = getMonthStr(today.getMonth() + 1);
 var thisMonthDataList = new Array();
 
 var keyList = new Array();
-var titleList = new Array('날짜', '카드사', '카드명', '구매처', '충전처', '종류');
+var titleList = new Array('날짜', '카드사', '카드명', '구매처', '충전처', '종류', '수수료');
 var cashKeyList = new Array('원가', '단가', '수량');
 
 var notiTitleArray = new Array('구분', '내용');
@@ -258,17 +258,19 @@ function setGiftCardArray() {
         for (var data of thisMonthDataList) {
             if (cardName != data[2])
                 continue;
-            var rate = getRate(data[5]);
-            giftArray[0] += (data[6] * data[8]);
-            giftArray[1] += (data[7] * data[8]);
-            giftArray[2] += (data[6] * rate) * data[8];
+            var rate = getRate(data[5], data[6]);
+            giftArray[0] += (data[7] * data[9]);
+            giftArray[1] += (data[8] * data[9]);
+            giftArray[2] += (data[7] * rate) * data[9];
         }
         giftArray[3] = (giftArray[2] - giftArray[1]);
         giftCardArray.push(new Array(cardName, giftArray[0], giftArray[1], giftArray[3]));
     }
 }
 
-function getRate(giftType) {
+function getRate(giftType, rate) {
+    if (rate != "")
+        return 1 - (rate / 100);
     for (var array of rateArray) {
         if (giftType == array[0])
             return array[1];
@@ -420,15 +422,16 @@ function setNotiContents(table, valueArray) {
 
 function setBookTitle(table) {
     table.append($('<tr/>')
-		.append($('<th/>', { align : 'center', 'width' : '15%' }).append($('<font/>', { text : '날짜' } )))
-        .append($('<th/>', { align : 'center', 'width' : '10%' }).append($('<font/>', { text : '카드사' } )))
-		.append($('<th/>', { align : 'center', 'width' : '11%' }).append($('<font/>', { text : '카드명' } )))
-        .append($('<th/>', { align : 'center', 'width' : '11%' }).append($('<font/>', { text : '구매처' } )))
-        .append($('<th/>', { align : 'center', 'width' : '12%' }).append($('<font/>', { text : '충전처' } )))
-        .append($('<th/>', { align : 'center', 'width' : '12%' }).append($('<font/>', { text : '종류' } )))
-        .append($('<th/>', { align : 'center', 'width' : '11%' }).append($('<font/>', { text : '원가' } )))
-        .append($('<th/>', { align : 'center', 'width' : '11%' }).append($('<font/>', { text : '단가' } )))
-        .append($('<th/>', { align : 'center', 'width' : '9%' }).append($('<font/>', { text : '수량' } )))
+		.append($('<th/>', { align : 'center', 'width' : '13%' }).append($('<font/>', { text : '날짜' } )))
+        .append($('<th/>', { align : 'center', 'width' : '9%' }).append($('<font/>', { text : '카드사' } )))
+		.append($('<th/>', { align : 'center', 'width' : '10%' }).append($('<font/>', { text : '카드명' } )))
+        .append($('<th/>', { align : 'center', 'width' : '10%' }).append($('<font/>', { text : '구매처' } )))
+        .append($('<th/>', { align : 'center', 'width' : '10%' }).append($('<font/>', { text : '충전처' } )))
+        .append($('<th/>', { align : 'center', 'width' : '10%' }).append($('<font/>', { text : '종류' } )))
+        .append($('<th/>', { align : 'center', 'width' : '10%' }).append($('<font/>', { text : '수수료' } )))
+        .append($('<th/>', { align : 'center', 'width' : '10%' }).append($('<font/>', { text : '원가' } )))
+        .append($('<th/>', { align : 'center', 'width' : '10%' }).append($('<font/>', { text : '단가' } )))
+        .append($('<th/>', { align : 'center', 'width' : '8%' }).append($('<font/>', { text : '수량' } )))
 	);
 }
 
@@ -441,9 +444,10 @@ function setBookContents(table, valueArray) {
             .append($('<td/>', { align : 'center' }).append($('<font/>', { text : value[3] } )))
             .append($('<td/>', { align : 'center' }).append($('<font/>', { text : value[4] } )))
             .append($('<td/>', { align : 'center' }).append($('<font/>', { text : value[5] } )))
-            .append($('<td/>', { align :  'right' }).append($('<font/>', { text : getCommaValue(value[6]) } )))
+            .append($('<td/>', { align :  'right' }).append($('<font/>', { text : value[6] } )))
             .append($('<td/>', { align :  'right' }).append($('<font/>', { text : getCommaValue(value[7]) } )))
             .append($('<td/>', { align :  'right' }).append($('<font/>', { text : getCommaValue(value[8]) } )))
+            .append($('<td/>', { align :  'right' }).append($('<font/>', { text : getCommaValue(value[9]) } )))
         );
     }
 }
