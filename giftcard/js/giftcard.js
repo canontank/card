@@ -72,6 +72,7 @@ var chargeLimitArray = new Array(
     new Array('네이버', 0, 0, 0, 1080000, 0),
     new Array('스타비즈', 0, 0, 0, 5000000, 0),
     new Array('기프트밸류', 0, 0, 0, 2000000, 0),
+    new Array('기프트플레이', 0, 0, 0, 5000000, 0),
     new Array('SSG', 0, 0, 0, 0, 2000000)
 );
 
@@ -291,7 +292,7 @@ function setGiftValueArray() {
                     continue;
                 if (data[5] != chargeTitleArray[i])
                     continue;
-                value += (data[6] * data[8]);
+                value += (data[7] * data[9]);
             }
             array.push(new Array(chargeLimit[0], chargeLimit[i], value, chargeLimit[i] - value));
         }
