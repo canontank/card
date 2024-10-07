@@ -10,7 +10,8 @@ var macroArray = new Array(
     new Array("book_inumber", "북앤라이프 (아이넘버)", new Array(4, 4, 4), 10, "#outputHiddenCommon"),
     new Array("culture", "컬쳐랜드", new Array(4, 4, 4, 4), 10, "#outputHiddenCommon"),
     new Array("online_starbiz", "온라인 문화상품권 (스타비즈)", new Array(4, 4, 4, 6), 10, "#outputHiddenOnlineStarbiz"),
-    new Array("online_naver", "온라인 문화상품권 (네이버)", new Array(4, 4, 4, 6), 5, "#outputHiddenOnlineNaver")
+    new Array("online_naver", "온라인 문화상품권 (네이버)", new Array(4, 4, 4, 6), 5, "#outputHiddenOnlineNaver"),
+    new Array("online_giftplay", "온라인 문화상품권 (기프트플레이)", new Array(4, 4, 4, 6), 10, "#outputHiddenOnlineGiftplay")
 );
 
 var arr = new Array();

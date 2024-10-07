@@ -175,6 +175,53 @@ function execute() {
 
 execute();
 			</textarea>
+			<textarea id="outputHiddenOnlineGiftplay">
+var codeList = "#GIFT_CODE";
+var newCodeList = new Array();
+
+function addBtn() {
+	for (var i = 0; i < 5; i++) {
+		$(".add_btn a").click();
+	}
+}
+
+function setNewCodeList() {
+	var newCode = "";
+	for (var number of codeList) {
+		if (isNaN(number))
+			continue;
+		newCode += number;
+		if (newCodeList.length % 4 == 3) {
+			if (newCode.length != 6)
+				continue;
+		} else {
+			if (newCode.length != 4)
+				continue;
+		}
+		newCodeList.push(newCode);
+		newCode = "";
+	}
+}
+
+function inputNewCodeList() {
+	$("#regForm").find("input:not(:hidden)").each(function(index, item) {
+		if (index % 4 == 3) {
+			$(this).val(newCodeList[index]);
+		} else {
+			$(this).val(newCodeList[index]);
+		}
+	});
+}
+
+function execute() {
+	addBtn();
+	setNewCodeList();
+	inputNewCodeList();
+	$("#naverPayAgree").prop('checked', true);
+}
+
+execute();
+			</textarea>
 		</div>
 	</body>
 </html>
