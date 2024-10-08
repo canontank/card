@@ -55,33 +55,28 @@ var cardValueArray = new Array(
     new Array('네이버', '혜택 없음')
 );
 
-var chargeTitleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드', '문화상품권', 'SSG');
+var chargeTitleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드', '문화상품권', 'SSG', '신세계', '현대');
 var chargeLimitArray = new Array(
-    new Array('모빌리언스', 6520000, 6520000, 6520000, 6520000, 0),
-    new Array('페이코', 4000000, 1000000, 4200000, 4000000, 0),
-    new Array('팔라고', 2000000, 2000000, 0, 0, 0),
-    new Array('모바일팝', 1500000, 4500000, 0, 0, 0),
-    new Array('머니트리', 4000000, 0, 0, 0, 0),
-    new Array('010pay', 2160000, 0, 0, 0, 0),
-    new Array('웰컴페이', 1060000, 0, 0, 0, 0),
-    new Array('메타클럽', 10000000, 0, 0, 0, 0),
-    new Array('포인트로페이', 0, 5000000, 0, 2000000, 0),
-    new Array('하나머니', 0, 2170000, 0, 0, 0),
-    new Array('마일벌스', 0, 66000000, 0, 0, 0),
-    new Array('페이북', 0, 0, 2160000, 0, 0),
-    new Array('네이버', 0, 0, 0, 1080000, 0),
-    new Array('스타비즈', 0, 0, 0, 5000000, 0),
-    new Array('기프트밸류', 0, 0, 0, 2000000, 0),
-    new Array('기프트플레이', 0, 0, 0, 5000000, 0),
-    new Array('SSG', 0, 0, 0, 0, 2000000)
+    new Array('모빌리언스', 6520000, 6520000, 6520000, 6520000, 0, 0, 0),
+    new Array('페이코', 4000000, 1000000, 4200000, 4000000, 0, 0, 0),
+    new Array('팔라고', 2000000, 2000000, 0, 0, 0, 0, 0),
+    new Array('모바일팝', 1500000, 4500000, 0, 0, 0, 0, 0),
+    new Array('머니트리', 4000000, 0, 0, 0, 0, 0, 0),
+    new Array('010pay', 2160000, 0, 0, 0, 0, 0, 0),
+    new Array('웰컴페이', 1060000, 0, 0, 0, 0, 0, 0),
+    new Array('메타클럽', 10000000, 0, 0, 0, 0, 0, 0),
+    new Array('포인트로페이', 0, 5000000, 0, 2000000, 0, 0, 0),
+    new Array('하나머니', 0, 2170000, 0, 0, 0, 0, 0),
+    new Array('마일벌스', 0, 66000000, 0, 0, 0, 0, 0),
+    new Array('페이북', 0, 0, 2160000, 0, 0, 0, 0),
+    new Array('네이버', 0, 0, 0, 1080000, 0, 0, 0),
+    new Array('스타비즈', 0, 0, 0, 5000000, 0, 0, 0),
+    new Array('기프트밸류', 0, 0, 0, 2000000, 0, 0, 0),
+    new Array('기프트플레이', 0, 0, 0, 5000000, 0, 0, 0),
+    new Array('SSG', 0, 0, 0, 0, 2000000, 0, 0),
+    new Array('우현상품권', 0, 0, 0, 0, 0, 100000000, 100000000),
+    new Array('씨티페이', 0, 0, 0, 0, 0, 100000000, 100000000)
 );
-
-var rateArray = new Array(
-    new Array("페이코", 1.00),
-    new Array("티몬캐시", 0.96),
-    new Array("SSG", 0.95),
-    new Array("에그머니", 0.88)
-)
 
 var cardNameList = new Set();
 
@@ -259,7 +254,7 @@ function setGiftCardArray() {
         for (var data of thisMonthDataList) {
             if (cardName != data[2])
                 continue;
-            var rate = getRate(data[5], data[6]);
+            var rate = getRate(data[6]);
             giftArray[0] += (data[7] * data[9]);
             giftArray[1] += (data[8] * data[9]);
             giftArray[2] += (data[7] * rate) * data[9];
@@ -269,13 +264,9 @@ function setGiftCardArray() {
     }
 }
 
-function getRate(giftType, rate) {
+function getRate(rate) {
     if (rate != "")
         return 1 - (rate / 100);
-    for (var array of rateArray) {
-        if (giftType == array[0])
-            return array[1];
-    }
     return 0.92;
 }
 
@@ -321,7 +312,7 @@ function show() {
     for (var i = 0; i < giftValueArray.length; i++) {
         setAccountDiv1("#book" + (i + 13), '[ ' + chargeTitleArray[i + 1] + ' ]', giftTotalTitleArray, giftValueArray[i]);
     }
-    setAccountNotiDiv("#book18", '[ 주의사항 ]', notiTitleArray, cardValueArray);
+    setAccountNotiDiv("#book" + (giftValueArray.length + 13), '[ 주의사항 ]', notiTitleArray, cardValueArray);
     setAccountDiv2("#book2", '[ 상품권 ]', thisMonthDataList);
 }
 
