@@ -1,0 +1,27 @@
+body {
+	overflow-y : scroll;
+}
+
+div {
+	text-align : center;
+}
+
+img {
+	width : 340px;
+	border : 1px solid #ccc;
+}
+
+button {
+	width : 80px;
+	height : 26px;
+}
+
+select {
+	width : 170px;
+	height : 26px;
+	text-align-last : center;
+}
+
+.menu {
+	margin-bottom : 10px;
+}
