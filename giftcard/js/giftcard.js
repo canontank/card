@@ -57,28 +57,28 @@ var cardValueArray = new Array(
 
 var chargeTitleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드', '문화상품권', 'SSG', '신세계', '현대');
 var chargeLimitArray = new Array(
-    new Array('모빌리언스', 6520000, 6520000, 6520000, 6520000, 0, 0, 0),
-    new Array('페이코', 4000000, 1000000, 4200000, 4000000, 0, 0, 0),
-    new Array('팔라고', 2000000, 2000000, 0, 0, 0, 0, 0),
-    new Array('모바일팝', 1500000, 4500000, 0, 0, 0, 0, 0),
-    new Array('머니트리', 4000000, 0, 0, 0, 0, 0, 0),
-    new Array('010pay', 2160000, 0, 0, 0, 0, 0, 0),
-    new Array('웰컴페이', 1060000, 0, 0, 0, 0, 0, 0),
-    new Array('메타클럽', 10000000, 0, 0, 0, 0, 0, 0),
+    new Array('모빌리언스', 0, 0, 0, 0, 0, 0, 0),
+    new Array('페이코', 0, 0, 200000, 100000, 0, 0, 0),
+    new Array('팔라고', 0, 0, 0, 0, 0, 0, 0),
+    new Array('모바일팝', 0, 0, 0, 0, 0, 0, 0),
+    new Array('머니트리', 0, 0, 0, 0, 0, 0, 0),
+    new Array('010pay', 0, 0, 0, 0, 0, 0, 0),
+    new Array('웰컴페이', 0, 0, 0, 0, 0, 0, 0),
+    new Array('메타클럽', 0, 0, 0, 0, 0, 0, 0),
     new Array('포인트로페이', 0, 5000000, 0, 2000000, 0, 0, 0),
-    new Array('하나머니', 0, 2170000, 0, 0, 0, 0, 0),
+    new Array('하나머니', 0, 0, 0, 0, 0, 0, 0),
     new Array('마일벌스', 0, 66000000, 0, 0, 0, 0, 0),
-    new Array('페이북', 0, 0, 2160000, 0, 0, 0, 0),
-    new Array('네이버', 0, 0, 0, 1080000, 0, 0, 0),
-    new Array('스타비즈', 0, 0, 0, 5000000, 0, 0, 0),
-    new Array('기프트밸류', 0, 0, 0, 2000000, 0, 0, 0),
+    new Array('페이북', 0, 0, 200000, 0, 0, 0, 0),
+    new Array('네이버', 0, 0, 1000000, 200000, 0, 0, 0),
+    new Array('스타비즈', 0, 0, 0, 0, 0, 0, 0),
+    new Array('기프트밸류', 0, 0, 0, 5000000, 0, 0, 0),
     new Array('기프트플레이', 0, 0, 0, 5000000, 0, 0, 0),
     new Array('SSG', 0, 0, 0, 0, 2000000, 0, 0),
     new Array('우현', 0, 0, 0, 0, 0, 99000000, 99000000),
     new Array('우천', 0, 0, 0, 0, 0, 99000000, 99000000),
-    new Array('씨티페이', 0, 0, 0, 0, 0, 99000000, 99000000),
     new Array('엑스이', 0, 0, 0, 0, 0, 99000000, 99000000),
-    new Array('기프너스', 0, 0, 0, 0, 0, 99000000, 99000000),
+    new Array('씨티페이', 0, 0, 0, 0, 0, 99000000, 99000000),
+    new Array('기프너스', 0, 0, 0, 0, 0, 99000000, 99000000)
 );
 
 var cardNameList = new Set();
@@ -224,6 +224,7 @@ function setAccountBook() {
 function set() {
     setThisMonthDataList();
     setCardNameList();
+    setChargeLimitArray();
     setGiftCardArray();
     setGiftValueArray();
     setGiftTotalValueArray();
@@ -248,6 +249,24 @@ function setCardNameList() {
             continue;
         cardNameList.add(data[2]);
     }
+}
+
+function setChargeLimitArray() {
+    for (var data of thisMonthDataList) {
+        if (data[4] == "-")
+            continue;
+        if (isDuplicate(chargeLimitArray, data[4]))
+            continue;
+        chargeLimitArray.push(new Array(data[4], 0, 0, 0, 0, 0, 0, 0));
+    }
+}
+
+function isDuplicate(arr, chargeName) {
+    for (var obj of arr) {
+        if (obj[0] == chargeName)
+            return true;
+    }
+    return false;
 }
 
 function setGiftCardArray() {
@@ -279,8 +298,6 @@ function setGiftValueArray() {
         var array = new Array();
         for (var chargeLimit of chargeLimitArray) {
             var value = 0;
-            if (chargeLimit[i] == 0)
-                continue;
             for (var data of thisMonthDataList) {
                 if (data[4] != chargeLimit[0])
                     continue;
@@ -288,7 +305,10 @@ function setGiftValueArray() {
                     continue;
                 value += (data[7] * data[9]);
             }
-            array.push(new Array(chargeLimit[0], chargeLimit[i], value, chargeLimit[i] - value));
+            if (chargeLimit[i] == 0 && value == 0)
+                continue;
+            var remain = (chargeLimit[i] - value < 0) ? 0 : chargeLimit[i] - value;
+            array.push(new Array(chargeLimit[0], chargeLimit[i], value, remain));
         }
         giftValueArray.push(array);
     }
@@ -305,6 +325,8 @@ function setGiftTotalValueArray() {
             totalArray[2] += array[2];
             totalArray[3] += array[3];
         }
+        if (totalArray[1] == 0 && totalArray[2] == 0)
+            continue;
         giftTotalValueArray.push(totalArray);
     }
 }
@@ -313,6 +335,8 @@ function show() {
     setAccountDiv1("#book11", '[ 카드 ]', giftTitleArray, giftCardArray);
     setAccountDiv1("#book12", '[ 합계 ]', giftTotalTitleArray, giftTotalValueArray);
     for (var i = 0; i < giftValueArray.length; i++) {
+        if (giftValueArray[i].length == 0)
+            continue;
         setAccountDiv1("#book" + (i + 13), '[ ' + chargeTitleArray[i + 1] + ' ]', giftTotalTitleArray, giftValueArray[i]);
     }
     setAccountNotiDiv("#book" + (giftValueArray.length + 13), '[ 주의사항 ]', notiTitleArray, cardValueArray);
