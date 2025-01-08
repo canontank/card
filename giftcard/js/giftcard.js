@@ -8,8 +8,9 @@ var keyList = new Array();
 var titleList = new Array('날짜', '카드사', '카드명', '구매처', '충전처', '종류', '수수료');
 var cashKeyList = new Array('원가', '단가', '수량');
 
+var notiWidthArray = new Array(25, 75);
 var notiTitleArray = new Array('구분', '내용');
-var cardValueArray = new Array(
+var notiValueArray = new Array(
     //new Array('샤롯데', '지마켓/옥션 40만, 티몬/위메프 50만'),
     new Array('딥에코', '티몬, 위메프, 쿠팡, 지마켓, 옥션, 11번가'),
     //new Array('욜로', '티몬, 위메프, 쿠팡'),
@@ -83,12 +84,15 @@ var chargeLimitArray = new Array(
 
 var cardNameList = new Set();
 
-var giftTitleArray = new Array('구분', '상품권', '거래가', '마진');
-var giftCardArray = new Array();
+var cardTitleArray = new Array('구분', '상품권', '거래가', '마진');
+var cardValueArray = new Array();
 
-var giftTotalTitleArray = new Array('구분', '충전한도', '충전금액', '남은금액');
+var giftTitleArray = new Array('구분', '충전한도', '충전금액', '남은금액');
 var giftTotalValueArray = new Array();
 var giftValueArray = new Array();
+
+var bookWidthArray = new Array(13, 9, 10, 10, 10, 10, 10, 10, 10, 8);
+var bookTitleArray = new Array('날짜', '카드사', '카드명', '구매처', '충전처', '종류', '수수료', '원가', '단가', '수량');
 
 $(function() {
     setKeyList();
@@ -225,7 +229,7 @@ function set() {
     setThisMonthDataList();
     setCardNameList();
     setChargeLimitArray();
-    setGiftCardArray();
+    setCardValueArray();
     setGiftValueArray();
     setGiftTotalValueArray();
 }
@@ -241,7 +245,7 @@ function setThisMonthDataList() {
 
 function setCardNameList() {
     cardNameList = new Set();
-    for (var cardValue of cardValueArray) {
+    for (var cardValue of notiValueArray) {
         cardNameList.add(cardValue[0]);
     }
     for (var data of thisMonthDataList) {
@@ -269,8 +273,8 @@ function isDuplicate(arr, chargeName) {
     return false;
 }
 
-function setGiftCardArray() {
-    giftCardArray = new Array();
+function setCardValueArray() {
+    cardValueArray = new Array();
     for (var cardName of cardNameList) {
         var giftArray = new Array(0, 0, 0, 0);
         for (var data of thisMonthDataList) {
@@ -282,7 +286,7 @@ function setGiftCardArray() {
             giftArray[2] += (data[7] * rate) * data[9];
         }
         giftArray[3] = (giftArray[2] - giftArray[1]);
-        giftCardArray.push(new Array(cardName, giftArray[0], giftArray[1], giftArray[3]));
+        cardValueArray.push(new Array(cardName, giftArray[0], giftArray[1], giftArray[3]));
     }
 }
 
@@ -332,147 +336,21 @@ function setGiftTotalValueArray() {
 }
 
 function show() {
-    setAccountDiv1("#book11", '[ 카드 ]', giftTitleArray, giftCardArray);
-    setAccountDiv1("#book12", '[ 합계 ]', giftTotalTitleArray, giftTotalValueArray);
+    initParentDiv();
+    setTable("#book1", "#book11", "카드", true, cardTitleArray, cardValueArray);
+    setTable("#book1", "#book12", "합계", true, giftTitleArray, giftTotalValueArray);
     for (var i = 0; i < giftValueArray.length; i++) {
         if (giftValueArray[i].length == 0)
             continue;
-        setAccountDiv1("#book" + (i + 13), '[ ' + chargeTitleArray[i + 1] + ' ]', giftTotalTitleArray, giftValueArray[i]);
+        setTable("#book1", "#book" + (i + 13), chargeTitleArray[i + 1], true, giftTitleArray, giftValueArray[i]);
     }
-    setAccountNotiDiv("#book" + (giftValueArray.length + 13), '[ 주의사항 ]', notiTitleArray, cardValueArray);
-    setAccountDiv2("#book2", '[ 상품권 ]', thisMonthDataList);
+    setTable("#book1", "#book" + (giftValueArray.length + 13), '주의사항', true, notiTitleArray, notiValueArray, notiWidthArray);
+    setTable("#book2", "#book21", '상품권', false, bookTitleArray, thisMonthDataList, bookWidthArray);
 }
 
-function setAccountDiv1(divId, header, titleArray, valueArray) {
-    setAccountDiv(divId, header);
-    setTable(divId, titleArray, valueArray);
-}
-
-function setAccountNotiDiv(divId, header, titleArray, valueArray) {
-    setAccountDiv(divId, header);
-    setNotiTable(divId, titleArray, valueArray);
-}
-
-function setAccountDiv2(divId, title, valueArray) {
-    setAccountDiv(divId, title);
-    setBookTable(divId, valueArray);
-}
-
-function setAccountDiv(divId, title) {
-    $(divId).empty();
-    setHeader(divId, title);
-}
-
-function setHeader(divId, text) {
-    $(divId).append(
-        $('<table/>').append(
-            $('<tr/>', { height : '30', valign : 'bottom' }).append(
-                $('<td/>', { class : 'accountHeader' }).append(
-                    $('<font/>', { text : text } )
-                )
-            )
-        )
-    );
-}
-
-function setTable(divId, titleArray, valueArray) {
-    var table = getTable();
-    setTitle(table, titleArray);
-    setContents(table, valueArray);
-	$(divId).append(table);
-}
-
-function setNotiTable(divId, titleArray, valueArray) {
-    var table = getTable();
-    setNotiTitle(table, titleArray);
-    setNotiContents(table, valueArray);
-	$(divId).append(table);
-}
-
-function setBookTable(divId, valueArray) {
-    var table = getTable();
-    setBookTitle(table);
-    setBookContents(table, valueArray);
-    $(divId).append(table);
-}
-
-function setTitle(table, titleArray) {
-    var tr = ($('<tr/>'));
-    for (var title of titleArray) {
-        tr.append($('<th/>', { align : 'center', width : '25%' }).append($('<font/>', { text : title } )));
-    }
-    table.append(tr);
-}
-
-function setNotiTitle(table, titleArray) {
-    var tr = ($('<tr/>'));
-    tr.append($('<th/>', { align : 'center', width : '25%' }).append($('<font/>', { text : titleArray[0] } )));
-    tr.append($('<th/>', { align : 'center', width : '75%' }).append($('<font/>', { text : titleArray[1] } )));
-    table.append(tr);
-}
-
-function setContents(table, valueArray) {
-    for (var value of valueArray) {
-        var tr = ($('<tr/>'));
-        for (var i = 0; i < value.length; i++) {
-            var td = (i == 0) ? '<th/>' : '<td/>';
-            var align = (i == 0) ? 'center' : 'right';
-            var text = (i == 0) ? value[i] : getCommaValue(value[i]);
-            var color = (i == 0) ? '' : getColor(value[i]);
-            tr.append($(td, { align : align }).append($('<font/>', { text : text, color : color } )));
-        }
-        table.append(tr);
-    }
-}
-
-function setNotiContents(table, valueArray) {
-    for (var value of valueArray) {
-        var tr = ($('<tr/>'));
-        for (var i = 0; i < value.length; i++) {
-            var td = (i == 0) ? '<th/>' : '<td/>';
-            var align = 'center';
-            var text = (i == 0) ? value[i] : getCommaValue(value[i]);
-            var color = (i == 0) ? '' : getColor(value[i]);
-            tr.append($(td, { align : align }).append($('<font/>', { text : text, color : color } )));
-        }
-        table.append(tr);
-    }
-}
-
-function setBookTitle(table) {
-    table.append($('<tr/>')
-		.append($('<th/>', { align : 'center', 'width' : '13%' }).append($('<font/>', { text : '날짜' } )))
-        .append($('<th/>', { align : 'center', 'width' : '9%' }).append($('<font/>', { text : '카드사' } )))
-		.append($('<th/>', { align : 'center', 'width' : '10%' }).append($('<font/>', { text : '카드명' } )))
-        .append($('<th/>', { align : 'center', 'width' : '10%' }).append($('<font/>', { text : '구매처' } )))
-        .append($('<th/>', { align : 'center', 'width' : '10%' }).append($('<font/>', { text : '충전처' } )))
-        .append($('<th/>', { align : 'center', 'width' : '10%' }).append($('<font/>', { text : '종류' } )))
-        .append($('<th/>', { align : 'center', 'width' : '10%' }).append($('<font/>', { text : '수수료' } )))
-        .append($('<th/>', { align : 'center', 'width' : '10%' }).append($('<font/>', { text : '원가' } )))
-        .append($('<th/>', { align : 'center', 'width' : '10%' }).append($('<font/>', { text : '단가' } )))
-        .append($('<th/>', { align : 'center', 'width' : '8%' }).append($('<font/>', { text : '수량' } )))
-	);
-}
-
-function setBookContents(table, valueArray) {
-    for (var value of valueArray) {
-        table.append($('<tr/>')
-            .append($('<td/>', { align : 'center' }).append($('<font/>', { text : new Date(value[0]).format("yyyy-MM-dd (E)"), class : getDayClass(new Date(value[0]).format("E")) } )))
-            .append($('<td/>', { align : 'center' }).append($('<font/>', { text : value[1] } )))
-            .append($('<td/>', { align : 'center' }).append($('<font/>', { text : value[2] } )))
-            .append($('<td/>', { align : 'center' }).append($('<font/>', { text : value[3] } )))
-            .append($('<td/>', { align : 'center' }).append($('<font/>', { text : value[4] } )))
-            .append($('<td/>', { align : 'center' }).append($('<font/>', { text : value[5] } )))
-            .append($('<td/>', { align :  'right' }).append($('<font/>', { text : value[6] } )))
-            .append($('<td/>', { align :  'right' }).append($('<font/>', { text : getCommaValue(value[7]) } )))
-            .append($('<td/>', { align :  'right' }).append($('<font/>', { text : getCommaValue(value[8]) } )))
-            .append($('<td/>', { align :  'right' }).append($('<font/>', { text : getCommaValue(value[9]) } )))
-        );
-    }
-}
-
-function getTable() {
-    return $('<table/>', { class : 'table table-bordered table-striped' });
+function initParentDiv() {
+    $("#book1").empty();
+    $("#book2").empty();
 }
 
 function isThisMonth(data) {
@@ -531,51 +409,7 @@ function getPrevDateNum(date) {
     return (y + getMonthStr(m * 1 - 1)) * 1;
 }
 
-function getColor(value) {
-    if (value < 0)
-        return "red";
-    return "black";
-}
-
-function getCommaValue(value) {
-    return value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
-}
-
 function setHeight() {
     $(".account").innerHeight(window.innerHeight);
 }
 
-function getDayClass(day) {
-	if (day == "토") {
-		return "saturday";
-	} else if (day == "일") {
-		return "sunday";
-	} else {
-		return "normal";
-	}
-}
-
-Date.prototype.format = function(f) {
-	if (!this.valueOf())
-		return " ";
-	var weekName = [ "일", "월", "화", "수", "목", "금", "토" ];
-	var d = this;
-	return f.replace(/(yyyy|yy|MM|dd|E|hh|mm|ss|a\/p)/gi, function($1) {
-		switch ($1) {
-			case "yyyy": return d.getFullYear();
-			case "yy": return (d.getFullYear() % 1000).zf(2);
-			case "MM": return (d.getMonth() + 1).zf(2);
-			case "dd": return d.getDate().zf(2);
-			case "E": return weekName[d.getDay()];
-			case "HH": return d.getHours().zf(2);
-			case "hh": return ((h = d.getHours() % 12) ? h : 12).zf(2);
-			case "mm": return d.getMinutes().zf(2);
-			case "ss": return d.getSeconds().zf(2);
-			case "a/p": return d.getHours() < 12 ? "오전" : "오후";
-			default: return $1;
-		}
-	});
-};
-String.prototype.string = function(len){var s = '', i = 0; while (i++ < len) { s += this; } return s;};
-String.prototype.zf = function(len){return "0".string(len - this.length) + this;};
-Number.prototype.zf = function(len){return this.toString().zf(len);};
