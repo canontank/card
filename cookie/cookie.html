@@ -5,15 +5,16 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<script type="text/javascript" src="../common/js/jquery-1.11.1.js"></script>
 		<script type="text/javascript" src="../common/js/bootstrap.js"></script>
-		<script type="text/javascript" src="../common/js/cardData.js"></script>
-		<script type="text/javascript" src="js/cookie.js"></script>
+        <script type="text/javascript" src="../common/js/cardData.js"></script>
+        <script type="text/javascript" src="../common/js/date.js"></script>
+        <script type="text/javascript" src="js/cookie.js"></script>
 		<link type="text/css" rel="stylesheet" href="../common/css/bootstrap.css">
 		<link type="text/css" rel="stylesheet" href="css/cookie.css">
 	</head>
 
 	<body>
 		<div class="account account1">
-            <div id="date">
+            <div id="date" style="margin-bottom: 15px;">
                 <div style="padding-top:5px; padding-bottom:5px;">
                     <button id="prevMonthBtn">지난 달</button>
                     <button id="thisMonthBtn">현재</button>
@@ -30,28 +31,9 @@
                     </tr>
                 </table>
             </div>
-            <div class="clear10"></div>
-			<div id="book11"></div>
-            <div class="clear10"></div>
-			<div id="book12"></div>
-			<div class="clear10"></div>
-			<div id="book13"></div>
-			<div class="clear10"></div>
+            <div id="discount"></div>
 		</div>
-		<div class="hidden-xs">
-	        <div class="account account2">
-	            <div id="gbn0"></div>
-			</div>
-			<div class="account account3">
-				<div id="gbn1"></div>
-				<div class="clear10"></div>
-				<div id="gbn2"></div>
-				<div class="clear10"></div>
-				<div id="gbn3"></div>
-				<div class="clear10"></div>
-				<div id="gbn4"></div>
-				<div class="clear10"></div>
-			</div>
-		</div>	
+	    <div id="usage" class="account account2"></div>
+        <div id="exp" class="account account3"></div>
 	</body>
 </html>

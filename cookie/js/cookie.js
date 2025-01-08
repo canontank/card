@@ -1,31 +1,44 @@
-var dataList = new Array();
 var today = new Date();
 var year = today.getFullYear();
 var month = getMonthStr(today.getMonth() + 1);
 
-var keyList = new Array();
-var titleList = new Array('날짜', '카드', '구매처', '간편결제');
-var cashKeyList = new Array('액면가', '거래가', '수량');
+var todayYear = today.getFullYear();
+var todayMonth = today.getMonth() + 1;
 
-var titleArray1 = new Array('구분', '실적', '기본할인', '추가할인');
+var cookieDataList = new Array();
+var cookieKeyList = new Array();
+var cookieTitleList = new Array('날짜', '카드', '구매처', '간편결제');
+var cookieCashKeyList = new Array('액면가', '거래가', '수량');
 
-// common/js/cardData.js 참고
-var cardArray = cardArray1.concat(cardArray2).concat(cardArray3);
+var accountValueArray = new Array();
+var cookieValueArray = new Array();
+
+var compareTitleArray = new Array('카드명', '가계부', '쿠키', '비교');
+var compareValueArray = new Array();
+
+var discountTitleArray = new Array('구분', '실적', '기본할인', '추가할인');
+var discountNowValueArray = new Array();
+var discountFutureValueArray = new Array();
+
+var remainTitleArray = new Array('날짜', '실적');
+var remainValueArray = new Array();
+
+var usageWidthArray = new Array(19, 14, 14, 14, 13, 13, 13);
+var usageTitleArray = new Array('날짜', '카드', '구매처', '간편결제', '액면가', '거래가', '수량');
+var usageValueArray = new Array();
+
+var expDateArray = new Array('1일차', '2일차', '3일차', '4일차');
+var expTitleArray = new Array('카드', '구매처', '액면가', '거래가', '수량');
+var expValueArray = new Array();
+
+// ../../card/common/js/cardData.js 참고
+var cardNameArray = cardArray1.concat(cardArray2).concat(cardArray3);
 
 $(function() {
-    setKeyList();
     init();
-    loadDataList();
+    setCookieKeyList();
+    loadCookieDataList();
 });
-
-function setKeyList() {
-    var totalKeyList = new Array(titleList, cashKeyList);
-    for (var totalKey of totalKeyList) {
-        for (var key of totalKey) {
-            keyList.push(key);
-        }
-    }
-}
 
 function init() {
     $(window).resize(setHeight);
@@ -39,7 +52,16 @@ function init() {
     setHeight();
 }
 
-function loadDataList() {
+function setCookieKeyList() {
+    var totalKeyList = new Array(cookieTitleList, cookieCashKeyList);
+    for (var totalKey of totalKeyList) {
+        for (var key of totalKey) {
+            cookieKeyList.push(key);
+        }
+    }
+}
+
+function loadCookieDataList() {
     $.ajax({
         type : "GET",
 		url : "https://script.google.com/macros/s/AKfycbwKoLpLj1urPmJZ9ucgGk08ud-4p4l45k0WjLB6M6rHLDf63lcf31fDoJsX7sj8F95ltQ/exec",
@@ -47,161 +69,78 @@ function loadDataList() {
             "cmd" : "get"
         },
         success : function(rows) {
-            setDataList(rows);
+            setCookieDataList(rows);
             setAccountBook();
         },
         error : function() {
-            loadDataList();
+            loadCookieDataList();
         }
     });
 }
 
-function setDataList(rows) {
+function setCookieDataList(rows) {
     for (var row of rows) {
         var data = new Array();
-        for (var i = 0; i < keyList.length; i++) {
-            var value = row[keyList[i]];
-            if (cashKeyList.includes(keyList[i])) {
+        for (var i = 0; i < cookieKeyList.length; i++) {
+            var value = row[cookieKeyList[i]];
+            if (cookieCashKeyList.includes(cookieKeyList[i])) {
                 value = value.replaceAll(",", "") * 1;
             }
             data.push(value);
         }
-        dataList.push(data);
+        cookieDataList.push(data);
     }
-}
-
-function initYearSelect() {
-    for (var i = 2022; i <= year; i++) {
-        $("#yearSelect").append("<option value=" + i + ">" + i + "</option>");
-    }
-    $("#yearSelect").val(year);
-}
-
-function initMonthSelect() {
-    for (var i = 1; i <= 12; i++) {
-        $("#monthSelect").append("<option value=" + getMonthStr(i) + ">" + getMonthStr(i) + "</option>");
-    }
-    $("#monthSelect").val(month);
-}
-
-function clickPrevMonthBtn() {
-    $("#prevMonthBtn").click(function() {
-        if (month == "01") {
-            year = (year * 1 - 1) + "";
-            month = "12";
-        } else {
-            month = getMonthStr(month * 1 - 1);
-        }
-        setYearMonth();
-        setAccountBook();
-    });
-}
-
-function clickThisMonthBtn() {
-    $("#thisMonthBtn").click(function() {
-        year = today.getFullYear();
-        month = getMonthStr(today.getMonth() + 1);
-        setYearMonth();
-        setAccountBook();
-    });
-}
-
-function clickNextMonthBtn() {
-    $("#nextMonthBtn").click(function() {
-        if (month == "12") {
-            year = (year * 1 + 1) + "";
-            month = "01";
-        } else {
-            month = getMonthStr(month * 1 + 1);
-        }
-        setYearMonth();
-        setAccountBook();
-    });
-}
-
-function changeYear() {
-    $("#yearSelect").change(function() {
-        year = this.value;
-        setAccountBook();
-    });
-}
-
-function changeMonth() {
-    $("#monthSelect").change(function() {
-        month = this.value;
-        setAccountBook();
-    });
-}
-
-function setYearMonth() {
-    $("#yearSelect").val(year);
-    $("#monthSelect").val(month);
 }
 
 function setAccountBook() {
-	setAccountBook11();
-	setAccountBook12();
-	setAccountBook13();
-	setAccountBook2();
-	setAccountBook3();
+    set();
+    show();
 }
 
-function setAccountBook11() {
-    var valueArray = new Array();
-    for (var card of cardArray) {
-        var performence = 0;
-        var discount = 0;
-        var addDiscount = 0;
-        for (var data of dataList) {
+function set() {
+    setDiscount();
+    setRemain();
+    setUsage();
+    setExp();
+}
+
+function setDiscount() {
+    setNow();
+    setFuture();
+}
+
+function setNow() {
+    discountNowValueArray = new Array();
+    for (var card of cardNameArray) {
+        var valueArray = new Array(card, 0, 0, 0);
+        for (var data of cookieDataList) {
             if (!isThisMonth(data))
                 continue;
             if (card != data[1])
                 continue;
-            performence += (data[5] * data[6]);
-			discount += getDiscount(data);
-			addDiscount += getAddDiscount(data);
+            valueArray[1] += (data[5] * data[6]);
+			valueArray[2] += getDiscount(data);
+			valueArray[3] += getAddDiscount(data);
         }
-        valueArray.push(new Array(card, performence, discount, addDiscount));
+        discountNowValueArray.push(valueArray);
     }
-    setAccountDiv1("#book11", '[ 현재 ]', titleArray1, valueArray);
 }
 
-function setAccountBook12() {
-    var valueArray = new Array();
-    for (var card of cardArray) {
-        var performence = 0;
-        var discount = 0;
-        var addDiscount = 0;
-        for (var data of dataList) {
+function setFuture() {
+    discountFutureValueArray = new Array();
+    for (var card of cardNameArray) {
+        var valueArray = new Array(card, 0, 0, 0);
+        for (var data of cookieDataList) {
             if (!isThisMonth(data) && !isExpDate(data[0]))
                 continue;
             if (card != data[1])
                 continue;
-            performence += (data[5] * data[6]);
-			discount += getDiscount(data);
-			addDiscount += getAddDiscount(data);
+            valueArray[1] += (data[5] * data[6]);
+            valueArray[2] += getDiscount(data);
+            valueArray[3] += getAddDiscount(data);
         }
-        valueArray.push(new Array(card, performence, discount, addDiscount));
+        discountFutureValueArray.push(valueArray);
     }
-    setAccountDiv1("#book12", '[ 예상 ]', titleArray1, valueArray);
-}
-
-function setAccountBook13() {
-	var expDateArray = new Array('1일차', '2일차', '3일차', '4일차');
-	var titleArray = new Array('날짜', '실적');
-    var valueArray = new Array();
-    for (var expDate of expDateArray) {
-        var performence = 0;
-        for (var data of dataList) {
-			if (!isThisMonth(data) && !isExpDate(data[0]))
-                continue;
-			if (expDate != data[0])
-                continue;
-            performence += (data[5] * data[6]);
-        }
-        valueArray.push(new Array(expDate, performence));
-    }
-    setAccountDiv1("#book13", '[ 남은 실적 ]', titleArray, valueArray);
 }
 
 function getDiscount(data) {
@@ -234,105 +173,104 @@ function getAddDiscount(data) {
 	return 0;
 }
 
-function isExpDate(value) {
-	if (value.indexOf('일차') == -1)
-		return false;
-	var tYear = today.getFullYear();
-	var tMonth = getMonthStr(today.getMonth() + 1);
-	if (getThisDate() != tYear + "-" + tMonth)
-		return false;
-	return true;
+function setRemain() {
+    remainValueArray = new Array();
+    for (var expDate of expDateArray) {
+        var performence = 0;
+        for (var data of cookieDataList) {
+			if (!isThisMonth(data) && !isExpDate(data[0]))
+                continue;
+			if (expDate != data[0])
+                continue;
+            performence += (data[5] * data[6]);
+        }
+        remainValueArray.push(new Array(expDate, performence));
+    }
 }
 
-function setAccountBook2() {
-    var valueArray = new Array();
-    for (var data of dataList) {
+function setUsage() {
+    usageValueArray = new Array();
+    for (var data of cookieDataList) {
         if (!isThisMonth(data))
             continue;
-		valueArray.push(data);
+        usageValueArray.push(data);
     }
-    setAccountDiv2("#gbn0", '[ 내역 ]', valueArray);
 }
 
-function setAccountBook3() {
-	var expDateArray = new Array('1일차', '2일차', '3일차', '4일차');
-	var count = 0;
-	for (var expDate of expDateArray) {
+function setExp() {
+    expValueArray = new Array();
+    for (var expDate of expDateArray) {
 		var valueArray = new Array();
-		for (var data of dataList) {
+		for (var data of cookieDataList) {
 			if (!isExpDate(data[0]))
 				continue;
 			if (data[0] != expDate)
 				continue;
 			valueArray.push(data);
 		}
-		setAccountDiv3("#gbn" + (count + 1) + "", '[ ' + expDate + ' ]', valueArray);
-		count++;
+        expValueArray.push(valueArray);
     }
 }
 
-function setAccountDiv1(divId, header, titleArray, valueArray) {
-    setAccountDiv(divId, header);
-    setTable(divId, titleArray, valueArray);
+function show() {
+    initParentDiv();
+    showCommonTable("#discount", "#now", '현재', discountTitleArray, discountNowValueArray);
+    showCommonTable("#discount", "#future", '예상', discountTitleArray, discountFutureValueArray);
+    showCommonTable("#discount", "#remain", '남은 실적', remainTitleArray, remainValueArray);
+    showUsageTable("#usage", "#usage0", '내역', usageTitleArray, usageValueArray);
+    for (var i = 0; i < expDateArray.length; i++) {
+        showExpTable("#exp", "#exp" + (i + 1) + "", expDateArray[i], expTitleArray, expValueArray[i]);
+    }
 }
 
-function setAccountDiv2(divId, title, valueArray) {
-    setAccountDiv(divId, title);
-    setBookTable(divId, valueArray);
+function initParentDiv() {
+    $("#discount").empty();
+    $("#usage").empty();
+    $("#exp").empty();
 }
 
-function setAccountDiv3(divId, title, valueArray) {
-    setAccountDiv(divId, title);
-    setBookTable3(divId, valueArray);
-}
-
-function setAccountDiv(divId, title) {
-    $(divId).empty();
-    setHeader(divId, title);
-}
-
-function setHeader(divId, text) {
-    $(divId).append(
-        $('<table/>').append(
-            $('<tr/>', { height : '30', valign : 'bottom' }).append(
-                $('<td/>', { class : 'accountHeader' }).append(
-                    $('<font/>', { text : text } )
-                )
-            )
-        )
-    );
-}
-
-function setTable(divId, titleArray, valueArray) {
+function showCommonTable(parentDivId, divId, header, titleArray, valueArray) {
+    setDiv(parentDivId, divId, header);
     var table = getTable();
-    setTitle(table, titleArray);
-    setContents(table, valueArray);
+    setCommonTitle(table, titleArray);
+    setCommonContents(table, valueArray);
 	$(divId).append(table);
 }
 
-function setBookTable(divId, valueArray) {
+function showUsageTable(parentDivId, divId, header, titleArray, valueArray) {
+    setDiv(parentDivId, divId, header);
     var table = getTable();
-    setBookTitle(table);
-    setBookContents(table, valueArray);
+    setTitle(table, usageWidthArray, titleArray);
+    setUsageContents(table, valueArray);
     $(divId).append(table);
 }
 
-function setBookTable3(divId, valueArray) {
+function showExpTable(parentDivId, divId, header, titleArray, valueArray) {
+    setDiv(parentDivId, divId, header);
     var table = getTable();
-    setBookTitle3(table);
-    setBookContents3(table, valueArray);
+    setCommonTitle(table, titleArray);
+    setExpContents(table, valueArray);
     $(divId).append(table);
 }
 
-function setTitle(table, titleArray) {
+function setCommonTitle(table, titleArray) {
     var tr = ($('<tr/>'));
     for (var title of titleArray) {
-        tr.append($('<th/>', { align : 'center', width : '25%' }).append($('<font/>', { text : title } )));
+        tr.append($('<th/>', { align : 'center', width : (100 / titleArray.length) + '%' }).append($('<font/>', { text : title } )));
     }
     table.append(tr);
 }
 
-function setContents(table, valueArray) {
+function setTitle(table, widthArray, titleArray) {
+    var tr = ($('<tr/>'));
+    for (var i = 0; i < titleArray.length; i++) {
+        tr.append($('<th/>', { align : 'center', width : widthArray[i] + '%' }).append($('<font/>', { text : titleArray[i] } )));
+
+    }
+    table.append(tr);
+}
+
+function setCommonContents(table, valueArray) {
     for (var value of valueArray) {
         var tr = ($('<tr/>'));
         for (var i = 0; i < value.length; i++) {
@@ -346,19 +284,7 @@ function setContents(table, valueArray) {
     }
 }
 
-function setBookTitle(table) {
-    table.append($('<tr/>')
-		.append($('<th/>', { align : 'center', 'width' : '19%' }).append($('<font/>', { text : '날짜' } )))
-		.append($('<th/>', { align : 'center', 'width' : '14%' }).append($('<font/>', { text : '카드' } )))
-        .append($('<th/>', { align : 'center', 'width' : '14%' }).append($('<font/>', { text : '구매처' } )))
-        .append($('<th/>', { align : 'center', 'width' : '14%' }).append($('<font/>', { text : '간편결제' } )))
-        .append($('<th/>', { align : 'center', 'width' : '13%' }).append($('<font/>', { text : '액면가' } )))
-        .append($('<th/>', { align : 'center', 'width' : '13%' }).append($('<font/>', { text : '거래가' } )))
-        .append($('<th/>', { align : 'center', 'width' : '13%' }).append($('<font/>', { text : '수량' } )))
-	);
-}
-
-function setBookContents(table, valueArray) {
+function setUsageContents(table, valueArray) {
     for (var value of valueArray) {
 		table.append($('<tr/>')
 			.append($('<td/>', { align : 'center' }).append($('<font/>', { text : getDateValue(value[0]), class : getDayClass(value[0]) } )))
@@ -372,17 +298,7 @@ function setBookContents(table, valueArray) {
     }
 }
 
-function setBookTitle3(table) {
-    table.append($('<tr/>')
-		.append($('<th/>', { align : 'center', 'width' : '20%' }).append($('<font/>', { text : '카드' } )))
-        .append($('<th/>', { align : 'center', 'width' : '20%' }).append($('<font/>', { text : '구매처' } )))
-        .append($('<th/>', { align : 'center', 'width' : '20%' }).append($('<font/>', { text : '액면가' } )))
-        .append($('<th/>', { align : 'center', 'width' : '20%' }).append($('<font/>', { text : '거래가' } )))
-        .append($('<th/>', { align : 'center', 'width' : '20%' }).append($('<font/>', { text : '수량' } )))
-	);
-}
-
-function setBookContents3(table, valueArray) {
+function setExpContents(table, valueArray) {
     for (var value of valueArray) {
 		table.append($('<tr/>')
 			.append($('<td/>', { align : 'center' }).append($('<font/>', { text : value[1] } )))
@@ -392,6 +308,29 @@ function setBookContents3(table, valueArray) {
 			.append($('<td/>', { align :  'right' }).append($('<font/>', { text : getCommaValue(value[6]) } )))
 		);
     }
+}
+
+function setDiv(parentDivId, divId, title) {
+    makeDiv(parentDivId, divId);
+    setHeader(divId, title);
+}
+
+function makeDiv(parentDivId, divId) {
+    $(parentDivId).append(
+        $('<div/>', { id : divId.replace("#", ""), style : 'margin-bottom : 15px;' } )
+    );
+}
+
+function setHeader(divId, text) {
+    $(divId).append(
+        $('<table/>').append(
+            $('<tr/>', { height : '30', valign : 'bottom' }).append(
+                $('<td/>', { class : 'accountHeader' }).append(
+                    $('<font/>', { text : '[ ' + text + ' ]' } )
+                )
+            )
+        )
+    );
 }
 
 function getTable() {
@@ -466,6 +405,16 @@ function getDateValue(value) {
 	return value;
 }
 
+function isExpDate(value) {
+	if (value.indexOf('일차') == -1)
+		return false;
+	var tYear = today.getFullYear();
+	var tMonth = getMonthStr(today.getMonth() + 1);
+	if (getThisDate() != tYear + "-" + tMonth)
+		return false;
+	return true;
+}
+
 function getCommaValue(value) {
     return value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
 }
@@ -475,9 +424,9 @@ function setHeight() {
 }
 
 function getDayClass(value) {
-	if (isExpDate(value))
+    if (isExpDate(value))
 		return "normal";
-	var day = new Date(value).format("E")
+	var day = new Date(value).format("E");
 	if (day == "토") {
 		return "saturday";
 	} else if (day == "일") {

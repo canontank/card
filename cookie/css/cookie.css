@@ -41,7 +41,8 @@ select {
 
 .account {
     float : left;
-    padding : 20px;   
+    padding : 20px;
+    border-right : 1px solid #ccc;
 }
 
 .account1 {
@@ -66,10 +67,9 @@ select {
     width : 590px;
     overflow-y : scroll;
 }
-
 .accountHeader {
     font-weight : 600;
-    font-size : large;
+    font-size : medium;
 }
 
 .chart {
