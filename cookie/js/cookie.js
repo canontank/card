@@ -31,7 +31,7 @@ var expDateArray = new Array('1일차', '2일차', '3일차', '4일차');
 var expTitleArray = new Array('카드', '구매처', '액면가', '거래가', '수량');
 var expValueArray = new Array();
 
-// ../../card/common/js/cardData.js 참고
+// ../common/js/cardData.js 참고
 var cardNameArray = cardArray1.concat(cardArray2).concat(cardArray3);
 
 $(function() {
@@ -212,14 +212,24 @@ function setExp() {
     }
 }
 
+function isExpDate(value) {
+	if (value.indexOf('일차') == -1)
+		return false;
+	var tYear = today.getFullYear();
+	var tMonth = getMonthStr(today.getMonth() + 1);
+	if (getThisDate() != tYear + "-" + tMonth)
+		return false;
+	return true;
+}
+
 function show() {
     initParentDiv();
-    showCommonTable("#discount", "#now", '현재', discountTitleArray, discountNowValueArray);
-    showCommonTable("#discount", "#future", '예상', discountTitleArray, discountFutureValueArray);
-    showCommonTable("#discount", "#remain", '남은 실적', remainTitleArray, remainValueArray);
-    showUsageTable("#usage", "#usage0", '내역', usageTitleArray, usageValueArray);
+    setTable("#discount", "#now", '현재', true, discountTitleArray, discountNowValueArray);
+    setTable("#discount", "#future", '예상', true, discountTitleArray, discountFutureValueArray);
+    setTable("#discount", "#remain", '남은 실적', true, remainTitleArray, remainValueArray);
+    setTable("#usage", "#usage0", '내역', false, usageTitleArray, usageValueArray, usageWidthArray);
     for (var i = 0; i < expDateArray.length; i++) {
-        showExpTable("#exp", "#exp" + (i + 1) + "", expDateArray[i], expTitleArray, expValueArray[i]);
+        setTable("#exp", "#exp" + (i + 1) + "", expDateArray[i], false, expTitleArray, expValueArray[i]);
     }
 }
 
@@ -227,114 +237,6 @@ function initParentDiv() {
     $("#discount").empty();
     $("#usage").empty();
     $("#exp").empty();
-}
-
-function showCommonTable(parentDivId, divId, header, titleArray, valueArray) {
-    setDiv(parentDivId, divId, header);
-    var table = getTable();
-    setCommonTitle(table, titleArray);
-    setCommonContents(table, valueArray);
-	$(divId).append(table);
-}
-
-function showUsageTable(parentDivId, divId, header, titleArray, valueArray) {
-    setDiv(parentDivId, divId, header);
-    var table = getTable();
-    setTitle(table, usageWidthArray, titleArray);
-    setUsageContents(table, valueArray);
-    $(divId).append(table);
-}
-
-function showExpTable(parentDivId, divId, header, titleArray, valueArray) {
-    setDiv(parentDivId, divId, header);
-    var table = getTable();
-    setCommonTitle(table, titleArray);
-    setExpContents(table, valueArray);
-    $(divId).append(table);
-}
-
-function setCommonTitle(table, titleArray) {
-    var tr = ($('<tr/>'));
-    for (var title of titleArray) {
-        tr.append($('<th/>', { align : 'center', width : (100 / titleArray.length) + '%' }).append($('<font/>', { text : title } )));
-    }
-    table.append(tr);
-}
-
-function setTitle(table, widthArray, titleArray) {
-    var tr = ($('<tr/>'));
-    for (var i = 0; i < titleArray.length; i++) {
-        tr.append($('<th/>', { align : 'center', width : widthArray[i] + '%' }).append($('<font/>', { text : titleArray[i] } )));
-
-    }
-    table.append(tr);
-}
-
-function setCommonContents(table, valueArray) {
-    for (var value of valueArray) {
-        var tr = ($('<tr/>'));
-        for (var i = 0; i < value.length; i++) {
-            var td = (i == 0) ? '<th/>' : '<td/>';
-            var align = (i == 0) ? 'center' : 'right';
-            var text = (i == 0) ? value[i] : getCommaValue(value[i]);
-            var color = (i == 0) ? '' : getColor(value[i]);
-            tr.append($(td, { align : align }).append($('<font/>', { text : text, color : color } )));
-        }
-        table.append(tr);
-    }
-}
-
-function setUsageContents(table, valueArray) {
-    for (var value of valueArray) {
-		table.append($('<tr/>')
-			.append($('<td/>', { align : 'center' }).append($('<font/>', { text : getDateValue(value[0]), class : getDayClass(value[0]) } )))
-			.append($('<td/>', { align : 'center' }).append($('<font/>', { text : value[1] } )))
-			.append($('<td/>', { align : 'center' }).append($('<font/>', { text : value[2] } )))
-			.append($('<td/>', { align : 'center' }).append($('<font/>', { text : value[3] } )))
-			.append($('<td/>', { align :  'right' }).append($('<font/>', { text : getCommaValue(value[4]) } )))
-			.append($('<td/>', { align :  'right' }).append($('<font/>', { text : getCommaValue(value[5]) } )))
-			.append($('<td/>', { align :  'right' }).append($('<font/>', { text : getCommaValue(value[6]) } )))
-		);
-    }
-}
-
-function setExpContents(table, valueArray) {
-    for (var value of valueArray) {
-		table.append($('<tr/>')
-			.append($('<td/>', { align : 'center' }).append($('<font/>', { text : value[1] } )))
-			.append($('<td/>', { align : 'center' }).append($('<font/>', { text : value[2] } )))
-			.append($('<td/>', { align :  'right' }).append($('<font/>', { text : getCommaValue(value[4]) } )))
-			.append($('<td/>', { align :  'right' }).append($('<font/>', { text : getCommaValue(value[5]) } )))
-			.append($('<td/>', { align :  'right' }).append($('<font/>', { text : getCommaValue(value[6]) } )))
-		);
-    }
-}
-
-function setDiv(parentDivId, divId, title) {
-    makeDiv(parentDivId, divId);
-    setHeader(divId, title);
-}
-
-function makeDiv(parentDivId, divId) {
-    $(parentDivId).append(
-        $('<div/>', { id : divId.replace("#", ""), style : 'margin-bottom : 15px;' } )
-    );
-}
-
-function setHeader(divId, text) {
-    $(divId).append(
-        $('<table/>').append(
-            $('<tr/>', { height : '30', valign : 'bottom' }).append(
-                $('<td/>', { class : 'accountHeader' }).append(
-                    $('<font/>', { text : '[ ' + text + ' ]' } )
-                )
-            )
-        )
-    );
-}
-
-function getTable() {
-    return $('<table/>', { class : 'table table-bordered table-striped' });
 }
 
 function isThisMonth(data) {
@@ -393,47 +295,8 @@ function getPrevDateNum(date) {
     return (y + getMonthStr(m * 1 - 1)) * 1;
 }
 
-function getColor(value) {
-    if (value < 0)
-        return "red";
-    return "black";
-}
-
-function getDateValue(value) {
-	if (!isExpDate(value))
-		return new Date(value).format("yyyy-MM-dd (E)");
-	return value;
-}
-
-function isExpDate(value) {
-	if (value.indexOf('일차') == -1)
-		return false;
-	var tYear = today.getFullYear();
-	var tMonth = getMonthStr(today.getMonth() + 1);
-	if (getThisDate() != tYear + "-" + tMonth)
-		return false;
-	return true;
-}
-
-function getCommaValue(value) {
-    return value.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",")
-}
-
 function setHeight() {
     $(".account").innerHeight(window.innerHeight);
-}
-
-function getDayClass(value) {
-    if (isExpDate(value))
-		return "normal";
-	var day = new Date(value).format("E");
-	if (day == "토") {
-		return "saturday";
-	} else if (day == "일") {
-		return "sunday";
-	} else {
-		return "normal";
-	}
 }
 
 Date.prototype.format = function(f) {
