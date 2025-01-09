@@ -1,16 +1,12 @@
 function setTable(parentDivId, divId, header, isTh, titleArray, valueArray, widthArray) {
     if (valueArray.length == 0)
         return;
-    setDiv(parentDivId, divId, header);
+    makeDiv(parentDivId, divId);
+    setHeader(divId, header);
     var table = getTable();
     setTitle(table, titleArray, widthArray);
     setContents(table, valueArray, isTh);
     $(divId).append(table);
-}
-
-function setDiv(parentDivId, divId, title) {
-    makeDiv(parentDivId, divId);
-    setHeader(divId, title);
 }
 
 function makeDiv(parentDivId, divId) {

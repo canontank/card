@@ -1,5 +1,28 @@
+var today = new Date();
+var year = today.getFullYear();
+var month = getMonthStr(today.getMonth() + 1);
+
+var startYear = 2010;
+
+function initDatePicker(sYear) {
+    setStartYear(sYear);
+    initYearSelect();
+    initMonthSelect();
+    clickPrevMonthBtn();
+    clickThisMonthBtn();
+    clickNextMonthBtn();
+    changeYear();
+    changeMonth();
+}
+
+function setStartYear(sYear) {
+    if (sYear == undefined)
+        return;
+    startYear = sYear;
+}
+
 function initYearSelect() {
-    for (var i = 2010; i <= year; i++) {
+    for (var i = startYear; i <= year; i++) {
         $("#yearSelect").append("<option value=" + i + ">" + i + "</option>");
     }
     $("#yearSelect").val(year);
@@ -15,7 +38,7 @@ function initMonthSelect() {
 function clickPrevMonthBtn() {
     $("#prevMonthBtn").click(function() {
         if (month == "01") {
-			if (year * 1 == 2010)
+			if (year * 1 == startYear)
 				return;
             year = (year * 1 - 1) + "";
             month = "12";
@@ -39,7 +62,7 @@ function clickThisMonthBtn() {
 function clickNextMonthBtn() {
     $("#nextMonthBtn").click(function() {
         if (month == "12") {
-			if (year * 1 == todayYear * 1)
+			if (year * 1 == today.getFullYear() * 1)
 				return;
             year = (year * 1 + 1) + "";
             month = "01";
@@ -68,4 +91,20 @@ function changeMonth() {
 function setYearMonth() {
     $("#yearSelect").val(year);
     $("#monthSelect").val(month);
+}
+
+function getMonthStr(month) {
+    if (month < 10)
+        return "0" + month;
+    return month;
+}
+
+function isThisMonth(value) {
+    if (value.startsWith(getThisDate()))
+        return true;
+    return false;
+}
+
+function getThisDate() {
+    return year + "-" + month;
 }
