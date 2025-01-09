@@ -24,12 +24,13 @@ var expDateArray = new Array('1일차', '2일차', '3일차', '4일차');
 var expTitleArray = new Array('카드', '구매처', '액면가', '거래가', '수량');
 var expValueArray = new Array();
 
-// ../common/js/cardData.js 참고
+var cardArray1 = new Array('쿠키', '쿠키런', '람다람', '총몇명', '야코', '스무살', '선불교통', '12세후불');
+var cardArray2 = new Array('한베가족', '롤챔코', 'K-패스');
+var cardArray3 = new Array('국민행복');
 var cardNameArray = cardArray1.concat(cardArray2).concat(cardArray3);
 
 $(function() {
-    $(window).resize(setHeight);
-    setHeight();
+    initHeight();
     initDatePicker(2022);
     setCookieDataList();
 });
@@ -183,8 +184,4 @@ function initParentDiv() {
     $("#discount").empty();
     $("#usage").empty();
     $("#exp").empty();
-}
-
-function setHeight() {
-    $(".account").innerHeight(window.innerHeight);
 }

@@ -94,8 +94,7 @@ var bookWidthArray = new Array(13, 9, 10, 10, 10, 10, 10, 10, 10, 8);
 var bookTitleArray = new Array('날짜', '카드사', '카드명', '구매처', '충전처', '종류', '수수료', '원가', '단가', '수량');
 
 $(function() {
-    $(window).resize(setHeight);
-    setHeight();
+    initHeight();
     initDatePicker(2022);
     setDataList();
 });
@@ -234,8 +233,4 @@ function show() {
 function initParentDiv() {
     $("#book1").empty();
     $("#book2").empty();
-}
-
-function setHeight() {
-    $(".account").innerHeight(window.innerHeight);
 }
