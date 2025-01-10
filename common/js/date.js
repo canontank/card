@@ -4,7 +4,7 @@ var month = getMonthStr(today.getMonth() + 1);
 
 var startYear = 2010;
 
-function initDatePicker(sYear) {
+function initDate(sYear) {
     setStartYear(sYear);
     initYearSelect();
     initMonthSelect();
@@ -46,7 +46,7 @@ function clickPrevMonthBtn() {
             month = getMonthStr(month * 1 - 1);
         }
         setYearMonth();
-        setAccountBook();
+        execute();
     });
 }
 
@@ -55,7 +55,7 @@ function clickThisMonthBtn() {
         year = today.getFullYear();
         month = getMonthStr(today.getMonth() + 1);
         setYearMonth();
-        setAccountBook();
+        execute();
     });
 }
 
@@ -70,21 +70,21 @@ function clickNextMonthBtn() {
             month = getMonthStr(month * 1 + 1);
         }
         setYearMonth();
-        setAccountBook();
+        execute();
     });
 }
 
 function changeYear() {
     $("#yearSelect").change(function() {
         year = this.value;
-        setAccountBook();
+        execute();
     });
 }
 
 function changeMonth() {
     $("#monthSelect").change(function() {
         month = this.value;
-        setAccountBook();
+        execute();
     });
 }
 

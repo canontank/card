@@ -95,7 +95,7 @@ var bookTitleArray = new Array('날짜', '카드사', '카드명', '구매처', 
 
 $(function() {
     initHeight();
-    initDatePicker(2022);
+    initDate(2022);
     setDataList();
 });
 
@@ -103,7 +103,7 @@ function setDataList() {
     dataList = getDataList(url, data, keyList, cashKeyList);
 }
 
-function setAccountBook() {
+function execute() {
     set();
     show();
 }
@@ -218,7 +218,12 @@ function setGiftTotalValueArray() {
 }
 
 function show() {
-    initParentDiv();
+    showBook1();
+    showBook2();
+}
+
+function showBook1() {
+    $("#book1").empty();
     setTable("#book1", "#book11", "카드", true, cardTitleArray, cardValueArray);
     setTable("#book1", "#book12", "합계", true, giftTitleArray, giftTotalValueArray);
     for (var i = 0; i < giftValueArray.length; i++) {
@@ -227,10 +232,9 @@ function show() {
         setTable("#book1", "#book" + (i + 13), chargeTitleArray[i + 1], true, giftTitleArray, giftValueArray[i]);
     }
     setTable("#book1", "#book" + (giftValueArray.length + 13), '주의사항', true, notiTitleArray, notiValueArray, notiWidthArray);
-    setTable("#book2", "#book21", '상품권', false, bookTitleArray, thisMonthDataList, bookWidthArray);
 }
 
-function initParentDiv() {
-    $("#book1").empty();
+function showBook2() {
     $("#book2").empty();
+    setTable("#book2", "#book21", '상품권', false, bookTitleArray, thisMonthDataList, bookWidthArray);
 }

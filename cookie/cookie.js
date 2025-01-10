@@ -31,7 +31,7 @@ var cardNameArray = cardArray1.concat(cardArray2).concat(cardArray3);
 
 $(function() {
     initHeight();
-    initDatePicker(2022);
+    initDate(2022);
     setCookieDataList();
 });
 
@@ -39,7 +39,7 @@ function setCookieDataList() {
     cookieDataList = getDataList(cookieUrl, cookieData, cookieKeyList, cookieCashKeyList);
 }
 
-function setAccountBook() {
+function execute() {
     set();
     show();
 }
@@ -170,18 +170,26 @@ function isExpDate(value) {
 }
 
 function show() {
-    initParentDiv();
+    showDiscount();
+    showUsage();
+    showExp();    
+}
+
+function showDiscount() {
+    $("#discount").empty();
     setTable("#discount", "#now", '현재', true, discountTitleArray, discountNowValueArray);
     setTable("#discount", "#future", '예상', true, discountTitleArray, discountFutureValueArray);
     setTable("#discount", "#remain", '남은 실적', true, remainTitleArray, remainValueArray);
+}
+
+function showUsage() {
+    $("#usage").empty();
     setTable("#usage", "#usage0", '내역', false, usageTitleArray, usageValueArray, usageWidthArray);
+}
+
+function showExp() {
+    $("#exp").empty();
     for (var i = 0; i < expDateArray.length; i++) {
         setTable("#exp", "#exp" + (i + 1) + "", expDateArray[i], false, expTitleArray, expValueArray[i]);
     }
-}
-
-function initParentDiv() {
-    $("#discount").empty();
-    $("#usage").empty();
-    $("#exp").empty();
 }

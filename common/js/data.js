@@ -8,7 +8,7 @@ function getDataList(url, data, keyList, cashKeyList) {
             for (var row of rows) {
                 dataList.push(getData(row, keyList, cashKeyList));
             }
-            setAccountBook();
+            execute();
         },
         error : function() {
             getDataList(url, data);
