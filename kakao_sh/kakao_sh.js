@@ -121,33 +121,25 @@ function getCount() {
 }
 
 function getPrice(card) {
-	var price = 0;
-	for (var data of thisMonthDataList) {
-        if (card != '' && card != data[1])
-            continue;
-        price += data[3];
-	}
-	return price;
+	return getPCR(card, 3);
 }
 
 function getCharge(card) {
-	var charge = 0;
-	for (var data of thisMonthDataList) {
-        if (card != '' && card != data[1])
-            continue;
-		charge += data[4];
-    }
-	return charge;
+	return getPCR(card, 4);
 }
 
 function getRefund(card) {
-	var refund = 0;
+	return getPCR(card, 5);
+}
+
+function getPCR(card, index) {
+    var pcr = 0;
 	for (var data of thisMonthDataList) {
         if (card != '' && card != data[1])
             continue;
-		refund += data[5];
+        pcr += data[index];
     }
-	return refund;
+	return pcr;
 }
 
 function getLoss(card) {
