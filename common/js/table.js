@@ -60,6 +60,8 @@ function getTd(isTh, index) {
 function getAlign(value) {
     if (!isNaN(value))
         return 'right';
+    if (value.indexOf("%") > -1)
+        return 'right';
     return 'center';
 }
 

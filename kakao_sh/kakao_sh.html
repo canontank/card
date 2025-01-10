@@ -5,14 +5,18 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 		<script type="text/javascript" src="../common/js/jquery-1.11.1.js"></script>
 		<script type="text/javascript" src="../common/js/bootstrap.js"></script>
-		<script type="text/javascript" src="js/kakao_sh.js"></script>
+		<script type="text/javascript" src="../common/js/height.js"></script>
+        <script type="text/javascript" src="../common/js/data.js"></script>
+        <script type="text/javascript" src="../common/js/date.js"></script>
+        <script type="text/javascript" src="../common/js/table.js"></script>
+		<script type="text/javascript" src="kakao_sh.js"></script>
 		<link type="text/css" rel="stylesheet" href="../common/css/bootstrap.css">
-		<link type="text/css" rel="stylesheet" href="css/kakao_sh.css">
+		<link type="text/css" rel="stylesheet" href="kakao_sh.css">
 	</head>
 
 	<body>
 		<div class="account account1">
-            <div id="date">
+            <div style="margin-bottom: 10px;">
                 <div style="padding-top:5px; padding-bottom:5px;">
                     <button id="prevMonthBtn">지난 달</button>
                     <button id="thisMonthBtn">현재</button>
@@ -29,23 +33,9 @@
                     </tr>
                 </table>
             </div>
-            <div class="clear10"></div>
-			<div id="book11"></div>
-            <div class="clear10"></div>
-			<div id="book12"></div>
-			<div class="clear10"></div>
-			<div id="book13"></div>
-			<div class="clear10"></div>
-			<div id="book14"></div>
-			<div class="clear10"></div>
+			<div id="book1"></div>
 		</div>
-		<div class="hidden-xs">
-	        <div class="account account2">
-	            <div id="gbn0"></div>
-			</div>
-			<div class="account account2">
-	            <div id="gbn1"></div>
-			</div>
-		</div>
+		<div id="book2" class="hidden-xs account account2"></div>
+		<div id="book3" class="hidden-xs account account2"></div>
 	</body>
 </html>
