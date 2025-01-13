@@ -11,12 +11,8 @@ var thisMonthDataList = new Array();
 $(function() {
     initHeight();
     initDate(2022);
-    setDataList();
+    setDataList(url, data, keyList, cashKeyList, dataList);
 });
-
-function setDataList() {
-    dataList = getDataList(url, data, keyList, cashKeyList);
-}
 
 function execute() {
     setThisMonthDataList();

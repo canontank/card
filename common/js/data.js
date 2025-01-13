@@ -1,5 +1,4 @@
-function getDataList(url, data, keyList, cashKeyList) {
-    var dataList = new Array();
+function setDataList(url, data, keyList, cashKeyList, dataList) {
     $.ajax({
         type : "GET",
         url : url,
@@ -11,10 +10,9 @@ function getDataList(url, data, keyList, cashKeyList) {
             execute();
         },
         error : function() {
-            getDataList(url, data);
+            setDataList(url, data, keyList, cashKeyList, dataList);
         }
     });
-    return dataList;
 }
 
 function getData(row, keyList, cashKeyList) {

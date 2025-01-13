@@ -21,12 +21,8 @@ var cardNameArray = cardArray1.concat(cardArray2).concat(cardArray3);
 $(function() {
     initHeight();
     initDate(2022);
-    setCookieDataList();
+    setDataList(cookieUrl, cookieData, cookieKeyList, cookieCashKeyList, cookieDataList);
 });
-
-function setCookieDataList() {
-    cookieDataList = getDataList(cookieUrl, cookieData, cookieKeyList, cookieCashKeyList);
-}
 
 function execute() {
     setCookieThisMonthExpDataList();
