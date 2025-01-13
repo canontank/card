@@ -2,27 +2,16 @@ var cookieUrl = "https://script.google.com/macros/s/AKfycbwKoLpLj1urPmJZ9ucgGk08
 var cookieData = {
     "cmd" : "get"
 };
+var widthArray = new Array(19, 14, 14, 14, 13, 13, 13);
 var cookieKeyList = new Array('날짜', '카드', '구매처', '간편결제', '액면가', '거래가', '수량');
 var cookieCashKeyList = new Array('액면가', '거래가', '수량');
 var cookieDataList = new Array();
 
-var compareTitleArray = new Array('카드명', '가계부', '쿠키', '비교');
-var compareValueArray = new Array();
-
-var discountTitleArray = new Array('구분', '실적', '기본할인', '추가할인');
-var discountNowValueArray = new Array();
-var discountFutureValueArray = new Array();
-
-var remainTitleArray = new Array('날짜', '실적');
-var remainValueArray = new Array();
-
-var usageWidthArray = new Array(19, 14, 14, 14, 13, 13, 13);
-var usageTitleArray = new Array('날짜', '카드', '구매처', '간편결제', '액면가', '거래가', '수량');
-var usageValueArray = new Array();
+var cookieThisMonthExpDataList = new Array();
+var cookieThisMonthDataList = new Array();
+var cookieExpDataList = new Array();
 
 var expDateArray = new Array('1일차', '2일차', '3일차', '4일차');
-var expTitleArray = new Array('카드', '구매처', '액면가', '거래가', '수량');
-var expValueArray = new Array();
 
 var cardArray1 = new Array('쿠키', '쿠키런', '람다람', '총몇명', '야코', '스무살', '선불교통', '12세후불');
 var cardArray2 = new Array('한베가족', '롤챔코', 'K-패스');
@@ -40,54 +29,66 @@ function setCookieDataList() {
 }
 
 function execute() {
-    set();
-    show();
+    setCookieThisMonthExpDataList();
+    setDiv1();
+    setDiv2();
+    setDiv3();
 }
 
-function set() {
-    setDiscount();
-    setRemain();
-    setUsage();
-    setExp();
+function setCookieThisMonthExpDataList() {
+    cookieThisMonthExpDataList = new Array();
+    cookieThisMonthDataList = new Array();
+    cookieExpDataList = new Array();
+    for (var data of cookieDataList) {
+        if (isThisMonth(data[0])) {
+            cookieThisMonthDataList.push(data);
+        } else if (isExpDate(data[0])) {
+            cookieExpDataList.push(data);
+        }
+    }
+    cookieThisMonthExpDataList = cookieThisMonthDataList.concat(cookieExpDataList);
 }
 
-function setDiscount() {
+function isExpDate(value) {
+    if (value.indexOf('일차') == -1)
+        return false;
+    var tYear = today.getFullYear();
+    var tMonth = getMonthStr(today.getMonth() + 1);
+    if (getThisDate() != tYear + "-" + tMonth)
+        return false;
+    return true;
+}
+
+function setDiv1() {
+    $("#discount").empty();
     setNow();
     setFuture();
+    setRemain();
 }
 
 function setNow() {
-    discountNowValueArray = new Array();
-    for (var card of cardNameArray) {
-        var valueArray = new Array(card, 0, 0, 0);
-        for (var data of cookieDataList) {
-            if (!isThisMonth(data[0]))
-                continue;
-            if (card != data[1])
-                continue;
-            valueArray[1] += (data[5] * data[6]);
-            valueArray[2] += getDiscount(data);
-            valueArray[3] += getAddDiscount(data);
-        }
-        discountNowValueArray.push(valueArray);
-    }
+    setDiscount('#now', '현재', cookieThisMonthDataList);
 }
 
 function setFuture() {
-    discountFutureValueArray = new Array();
+    setDiscount('#future', '예상', cookieThisMonthExpDataList);
+}
+
+function setDiscount(divId, header, thisDataList) {
+    var titleArray = new Array('구분', '실적', '기본할인', '추가할인');
+    var valueArray = new Array();
     for (var card of cardNameArray) {
-        var valueArray = new Array(card, 0, 0, 0);
-        for (var data of cookieDataList) {
-            if (!isThisMonth(data[0]) && !isExpDate(data[0]))
-                continue;
+        var value = new Array(card, 0, 0, 0);
+        for (var data of thisDataList) {
             if (card != data[1])
                 continue;
-            valueArray[1] += (data[5] * data[6]);
-            valueArray[2] += getDiscount(data);
-            valueArray[3] += getAddDiscount(data);
+            value[1] += (data[5] * data[6]);
+            value[2] += getDiscount(data);
+            value[3] += getAddDiscount(data);
         }
-        discountFutureValueArray.push(valueArray);
+        valueArray.push(value);
     }
+    setTable("#discount", divId, header, true, titleArray, valueArray);
 }
 
 function getDiscount(data) {
@@ -121,75 +122,39 @@ function getAddDiscount(data) {
 }
 
 function setRemain() {
-    remainValueArray = new Array();
+    var titleArray = new Array('날짜', '실적');
+    var valueArray = new Array();
     for (var expDate of expDateArray) {
-        var performence = 0;
-        for (var data of cookieDataList) {
-            if (!isThisMonth(data[0]) && !isExpDate(data[0]))
-                continue;
+        var value = new Array(expDate, 0);
+        for (var data of cookieExpDataList) {
             if (expDate != data[0])
                 continue;
-            performence += (data[5] * data[6]);
+            value[1] += (data[5] * data[6]);
         }
-        remainValueArray.push(new Array(expDate, performence));
+        valueArray.push(value);
     }
+    setTable("#discount", "#remain", '남은 실적', true, titleArray, valueArray);
 }
 
-function setUsage() {
-    usageValueArray = new Array();
-    for (var data of cookieDataList) {
-        if (!isThisMonth(data[0]))
-            continue;
-        usageValueArray.push(data);
-    }
+function setDiv2() {
+    $("#usage").empty();
+    setTable("#usage", "#usage0", '내역', false, cookieKeyList, cookieThisMonthDataList, widthArray);
+}
+
+function setDiv3() {
+    $("#exp").empty();
+    setExp();
 }
 
 function setExp() {
-    expValueArray = new Array();
+    var titleArray = new Array('카드', '구매처', '액면가', '거래가', '수량');
     for (var expDate of expDateArray) {
         var valueArray = new Array();
-        for (var data of cookieDataList) {
-            if (!isExpDate(data[0]))
-                continue;
+        for (var data of cookieExpDataList) {
             if (data[0] != expDate)
                 continue;
-            valueArray.push(data);
+            valueArray.push(new Array(data[1], data[2], data[4], data[5], data[6]));
         }
-        expValueArray.push(valueArray);
-    }
-}
-
-function isExpDate(value) {
-    if (value.indexOf('일차') == -1)
-        return false;
-    var tYear = today.getFullYear();
-    var tMonth = getMonthStr(today.getMonth() + 1);
-    if (getThisDate() != tYear + "-" + tMonth)
-        return false;
-    return true;
-}
-
-function show() {
-    showDiscount();
-    showUsage();
-    showExp();    
-}
-
-function showDiscount() {
-    $("#discount").empty();
-    setTable("#discount", "#now", '현재', true, discountTitleArray, discountNowValueArray);
-    setTable("#discount", "#future", '예상', true, discountTitleArray, discountFutureValueArray);
-    setTable("#discount", "#remain", '남은 실적', true, remainTitleArray, remainValueArray);
-}
-
-function showUsage() {
-    $("#usage").empty();
-    setTable("#usage", "#usage0", '내역', false, usageTitleArray, usageValueArray, usageWidthArray);
-}
-
-function showExp() {
-    $("#exp").empty();
-    for (var i = 0; i < expDateArray.length; i++) {
-        setTable("#exp", "#exp" + (i + 1) + "", expDateArray[i], false, expTitleArray, expValueArray[i]);
+        setTable("#exp", "#exp" + expDate, expDate, false, titleArray, valueArray);
     }
 }
