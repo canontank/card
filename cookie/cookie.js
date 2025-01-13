@@ -26,9 +26,9 @@ $(function() {
 
 function execute() {
     setCookieThisMonthExpDataList();
-    setDiv1();
-    setDiv2();
-    setDiv3();
+    setDiscountDiv();
+    setUsageDiv();
+    setExpDiv();
 }
 
 function setCookieThisMonthExpDataList() {
@@ -55,7 +55,7 @@ function isExpDate(value) {
     return true;
 }
 
-function setDiv1() {
+function setDiscountDiv() {
     $("#discount").empty();
     setNow();
     setFuture();
@@ -132,12 +132,12 @@ function setRemain() {
     setTable("#discount", "#remain", '남은 실적', true, titleArray, valueArray);
 }
 
-function setDiv2() {
+function setUsageDiv() {
     $("#usage").empty();
     setTable("#usage", "#usage0", '내역', false, cookieKeyList, cookieThisMonthDataList, widthArray);
 }
 
-function setDiv3() {
+function setExpDiv() {
     $("#exp").empty();
     setExp();
 }
