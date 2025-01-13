@@ -58,9 +58,7 @@ function getTd(isTh, index) {
 }
 
 function getAlign(value) {
-    if (!isNaN(value))
-        return 'right';
-    if (value.indexOf("%") > -1)
+    if (!isNaN(value) || !isNaN(value.replace("%", "")))
         return 'right';
     return 'center';
 }
