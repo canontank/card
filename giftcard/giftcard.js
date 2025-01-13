@@ -2,6 +2,7 @@ var url = "https://script.google.com/macros/s/AKfycby0MRiCzRAqQcJiZs_n8e6wmLkSi4
 var data = {
     "cmd" : "get"
 };
+var widthArray = new Array(13, 9, 10, 10, 10, 10, 10, 10, 10, 8);
 var keyList = new Array('날짜', '카드사', '카드명', '구매처', '충전처', '종류', '수수료', '원가', '단가', '수량');
 var cashKeyList = new Array('원가', '단가', '수량');
 var dataList = new Array();
@@ -89,9 +90,6 @@ var cardValueArray = new Array();
 var giftTitleArray = new Array('구분', '충전한도', '충전금액', '남은금액');
 var giftTotalValueArray = new Array();
 var giftValueArray = new Array();
-
-var bookWidthArray = new Array(13, 9, 10, 10, 10, 10, 10, 10, 10, 8);
-var bookTitleArray = new Array('날짜', '카드사', '카드명', '구매처', '충전처', '종류', '수수료', '원가', '단가', '수량');
 
 $(function() {
     initHeight();
@@ -181,31 +179,30 @@ function getRate(rate) {
 function setGiftValueArray() {
     giftValueArray = new Array();
     for (var i = 1; i < chargeTitleArray.length; i++) {
-        var array = new Array();
+        var valueArray = new Array();
         for (var chargeLimit of chargeLimitArray) {
-            var value = 0;
+            var value = new Array(chargeLimit[0], chargeLimit[i], 0, 0);
             for (var data of thisMonthDataList) {
                 if (data[4] != chargeLimit[0])
                     continue;
                 if (data[5] != chargeTitleArray[i])
                     continue;
-                value += (data[7] * data[9]);
+                value[2] += (data[7] * data[9]);
             }
-            if (chargeLimit[i] == 0 && value == 0)
+            if (value[1] == 0 && value[2] == 0)
                 continue;
-            var remain = (chargeLimit[i] - value < 0) ? 0 : chargeLimit[i] - value;
-            array.push(new Array(chargeLimit[0], chargeLimit[i], value, remain));
+            value[3] = (value[1] - value[2] < 0) ? 0 : value[1] - value[2];
+            valueArray.push(value);
         }
-        giftValueArray.push(array);
+        giftValueArray.push(valueArray);
     }
 }
 
 function setGiftTotalValueArray() {
     giftTotalValueArray = new Array();
     for (var i = 0; i < giftValueArray.length; i++) {
+        var totalArray = new Array(chargeTitleArray[i + 1], 0, 0, 0);
         var giftArray = giftValueArray[i];
-        var totalArray = new Array("", 0, 0, 0);
-        totalArray[0] = chargeTitleArray[i + 1];
         for (var array of giftArray) {
             totalArray[1] += array[1];
             totalArray[2] += array[2];
@@ -227,8 +224,6 @@ function showBook1() {
     setTable("#book1", "#book11", "카드", true, cardTitleArray, cardValueArray);
     setTable("#book1", "#book12", "합계", true, giftTitleArray, giftTotalValueArray);
     for (var i = 0; i < giftValueArray.length; i++) {
-        if (giftValueArray[i].length == 0)
-            continue;
         setTable("#book1", "#book" + (i + 13), chargeTitleArray[i + 1], true, giftTitleArray, giftValueArray[i]);
     }
     setTable("#book1", "#book" + (giftValueArray.length + 13), '주의사항', true, notiTitleArray, notiValueArray, notiWidthArray);
@@ -236,5 +231,5 @@ function showBook1() {
 
 function showBook2() {
     $("#book2").empty();
-    setTable("#book2", "#book21", '상품권', false, bookTitleArray, thisMonthDataList, bookWidthArray);
+    setTable("#book2", "#book21", '상품권', false, keyList, thisMonthDataList, widthArray);
 }
