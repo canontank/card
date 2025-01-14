@@ -105,6 +105,34 @@ function isThisMonth(value) {
     return false;
 }
 
+function isPrevMonth(value) {
+    if (value.startsWith(getPrevDate()))
+        return true;
+    return false;
+}
+
+function isPrevPrevMonth(value) {
+    if (value.startsWith(getPrevPrevDate()))
+        return true;
+    return false;
+}
+
 function getThisDate() {
     return year + "-" + month;
+}
+
+function getPrevDate() {
+    if (month == "01") {
+        return (year * 1 - 1) + "-12";
+    }
+    return year + "-" + getMonthStr(month * 1 - 1);
+}
+
+function getPrevPrevDate() {
+    if (month == "01") {
+        return (year * 1 - 1) + "-11";
+    } else if (month == "02") {
+        return (year * 1 - 1) + "-12";
+    }
+    return year + "-" + getMonthStr(month * 1 - 2);
 }

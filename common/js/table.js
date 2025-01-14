@@ -11,19 +11,15 @@ function setTable(parentDivId, divId, header, isTh, titleArray, valueArray, widt
 
 function makeDiv(parentDivId, divId) {
     $(parentDivId).append(
-        $('<div/>', { id : divId.replace("#", ""), style : 'margin-bottom : 10px;' } )
+        $('<div/>', { id : divId.replace("#", ""), style : 'margin-bottom : 15px;' } )
     );
 }
 
-function setHeader(divId, text) {
+function setHeader(divId, header) {
+    if (header == '')
+		return;
     $(divId).append(
-        $('<table/>').append(
-            $('<tr/>', { height : '30', valign : 'bottom' }).append(
-                $('<td/>', { class : 'accountHeader' }).append(
-                    $('<font/>', { text : '[ ' + text + ' ]' } )
-                )
-            )
-        )
+        $('<font/>', { class: 'accountHeader', text : "[ " + header + " ]" } )
     );
 }
 
