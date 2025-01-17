@@ -43,7 +43,7 @@ function setBook11() {
 	var titleArray = new Array('구분', '횟수', '거래금액', '환급금액');
     var valueArray = new Array();
     valueArray.push(new Array('합계', getCount(), getPrice(''), getRefund('')));
-    setTable("#book1", "#book11", "합계", true, titleArray, valueArray);
+    setTable("#book1", "합계", true, titleArray, valueArray);
 }
 
 function setBook12() {
@@ -53,7 +53,7 @@ function setBook12() {
     for (var card of cardArray) {
         valueArray.push(new Array(card, getPrice(card), getCharge(card), getRefund(card)));
     }
-    setTable("#book1", "#book12", "충전", true, titleArray, valueArray);
+    setTable("#book1", "충전", true, titleArray, valueArray);
 }
 
 function setBook13() {
@@ -62,7 +62,7 @@ function setBook13() {
     var price = getPrice('');
     var loss = getLoss('');
 	valueArray.push(new Array('합계', getPrice(''), getLoss(''), getLossPer(price, loss)));
-    setTable("#book1", "#book13", "합계", true, titleArray, valueArray);
+    setTable("#book1", "합계", true, titleArray, valueArray);
 }
 
 function setBook14() {
@@ -74,7 +74,7 @@ function setBook14() {
         var loss = getLoss(card);
         valueArray.push(new Array(card, getPrice(card), getLoss(card), getLossPer(price, loss)));
     }
-    setTable("#book1", "#book14", "손실", true, titleArray, valueArray);
+    setTable("#book1", "손실", true, titleArray, valueArray);
 }
 
 function setBook2() {
@@ -89,7 +89,7 @@ function setBook2() {
         }
 		valueArray.push(value);
     }
-    setTable("#book2", "#book21", "충전 내역", false, bookTitleArray, valueArray, bookWidthArray);
+    setTable("#book2", "충전 내역", false, bookTitleArray, valueArray, bookWidthArray);
 }
 
 function setBook3() {
@@ -104,7 +104,7 @@ function setBook3() {
         }
         valueArray.push(value);
     }
-    setTable("#book3", "#book31", "환급 내역", false, bookTitleArray, valueArray, bookWidthArray);
+    setTable("#book3", "환급 내역", false, bookTitleArray, valueArray, bookWidthArray);
 }
 
 function getCount() {

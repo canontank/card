@@ -215,12 +215,12 @@ function show() {
 
 function showBook1() {
     $("#book1").empty();
-    setTable("#book1", "#book11", "카드", true, cardTitleArray, cardValueArray);
-    setTable("#book1", "#book12", "합계", true, giftTitleArray, giftTotalValueArray);
+    setTable("#book1", "카드", true, cardTitleArray, cardValueArray);
+    setTable("#book1", "합계", true, giftTitleArray, giftTotalValueArray);
     for (var i = 0; i < giftValueArray.length; i++) {
-        setTable("#book1", "#book" + (i + 13), chargeTitleArray[i + 1], true, giftTitleArray, giftValueArray[i]);
+        setTable("#book1", chargeTitleArray[i + 1], true, giftTitleArray, giftValueArray[i]);
     }
-    setTable("#book1", "#book" + (giftValueArray.length + 13), '주의사항', true, notiTitleArray, notiValueArray, notiWidthArray);
+    setTable("#book1", '주의사항', true, notiTitleArray, notiValueArray, notiWidthArray);
 }
 
 function showBook2() {
@@ -235,5 +235,5 @@ function showBook2() {
         }
         valueArray.push(value);
     }
-    setTable("#book2", "#book21", '상품권', false, titleArray, valueArray, widthArray);
+    setTable("#book2", '상품권', false, titleArray, valueArray, widthArray);
 }

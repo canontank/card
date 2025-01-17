@@ -61,14 +61,14 @@ function setDiscountDiv() {
 }
 
 function setNow() {
-    setDiscount('#now', '현재', cookieThisMonthDataList);
+    setDiscount('현재', cookieThisMonthDataList);
 }
 
 function setFuture() {
-    setDiscount('#future', '예상', cookieThisMonthExpDataList);
+    setDiscount('예상', cookieThisMonthExpDataList);
 }
 
-function setDiscount(divId, header, thisDataList) {
+function setDiscount(header, thisDataList) {
     var titleArray = new Array('구분', '실적', '기본할인', '추가할인');
     var valueArray = new Array();
     for (var card of cardNameArray) {
@@ -82,7 +82,7 @@ function setDiscount(divId, header, thisDataList) {
         }
         valueArray.push(value);
     }
-    setTable("#discount", divId, header, true, titleArray, valueArray);
+    setTable("#discount", header, true, titleArray, valueArray);
 }
 
 function getDiscount(data) {
@@ -127,7 +127,7 @@ function setRemain() {
         }
         valueArray.push(value);
     }
-    setTable("#discount", "#remain", '남은 실적', true, titleArray, valueArray);
+    setTable("#discount", '남은 실적', true, titleArray, valueArray);
 }
 
 function setUsageDiv() {
@@ -142,7 +142,7 @@ function setUsageDiv() {
         }
         valueArray.push(value);
     }
-    setTable("#usage", "#usage0", '내역', false, titleArray, valueArray, widthArray);
+    setTable("#usage", '내역', false, titleArray, valueArray, widthArray);
 }
 
 function setExpDiv() {
@@ -159,6 +159,6 @@ function setExpDiv() {
             }
             valueArray.push(value);
         }
-        setTable("#exp", "#exp" + expDate, expDate, false, titleArray, valueArray);
+        setTable("#exp", expDate, false, titleArray, valueArray);
     }
 }

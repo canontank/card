@@ -1,24 +1,24 @@
-function setTable(parentDivId, divId, header, isTh, titleArray, valueArray, widthArray) {
+function setTable(parentDivId, header, isTh, titleArray, valueArray, widthArray) {
     if (valueArray.length == 0)
         return;
-    makeDiv(parentDivId, divId);
-    setHeader(divId, header);
+    var div = makeDiv(parentDivId);
+    setHeader(div, header);
     var table = getTable();
     setTitle(table, titleArray, widthArray);
     setContents(table, valueArray, isTh);
-    $(divId).append(table);
+    div.append(table);
 }
 
-function makeDiv(parentDivId, divId) {
-    $(parentDivId).append(
-        $('<div/>', { id : divId.replace("#", ""), style : 'margin-bottom : 15px;' } )
-    );
+function makeDiv(parentDivId) {
+    var div = $('<div/>', { style : 'margin-bottom : 15px;' } );
+    $(parentDivId).append(div);
+    return div;
 }
 
-function setHeader(divId, header) {
+function setHeader(div, header) {
     if (header == '')
 		return;
-    $(divId).append(
+    div.append(
         $('<font/>', { class: 'accountHeader', text : "[ " + header + " ]" } )
     );
 }
