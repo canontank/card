@@ -32,7 +32,6 @@ function setTitle(table, titleArray, widthArray) {
     for (var i = 0; i < titleArray.length; i++) {
         var width = (widthArray == null) ? (100 / titleArray.length) : widthArray[i];
         tr.append($('<th/>', { align : 'center', width : width + '%' }).append($('<font/>', { text : titleArray[i] } )));
-
     }
     table.append(tr);
 }

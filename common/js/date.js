@@ -117,6 +117,12 @@ function isPrevPrevMonth(value) {
     return false;
 }
 
+function getDate(value) {
+    if (value == "")
+        return "";
+    return value.slice(0, 4) + "-" + value.slice(5, 7);
+}
+
 function getThisDate() {
     return year + "-" + month;
 }
