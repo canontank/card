@@ -1,28 +1,23 @@
-function setDataList(url, data, keyList, cashKeyList, dataList) {
+function setDataList(url, data, cashKeyList, dataList) {
     $.ajax({
         type : "GET",
         url : url,
         data : data,
         success : function(rows) {
             for (var row of rows) {
-                dataList.push(getData(row, keyList, cashKeyList));
+                dataList.push(getData(row, cashKeyList));
             }
             execute();
         },
         error : function() {
-            setDataList(url, data, keyList, cashKeyList, dataList);
+            setDataList(url, data, cashKeyList, dataList);
         }
     });
 }
 
-function getData(row, keyList, cashKeyList) {
-    var data = new Array();
-    for (var key of keyList) {
-        var value = row[key];
-        if (cashKeyList.includes(key)) {
-            value = value.replaceAll(",", "") * 1;
-        }
-        data.push(value);
+function getData(row, cashKeyList) {
+    for (var key of cashKeyList) {
+        row[key] = (row[key] == undefined) ? 0 : row[key].replaceAll(",", "") * 1;
     }
-    return data;
+    return row;
 }

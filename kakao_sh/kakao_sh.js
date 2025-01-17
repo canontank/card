@@ -2,16 +2,17 @@ var url = "https://script.google.com/macros/s/AKfycbxBAUpgq3NbFrji6UA75b4Q02MUSA
 var data = {
     "cmd" : "get"
 };
-var widthArray = new Array(20, 16, 16, 16, 16, 16);
-var keyList = new Array('날짜', '충전처', '충전수단', '거래금액', '충전금액', '환급금액');
 var cashKeyList = new Array('거래금액', '충전금액', '환급금액');
 var dataList = new Array();
 var thisMonthDataList = new Array();
 
+var bookWidthArray = new Array(20, 16, 16, 16, 16, 16);
+var bookTitleArray = new Array('날짜', '충전처', '충전수단', '거래금액', '충전금액', '환급금액');
+
 $(function() {
     initHeight();
     initDate(2022);
-    setDataList(url, data, keyList, cashKeyList, dataList);
+    setDataList(url, data, cashKeyList, dataList);
 });
 
 function execute() {
@@ -24,7 +25,7 @@ function execute() {
 function setThisMonthDataList() {
     thisMonthDataList = new Array();
     for (var data of dataList) {
-        if (!isThisMonth(data[0]))
+        if (!isThisMonth(data["날짜"]))
             continue;
         thisMonthDataList.push(data);
     }
@@ -78,38 +79,38 @@ function setBook14() {
 
 function setBook2() {
     $("#book2").empty();
-    setBook21();
-}
-
-function setBook21() {
     var valueArray = new Array();
     for (var data of thisMonthDataList) {
-		if (data[3] == 0)
-			continue;
-		valueArray.push(data);
+        if (data["거래금액"] == 0)
+            continue;
+        var value = new Array();
+        for (var title of bookTitleArray) {
+            value.push(data[title]);
+        }
+		valueArray.push(value);
     }
-    setTable("#book2", "#book21", "충전 내역", false, keyList, valueArray, widthArray);
+    setTable("#book2", "#book21", "충전 내역", false, bookTitleArray, valueArray, bookWidthArray);
 }
 
 function setBook3() {
     $("#book3").empty();
-    setBook31();
-}
-
-function setBook31() {
     var valueArray = new Array();
     for (var data of thisMonthDataList) {
-		if (data[3] != 0)
+		if (data["거래금액"] != 0)
 			continue;
-		valueArray.push(data);
+        var value = new Array();
+        for (var title of bookTitleArray) {
+            value.push(data[title]);
+        }
+        valueArray.push(value);
     }
-    setTable("#book3", "#book31", "환급 내역", false, keyList, valueArray, widthArray);
+    setTable("#book3", "#book31", "환급 내역", false, bookTitleArray, valueArray, bookWidthArray);
 }
 
 function getCount() {
 	var count = 0;
 	for (var data of thisMonthDataList) {
-        if (data[3] == 0)
+        if (data["거래금액"] == 0)
 			continue;
 		count++;
 	}
@@ -117,23 +118,23 @@ function getCount() {
 }
 
 function getPrice(card) {
-	return getPCR(card, 3);
+	return getPCR(card, "거래금액");
 }
 
 function getCharge(card) {
-	return getPCR(card, 4);
+	return getPCR(card, "충전금액");
 }
 
 function getRefund(card) {
-	return getPCR(card, 5);
+	return getPCR(card, "환급금액");
 }
 
-function getPCR(card, index) {
+function getPCR(card, key) {
     var pcr = 0;
 	for (var data of thisMonthDataList) {
-        if (card != '' && card != data[1])
+        if (card != '' && card != data["충전처"])
             continue;
-        pcr += data[index];
+        pcr += data[key];
     }
 	return pcr;
 }
@@ -141,9 +142,9 @@ function getPCR(card, index) {
 function getLoss(card) {
 	var loss = 0;
 	for (var data of thisMonthDataList) {
-        if (card != '' && card != data[1])
+        if (card != '' && card != data["충전처"])
             continue;
-		loss += (data[4] + data[5]) - data[3];
+		loss += (data["충전금액"] + data["환급금액"]) - data["거래금액"];
     }
 	return loss;
 }

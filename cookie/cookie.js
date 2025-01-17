@@ -2,8 +2,6 @@ var cookieUrl = "https://script.google.com/macros/s/AKfycbwKoLpLj1urPmJZ9ucgGk08
 var cookieData = {
     "cmd" : "get"
 };
-var widthArray = new Array(19, 14, 14, 14, 13, 13, 13);
-var cookieKeyList = new Array('날짜', '카드', '구매처', '간편결제', '액면가', '거래가', '수량');
 var cookieCashKeyList = new Array('액면가', '거래가', '수량');
 var cookieDataList = new Array();
 
@@ -21,7 +19,7 @@ var cardNameArray = cardArray1.concat(cardArray2).concat(cardArray3);
 $(function() {
     initHeight();
     initDate(2022);
-    setDataList(cookieUrl, cookieData, cookieKeyList, cookieCashKeyList, cookieDataList);
+    setDataList(cookieUrl, cookieData, cookieCashKeyList, cookieDataList);
 });
 
 function execute() {
@@ -36,9 +34,9 @@ function setCookieThisMonthExpDataList() {
     cookieThisMonthDataList = new Array();
     cookieExpDataList = new Array();
     for (var data of cookieDataList) {
-        if (isThisMonth(data[0])) {
+        if (isThisMonth(data["날짜"])) {
             cookieThisMonthDataList.push(data);
-        } else if (isExpDate(data[0])) {
+        } else if (isExpDate(data["날짜"])) {
             cookieExpDataList.push(data);
         }
     }
@@ -76,9 +74,9 @@ function setDiscount(divId, header, thisDataList) {
     for (var card of cardNameArray) {
         var value = new Array(card, 0, 0, 0);
         for (var data of thisDataList) {
-            if (card != data[1])
+            if (card != data["카드"])
                 continue;
-            value[1] += (data[5] * data[6]);
+            value[1] += (data["거래가"] * data["수량"]);
             value[2] += getDiscount(data);
             value[3] += getAddDiscount(data);
         }
@@ -88,30 +86,30 @@ function setDiscount(divId, header, thisDataList) {
 }
 
 function getDiscount(data) {
-    if (cardArray1.indexOf(data[1]) != -1) {
-        if ((data[2] == "지마켓" || data[2] == "11번가") && ((data[5] * data[6]) >= 20000))
+    if (cardArray1.indexOf(data["카드"]) != -1) {
+        if ((data["구매처"] == "지마켓" || data["구매처"] == "11번가") && ((data["거래가"] * data["수량"]) >= 20000))
 		    return 2000;
-        if (data[2] == "스타벅스" && (data[5] * data[6]) >= 10000)
+        if (data["구매처"] == "스타벅스" && (data["거래가"] * data["수량"]) >= 10000)
             return 2000;
-        if (data[2] == "편의점" && (data[5] * data[6]) >= 10000)
+        if (data["구매처"] == "편의점" && (data["거래가"] * data["수량"]) >= 10000)
             return 1000;
-    } else if (cardArray2.indexOf(data[1]) != -1) {
-        if ((data[2] == "지마켓" || data[2] == "옥션") && ((data[5] * data[6]) >= 20000)) {
-            var discount = Math.floor((data[5] * data[6]) * 0.1);
+    } else if (cardArray2.indexOf(data["카드"]) != -1) {
+        if ((data["구매처"] == "지마켓" || data["구매처"] == "옥션") && ((data["거래가"] * data["수량"]) >= 20000)) {
+            var discount = Math.floor((data["거래가"] * data["수량"]) * 0.1);
             if (discount > 3000)
                 return 3000;
             return discount;
         }
     } else {
-        if (data[2] == "지마켓" || data[2] == "옥션") {
-            return Math.floor((data[5] * data[6]) * 0.05);
+        if (data["구매처"] == "지마켓" || data["구매처"] == "옥션") {
+            return Math.floor((data["거래가"] * data["수량"]) * 0.05);
         }
     }
 	return 0;
 }
 
 function getAddDiscount(data) {
-    if (cardArray1.indexOf(data[1]) != -1 && data[3] == "간편결제" && (data[5] * data[6]) >= 10000) {
+    if (cardArray1.indexOf(data["카드"]) != -1 && data["간편결제"] == "간편결제" && (data["거래가"] * data["수량"]) >= 10000) {
         return 1000;
     }
 	return 0;
@@ -123,9 +121,9 @@ function setRemain() {
     for (var expDate of expDateArray) {
         var value = new Array(expDate, 0);
         for (var data of cookieExpDataList) {
-            if (expDate != data[0])
+            if (expDate != data["날짜"])
                 continue;
-            value[1] += (data[5] * data[6]);
+            value[1] += (data["거래가"] * data["수량"]);
         }
         valueArray.push(value);
     }
@@ -134,22 +132,32 @@ function setRemain() {
 
 function setUsageDiv() {
     $("#usage").empty();
-    setTable("#usage", "#usage0", '내역', false, cookieKeyList, cookieThisMonthDataList, widthArray);
+    var widthArray = new Array(19, 14, 14, 14, 13, 13, 13);
+    var titleArray = new Array('날짜', '카드', '구매처', '간편결제', '액면가', '거래가', '수량');
+    var valueArray = new Array();
+    for (var data of cookieThisMonthDataList) {
+        var value = new Array();
+        for (var title of titleArray) {
+            value.push(data[title]);
+        }
+        valueArray.push(value);
+    }
+    setTable("#usage", "#usage0", '내역', false, titleArray, valueArray, widthArray);
 }
 
 function setExpDiv() {
     $("#exp").empty();
-    setExp();
-}
-
-function setExp() {
     var titleArray = new Array('카드', '구매처', '액면가', '거래가', '수량');
     for (var expDate of expDateArray) {
         var valueArray = new Array();
         for (var data of cookieExpDataList) {
-            if (data[0] != expDate)
+            if (data["날짜"] != expDate)
                 continue;
-            valueArray.push(new Array(data[1], data[2], data[4], data[5], data[6]));
+            var value = new Array();
+            for (var title of titleArray) {
+                value.push(data[title]);
+            }
+            valueArray.push(value);
         }
         setTable("#exp", "#exp" + expDate, expDate, false, titleArray, valueArray);
     }
