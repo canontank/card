@@ -19,12 +19,6 @@ function makeDiv(parentDivId, header, table) {
     );
 }
 
-function setHeader(div, header) {
-    if (header == '')
-		return;
-    div.append($('<font/>', { class: 'accountHeader', text : "[ " + header + " ]" } ));
-}
-
 function setTitle(table, titleArray, widthArray) {
     var tr = ($('<tr/>'));
     for (var i = 0; i < titleArray.length; i++) {
