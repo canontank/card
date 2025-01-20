@@ -23,7 +23,9 @@ function setTitle(table, titleArray, widthArray) {
     var tr = ($('<tr/>'));
     for (var i = 0; i < titleArray.length; i++) {
         var width = (widthArray == null) ? (100 / titleArray.length) : widthArray[i];
-        tr.append($('<th/>', { align : 'center', width : width + '%' }).append($('<font/>', { text : titleArray[i] } )));
+        tr.append($('<th/>', { align : 'center', width : width + '%' }).append(
+            $('<font/>', { text : titleArray[i] } )
+        ));
     }
     table.append(tr);
 }
@@ -32,7 +34,9 @@ function setContents(table, valueArray, isTh) {
     for (var value of valueArray) {
         var tr = ($('<tr/>'));
         for (var i = 0; i < value.length; i++) {
-            tr.append($(getTd(isTh, i), { align : getAlign(value[i]) }).append($('<font/>', { text : getText(value[i]), color : getColor(isTh, i, value[i]) })));
+            tr.append($(getTd(isTh, i), { align : getAlign(value[i]) }).append(
+                $('<font/>', { text : getText(value[i]), color : getColor(isTh, i, value[i]) })
+            ));
         }
         table.append(tr);
     }
