@@ -9,13 +9,11 @@ var thisMonthDataList = new Array();
 var notiWidthArray = new Array(25, 75);
 var notiTitleArray = new Array('구분', '내용');
 var notiValueArray = new Array(
-    //new Array('샤롯데', '지마켓/옥션 40만, 티몬/위메프 50만'),
     new Array('딥에코', '티몬, 위메프, 쿠팡, 지마켓, 옥션, 11번가'),
-    //new Array('욜로', '티몬, 위메프, 쿠팡'),
+    new Array('금융포', '제약 없음'),
     new Array('SKT', '제약 없음 (실적용)'),
     new Array('KT NU', '제약 없음 (실적용)'),
     new Array('LG NU', '제약 없음 (실적용)'),
-    //new Array('스마트애니', '스마트로, 이니시스, KICC'),
     new Array('하이마트', '제약 없음 (실적용)'),
     //new Array('GOAT', '제약 없음'),
     new Array('신세계2', 'SSG, 이마트몰'),
@@ -57,7 +55,7 @@ var notiValueArray = new Array(
 var chargeTitleArray = new Array('구분', '해피머니', '북앤라이프', '컬쳐랜드', '문화상품권', 'SSG', '신세계', '현대');
 var chargeLimitArray = new Array(
     new Array('모빌리언스', 0, 0, 0, 0, 0, 0, 0),
-    new Array('페이코', 0, 0, 200000, 100000, 0, 0, 0),
+    new Array('페이코', 0, 0, 200000, 0, 0, 0, 0),
     new Array('팔라고', 0, 0, 0, 0, 0, 0, 0),
     new Array('모바일팝', 0, 0, 0, 0, 0, 0, 0),
     new Array('머니트리', 0, 0, 0, 0, 0, 0, 0),
@@ -68,7 +66,8 @@ var chargeLimitArray = new Array(
     new Array('하나머니', 0, 0, 0, 0, 0, 0, 0),
     new Array('마일벌스', 0, 66000000, 0, 0, 0, 0, 0),
     new Array('페이북', 0, 0, 200000, 0, 0, 0, 0),
-    new Array('네이버', 0, 0, 1000000, 200000, 0, 0, 0),
+    new Array('GLN', 0, 0, 1000000, 0, 0, 0, 0),
+    new Array('네이버', 0, 0, 1000000, 0, 0, 0, 0),
     new Array('스타비즈', 0, 0, 0, 0, 0, 0, 0),
     new Array('기프트밸류', 0, 0, 0, 5000000, 0, 0, 0),
     new Array('기프트플레이', 0, 0, 0, 5000000, 0, 0, 0),
