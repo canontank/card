@@ -24,14 +24,22 @@ document.addEventListener('DOMContentLoaded', () => {
         
         // 배열의 파일명 뒤에 자동으로 .jpg 확장자를 추가합니다.
         const currentFile = images[currentIndex] + '.jpg';
+        const imagePath = 'img/' + currentFile;
+        const targetIndex = currentIndex; // 현재 인덱스를 저장해 빠른 클릭 시 꼬임 방지
         
         // 자연스러운 전환 효과를 위해 투명도 조절
         imgEl.style.opacity = 0;
-        setTimeout(() => {
-            // 서버 환경에 따라 파일 경로 조정 필요 시 `${currentFile}` 부분을 수정하세요.
-            imgEl.src = 'img/' + currentFile; 
-            imgEl.style.opacity = 1;
-        }, 150);
+        
+        // 새 이미지를 백그라운드에서 미리 로드합니다.
+        const tempImg = new Image();
+        tempImg.onload = () => {
+            // 사용자가 버튼을 빠르게 여러 번 눌렀을 경우, 마지막 요청한 이미지만 표시되도록 확인
+            if (targetIndex === currentIndex) {
+                imgEl.src = imagePath;
+                imgEl.style.opacity = 1;
+            }
+        };
+        tempImg.src = imagePath;
 
         // 콤보박스 값 업데이트
         selectEl.value = currentIndex;
