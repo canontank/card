@@ -89,7 +89,7 @@ img {
     object-fit: contain;
     user-select: none;
     -webkit-user-drag: none; /* 이미지 드래그 방지 */
-    transition: opacity 0.3s ease;
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 /* 좌우 이동 버튼 */

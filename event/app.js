@@ -19,7 +19,8 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // 2. 화면 및 이미지 업데이트 함수
-    function updateView() {
+    // 방향(direction) 인자를 추가하여 슬라이드 방향 결정 ('next', 'prev', 'none')
+    function updateView(direction = 'none') {
         if (images.length === 0) return;
         
         // 배열의 파일명 뒤에 자동으로 .jpg 확장자를 추가합니다.
@@ -27,7 +28,14 @@ document.addEventListener('DOMContentLoaded', () => {
         const imagePath = 'img/' + currentFile;
         const targetIndex = currentIndex; // 현재 인덱스를 저장해 빠른 클릭 시 꼬임 방지
         
-        // 자연스러운 전환 효과를 위해 투명도 조절
+        // 슬라이드 아웃 효과: 현재 이미지를 좌우로 살짝 이동하며 투명하게 만듦
+        if (direction === 'next') {
+            imgEl.style.transform = 'translateX(-50px)'; // 다음 이미지: 현재 이미지는 왼쪽으로
+        } else if (direction === 'prev') {
+            imgEl.style.transform = 'translateX(50px)';  // 이전 이미지: 현재 이미지는 오른쪽으로
+        } else {
+            imgEl.style.transform = 'translateX(0)';
+        }
         imgEl.style.opacity = 0;
         
         // 새 이미지를 백그라운드에서 미리 로드합니다.
@@ -36,7 +44,24 @@ document.addEventListener('DOMContentLoaded', () => {
             // 사용자가 버튼을 빠르게 여러 번 눌렀을 경우, 마지막 요청한 이미지만 표시되도록 확인
             if (targetIndex === currentIndex) {
                 imgEl.src = imagePath;
+                
+                // 새 이미지가 들어올 시작 위치 설정 (애니메이션 끄기)
+                imgEl.style.transition = 'none';
+                if (direction === 'next') {
+                    imgEl.style.transform = 'translateX(50px)';  // 다음 이미지: 오른쪽에서 대기
+                } else if (direction === 'prev') {
+                    imgEl.style.transform = 'translateX(-50px)'; // 이전 이미지: 왼쪽에서 대기
+                } else {
+                    imgEl.style.transform = 'translateX(0)';
+                }
+                
+                // 브라우저 렌더링 강제 업데이트(Reflow)로 위치 변경 즉시 적용
+                void imgEl.offsetWidth;
+                
+                // 애니메이션 켜고 중앙(0)으로 부드럽게 이동
+                imgEl.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
                 imgEl.style.opacity = 1;
+                imgEl.style.transform = 'translateX(0)';
             }
         };
         tempImg.src = imagePath;
@@ -53,13 +78,13 @@ document.addEventListener('DOMContentLoaded', () => {
     const goPrev = () => {
         if (currentIndex > 0) {
             currentIndex--;
-            updateView();
+            updateView('prev');
         }
     };
     const goNext = () => {
         if (currentIndex < images.length - 1) {
             currentIndex++;
-            updateView();
+            updateView('next');
         }
     };
 
@@ -68,8 +93,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // 4. 콤보박스 변경 이벤트
     selectEl.addEventListener('change', (e) => {
+        const previousIndex = currentIndex;
         currentIndex = parseInt(e.target.value, 10);
-        updateView();
+        // 선택한 인덱스에 따라 이동 방향 결정
+        const direction = currentIndex > previousIndex ? 'next' : (currentIndex < previousIndex ? 'prev' : 'none');
+        updateView(direction);
     });
 
     // 5. 모바일 터치 스와이프 기능 (좌우 스냅 지원)
